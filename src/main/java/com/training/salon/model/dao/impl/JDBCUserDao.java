@@ -102,4 +102,25 @@ public class JDBCUserDao implements UserDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Optional<User> findByEmailAndPassword(String email, String password) {
+        final String query = "select * from user where email=? && password =?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setString (1, email);
+            st.setString (2, password);
+            UserMapper userMapper = new UserMapper();
+
+            ResultSet rs = st.executeQuery();
+            Optional<User> user=Optional.empty();
+            if(rs.next())
+                user=Optional.of(userMapper.extractFromResultSet(rs));
+            return user;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
 }

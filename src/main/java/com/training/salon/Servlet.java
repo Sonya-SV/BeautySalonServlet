@@ -1,6 +1,7 @@
 package com.training.salon;
 
 import com.training.salon.controller.command.ICommand;
+import com.training.salon.controller.command.Login;
 import com.training.salon.controller.command.Registration;
 import com.training.salon.model.service.UserService;
 
@@ -23,7 +24,7 @@ public class Servlet extends HttpServlet {
                 .setAttribute("loggedUsers", new HashSet<String>());
 
 //        commands.put("logout", new LogOut());
-//        commands.put("login", new Login(new UserService()));
+        commands.put("login", new Login(new UserService()));
         commands.put("registration", new Registration(new UserService()));
 //        commands.put("exception", new Exception());
 //        commands.put("admin/userList", new UserList(new UserService()));

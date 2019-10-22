@@ -2,7 +2,9 @@ package com.training.salon.model.dao;
 
 import com.training.salon.model.entity.User;
 
+import java.util.Optional;
+
 public interface UserDao extends GenericDao<User> {
-//    Optional<User> findByUsernameAndPassword(String username, String password);
+    Optional<User> findByEmailAndPassword(String username, String password);
 
 }

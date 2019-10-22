@@ -31,20 +31,20 @@
                     </c:if>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <c:if test="${sessionScope.user.role eq GUEST}">
+<%--                    <c:if test="${sessionScope.user.role eq GUEST}">--%>
                         <li><a href="${pageContext.request.contextPath}/app/login" id="myBtn">
                             <span class="glyphicon glyphicon-log-in"></span> Login </a></li>
                         <%--                        <li><a  id="myBtn1">--%>
                         <%--                            <span class="glyphicon glyphicon-log-in"></span> Login </a></li>--%>
                         <li><a href="${pageContext.request.contextPath}/app/registration">
                             <span class="glyphicon glyphicon-user"></span> Sign up </a></li>
-                    </c:if>
-                    <li class="locale-flag">
-                        <a><img src="http://files.softicons.com/download/internet-cons/flag-icons-by-custom-icon-design/png/256/United-States-Flag.png" style="height: 100%; width: 100%"></a>
-                    </li>
-                    <li class="locale-flag">
-                        <a><img src="https://cdn3.iconfinder.com/data/icons/finalflags/256/Ukraine-Flag.png" style="height: 100%; width: 100%"> </a>
-                    </li>
+<%--                    </c:if>--%>
+<%--                    <li class="locale-flag">--%>
+<%--                        <a><img src="http://files.softicons.com/download/internet-cons/flag-icons-by-custom-icon-design/png/256/United-States-Flag.png" style="height: 100%; width: 100%"></a>--%>
+<%--                    </li>--%>
+<%--                    <li class="locale-flag">--%>
+<%--                        <a><img src="https://cdn3.iconfinder.com/data/icons/finalflags/256/Ukraine-Flag.png" style="height: 100%; width: 100%"> </a>--%>
+<%--                    </li>--%>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:if test="${sessionScope.user.role ne GUEST}">
