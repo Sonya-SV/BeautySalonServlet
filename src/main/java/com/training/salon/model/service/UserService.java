@@ -30,4 +30,16 @@ public class UserService {
             return dao.findAll();
         }
     }
+
+    public void update(String firstName, String lastName, String password, User user) throws SQLException {
+        UserDao dao = daoFactory.createUserDao();
+        Optional<User> userToUpdate = dao.findById(user.getId());
+        if(!userToUpdate.isEmpty()){
+            User userr = userToUpdate.get();
+            userr.setFirstName(firstName);
+            userr.setLastName(lastName);
+            userr.setPassword(password);
+            dao.update(userr);
+        }
+    }
 }

@@ -18,6 +18,7 @@ public class UserList implements ICommand {
     public String execute(HttpServletRequest request) {
         List<User> users = userService.getAllUsers();
         request.setAttribute("users", users);
+        request.setAttribute("cal", 3);
         return "/app/admin/userList";
     }
 }

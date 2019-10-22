@@ -45,6 +45,7 @@
 <%--                    <li class="locale-flag">--%>
 <%--                        <a><img src="https://cdn3.iconfinder.com/data/icons/finalflags/256/Ukraine-Flag.png" style="height: 100%; width: 100%"> </a>--%>
 <%--                    </li>--%>
+    <li><a href="${pageContext.request.contextPath}/app/user/profile"> Profile</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:if test="${sessionScope.user.role ne GUEST}">
