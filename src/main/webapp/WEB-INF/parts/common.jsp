@@ -7,11 +7,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registration form</title>
-    <%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">--%>
+<%--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">--%>
     <%--    <link rel="stylesheet" href= "${pageContext.request.contextPath}/app/resources/css/index.css" />--%>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<%--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>--%>
 <%--    <style>--%>
 <%--        <%@ include file="../lib/css/index.css" %>--%>
 <%--    </style>--%>
@@ -21,11 +21,11 @@
     <div class="navbar-fixed-top">
         <div class="container">
             <div class="navbar navbar-default">
-                <a class="navbar-brand" href="">TRAINFOR</a>
+                <a class="navbar-brand" href="">Beauty</a>
                 <ul class="nav navbar-nav">
-                    <c:if test="${sessionScope.user.role eq ADMIN}">
+<%--                    <c:if test="${sessionScope.user.role eq ADMIN}">--%>
                         <li><a href="${pageContext.request.contextPath}/app/admin/userList">User List</a></li>
-                    </c:if>
+<%--                    </c:if>--%>
                     <c:if test="${sessionScope.user.role ne GUEST}">
                         <li><a href="${pageContext.request.contextPath}/app/user/trainSelection">Train tickets</a></li>
                     </c:if>

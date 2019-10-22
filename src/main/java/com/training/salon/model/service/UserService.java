@@ -5,11 +5,13 @@ import com.training.salon.model.dao.UserDao;
 import com.training.salon.model.entity.User;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class UserService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
+
 
     public void saveUser(User user) throws SQLException {
         UserDao dao = daoFactory.createUserDao();
@@ -22,5 +24,10 @@ public class UserService {
             user = dao.findByEmailAndPassword(email, password);
         }
         return user;
+    }
+    public List<User> getAllUsers(){
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.findAll();
+        }
     }
 }
