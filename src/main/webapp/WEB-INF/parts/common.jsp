@@ -26,9 +26,9 @@
 <%--                    <c:if test="${sessionScope.user.role eq ADMIN}">--%>
                         <li><a href="${pageContext.request.contextPath}/app/admin/userList">User List</a></li>
 <%--                    </c:if>--%>
-                    <c:if test="${sessionScope.user.role ne GUEST}">
-                        <li><a href="${pageContext.request.contextPath}/app/user/trainSelection">Train tickets</a></li>
-                    </c:if>
+<%--                    <c:if test="${sessionScope.user.role ne GUEST}">--%>
+                        <li><a href="${pageContext.request.contextPath}/app/user/serviceSelection">Services</a></li>
+<%--                    </c:if>--%>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 <%--                    <c:if test="${sessionScope.user.role eq GUEST}">--%>

@@ -1,10 +1,8 @@
 package com.training.salon;
 
-import com.training.salon.controller.command.ICommand;
-import com.training.salon.controller.command.Login;
-import com.training.salon.controller.command.Registration;
-import com.training.salon.controller.command.UserList;
+import com.training.salon.controller.command.*;
 import com.training.salon.controller.command.Exception;
+import com.training.salon.model.service.ProcedureService;
 import com.training.salon.model.service.UserService;
 
 import javax.servlet.ServletConfig;
@@ -30,7 +28,7 @@ public class Servlet extends HttpServlet {
         commands.put("registration", new Registration(new UserService()));
         commands.put("exception", new Exception());
         commands.put("admin/userList", new UserList(new UserService()));
-//        commands.put("user/trainSelection", new TrainCommand(new TrainService()));
+        commands.put("user/serviceSelection", new ProcedureCommand(new ProcedureService()));
 //        commands.put("user/trainList", new TrainCommand(new TrainService()));
 //        commands.put("user/order", new OrderCommand(new TrainService()));
 //        commands.put("user/cart", new CartCommand( new TicketService()));
