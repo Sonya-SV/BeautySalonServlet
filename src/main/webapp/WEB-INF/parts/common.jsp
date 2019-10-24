@@ -11,10 +11,10 @@
     <%--    <link rel="stylesheet" href= "${pageContext.request.contextPath}/app/resources/css/index.css" />--%>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
-<%--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>--%>
-<%--    <style>--%>
-<%--        <%@ include file="../lib/css/index.css" %>--%>
-<%--    </style>--%>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <style>
+        <%@ include file="/lib/css/style.css" %>
+    </style>
 </head>
 <body data-spy="scroll">
 <div class="header">
@@ -25,6 +25,8 @@
                 <ul class="nav navbar-nav">
 <%--                    <c:if test="${sessionScope.user.role eq ADMIN}">--%>
                         <li><a href="${pageContext.request.contextPath}/app/admin/userList">User List</a></li>
+                        <li><a href="${pageContext.request.contextPath}/app/user/masterList">Masters</a></li>
+                        <li><a href="${pageContext.request.contextPath}/app/user/categoryList">Categories</a></li>
 <%--                    </c:if>--%>
 <%--                    <c:if test="${sessionScope.user.role ne GUEST}">--%>
                         <li><a href="${pageContext.request.contextPath}/app/user/serviceSelection">Services</a></li>

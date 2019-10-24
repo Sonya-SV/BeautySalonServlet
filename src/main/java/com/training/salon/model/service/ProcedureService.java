@@ -19,9 +19,9 @@ public class ProcedureService {
         }
     }
 
-    public List<Procedure> getAllProceduresByCategory(Category category){
+    public List<Procedure> getAllProceduresByCategory(Long categoryId){
         try (ProcedureDao dao = daoFactory.createProcedureDao()) {
-            return dao.findAllByCategory(category);
+            return dao.findAllByCategory(categoryId);
         }
     }
 }

@@ -1,0 +1,22 @@
+ul.hor_nav {
+    margin: 0;
+    padding: 0;
+}
+ul.hor_nav li {
+    display: inline;
+    margin-right: 4px;
+    padding: 2px;
+}
+.card-group{
+
+    margin-right: 4px;
+    padding: 2px;
+}
+.card{
+    display: inline;
+}
+body {
+    /*background-image: url(http://fonday.ru/images/tmp/10/2/original/1021930k7BX41VKmE33ix169sY1dh4g.jpg) ;*/
+    /*background-image: url(https://st2.depositphotos.com/4097503/8670/v/950/depositphotos_86701870-stock-illustration-beauty-salon-poster-with-butterfly.jpg) ;*/
+    /*background-size: cover;*/
+}

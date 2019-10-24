@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface ProcedureDao extends GenericDao<Procedure> {
 
-    List<Procedure> findAllByCategory(Category category);
+    List<Procedure> findAllByCategory(Long categoryId);
 }

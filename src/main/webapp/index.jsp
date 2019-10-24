@@ -1,10 +1,8 @@
 <html>
-
 <body>
 <%@ include file="WEB-INF/parts/common.jsp" %>
 <div class="jumbotron" style="text-align: center; background: transparent">
-    <h1>Welcome!</h1>
-    <%--    <img src="WEB-INF/images/background-site1.jpg">--%>
-
+    <img src="https://make-up-me.ua/content/images/6/46010414988912.jpg"/>
+</div>
 </body>
 </html>

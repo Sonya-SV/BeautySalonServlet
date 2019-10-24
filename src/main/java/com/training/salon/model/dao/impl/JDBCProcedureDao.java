@@ -49,11 +49,11 @@ public class JDBCProcedureDao implements ProcedureDao {
     }
 
     @Override
-    public List<Procedure> findAllByCategory(Category category) {
+    public List<Procedure> findAllByCategory(Long categoryId) {
         Map<Long, Procedure> procedures = new HashMap<>();
-        final String query = "select * from proced inner join category on category.id = category_id where category_name = ?";
+        final String query = "select * from proced inner join category on category.id = category_id where category_id = ?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
-            st.setString(1, category.getName());
+            st.setLong(1, categoryId);
             ResultSet rs = st.executeQuery();
 
             ProcedureMapper procedureMapper = new ProcedureMapper();

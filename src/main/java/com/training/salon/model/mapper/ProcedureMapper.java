@@ -17,7 +17,7 @@ public class ProcedureMapper implements ObjectMapper<Procedure> {
         Category category = new Category();
         category.setId(rs.getLong("category_id"));
         category.setName(rs.getString("category_name"));
-
+        category.setImage(rs.getBlob("image"));
         procedure.setCategory(category);
 
         return procedure;
