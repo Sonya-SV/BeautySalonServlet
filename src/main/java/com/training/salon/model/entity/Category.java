@@ -1,8 +1,11 @@
 package com.training.salon.model.entity;
 
+import java.sql.Blob;
+
 public class Category {
     private Long id;
     private String name;
+    private Blob image;
 
     public Long getId() {
         return id;
@@ -18,5 +21,13 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Blob getImage() {
+        return image;
+    }
+
+    public void setImage(Blob image) {
+        this.image = image;
     }
 }

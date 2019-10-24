@@ -1,5 +1,6 @@
 package com.training.salon.model.dao.impl;
 
+import com.training.salon.model.dao.CategoryDao;
 import com.training.salon.model.dao.DaoFactory;
 import com.training.salon.model.dao.ProcedureDao;
 import com.training.salon.model.dao.UserDao;
@@ -20,6 +21,11 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public ProcedureDao createProcedureDao() {
         return new JDBCProcedureDao(getConnection());
+    }
+
+    @Override
+    public CategoryDao createCategoryDao() {
+        return new JDBCCategoryDao(getConnection());
     }
 
     private Connection getConnection(){
