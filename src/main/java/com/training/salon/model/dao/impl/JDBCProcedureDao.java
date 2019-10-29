@@ -2,8 +2,10 @@ package com.training.salon.model.dao.impl;
 
 import com.training.salon.model.dao.ProcedureDao;
 import com.training.salon.model.entity.Category;
+import com.training.salon.model.entity.Master;
 import com.training.salon.model.entity.Procedure;
 import com.training.salon.model.entity.User;
+import com.training.salon.model.mapper.MasterMapper;
 import com.training.salon.model.mapper.ProcedureMapper;
 import com.training.salon.model.mapper.UserMapper;
 
@@ -62,6 +64,32 @@ public class JDBCProcedureDao implements ProcedureDao {
                 Procedure procedure = procedureMapper.extractFromResultSet(rs);
                 procedures.putIfAbsent(procedure.getId(), procedure);
             }
+            return new ArrayList<>(procedures.values());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Procedure> findAllProceduresByMaster(Long masterId) {
+        Map<Long, Procedure> procedures = new HashMap<>();
+        final String query = " select * from proced inner join master  " +
+                "on proced.category_id = master.category_id " +
+                "inner join category " +
+                "on category.id = proced.category_id "+
+                "where master.id=?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setLong(1, masterId);
+            ResultSet rs = st.executeQuery();
+
+            ProcedureMapper procedureMapper = new ProcedureMapper();
+
+            while (rs.next()) {
+               Procedure procedure = procedureMapper.extractFromResultSet(rs);
+                procedures.putIfAbsent(procedure.getId(), procedure);
+            }
+
             return new ArrayList<>(procedures.values());
 
         } catch (SQLException e) {

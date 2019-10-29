@@ -18,15 +18,10 @@
 
 <form  autocomplete="off" novalidate>
     <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=1"><img src="https://backstage.ua/wp-content/uploads/2018/06/Volosy-1-601x1024.jpg" alt="..." height="380">
-    <input type="hidden" value="1" name="categoryId"/></a>
     <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=2"><img src="https://backstage.ua/wp-content/uploads/2018/06/Vizazh-1-601x1024.jpg" alt="..." height="380">
-    <input type="hidden" value="2" name="categoryId"/></a>
     <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=3"><img src="https://backstage.ua/wp-content/uploads/2018/06/Nogti-1-601x1024.jpg" alt="..." height="380">
-    <input type="hidden" value="3" name="categoryId"/></a>
     <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=4"><img src="https://backstage.ua/wp-content/uploads/2018/06/Litso-601x1024.jpg" alt="..." height="380">
-    <input type="hidden" value="4" name="categoryId"/></a>
     <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=5"><img src="https://backstage.ua/wp-content/uploads/2018/06/Telo-1-601x1024.jpg" alt="..." height="380">
-    <input type="hidden" value="5" name="categoryId"/></a>
 </form>
 </div>
 <%--<div class="container" style="margin-top: 60px">--%>
