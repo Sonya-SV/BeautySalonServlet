@@ -2,6 +2,7 @@ package com.training.salon.model.service;
 
 import com.training.salon.model.dao.DaoFactory;
 import com.training.salon.model.dao.UserDao;
+import com.training.salon.model.entity.Master;
 import com.training.salon.model.entity.User;
 
 import java.sql.SQLException;
@@ -42,4 +43,5 @@ public class UserService {
             dao.update(userr);
         }
     }
+
 }

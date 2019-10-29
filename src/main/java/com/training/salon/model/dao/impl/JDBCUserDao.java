@@ -55,23 +55,23 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        Map<Long, User> users = new HashMap<>();
-        final String query = " select * from user";
-        try (Statement st = connection.createStatement()) {
-            ResultSet rs = st.executeQuery(query);
-
-            UserMapper userMapper = new UserMapper();
-
-            while (rs.next()) {
-                User user = userMapper.extractFromResultSet(rs);
-                users.putIfAbsent(user.getId(), user);
-            }
-               return new ArrayList<>(users.values());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+//        Map<Long, User> users = new HashMap<>();
+//        final String query = " select * from user";
+//        try (Statement st = connection.createStatement()) {
+//            ResultSet rs = st.executeQuery(query);
+//
+//            UserMapper userMapper = new UserMapper();
+//
+//            while (rs.next()) {
+//                User user = userMapper.extractFromResultSet(rs);
+//                users.putIfAbsent(user.getId(), user);
+//            }
+//               return new ArrayList<>(users.values());
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
             return null;
-        }
+//        }
     }
 
 
@@ -122,5 +122,26 @@ public class JDBCUserDao implements UserDao {
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public List<User> findAllMasters() {
+        Map<Long, User> users = new HashMap<>();
+        final String query = " select * from user where role= ? ";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setString (1, User.Role.MASTER.name());
+            ResultSet rs = st.executeQuery();
+            UserMapper userMapper = new UserMapper();
+
+            while (rs.next()) {
+                User user = userMapper.extractFromResultSet(rs);
+                users.putIfAbsent(user.getId(), user);
+            }
+            return new ArrayList<>(users.values());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.training.salon.model.service;
 
 import com.training.salon.model.dao.DaoFactory;
+import com.training.salon.model.dao.MasterDao;
 import com.training.salon.model.dao.ProcedureDao;
 import com.training.salon.model.dao.UserDao;
 import com.training.salon.model.entity.Category;
@@ -22,6 +23,12 @@ public class ProcedureService {
     public List<Procedure> getAllProceduresByCategory(Long categoryId){
         try (ProcedureDao dao = daoFactory.createProcedureDao()) {
             return dao.findAllByCategory(categoryId);
+        }
+    }
+
+    public List<Procedure> getAllProceduresByMaster(Long masterId){
+        try (ProcedureDao dao = daoFactory.createProcedureDao()) {
+            return dao.findAllProceduresByMaster(masterId);
         }
     }
 }
