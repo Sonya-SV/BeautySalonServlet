@@ -10,6 +10,7 @@ public abstract class DaoFactory {
     public abstract ProcedureDao createProcedureDao();
     public abstract CategoryDao createCategoryDao();
     public abstract MasterDao createMasterDao();
+    public abstract ScheduleDao createScheduleDao();
     public static DaoFactory getInstance(){
         if( daoFactory == null ){
             synchronized (DaoFactory.class){

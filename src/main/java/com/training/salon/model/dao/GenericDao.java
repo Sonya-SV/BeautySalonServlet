@@ -1,5 +1,7 @@
 package com.training.salon.model.dao;
 
+import com.training.salon.controller.exception.BookException;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;

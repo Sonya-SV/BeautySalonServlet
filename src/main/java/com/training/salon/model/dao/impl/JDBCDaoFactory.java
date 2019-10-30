@@ -30,6 +30,11 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCMasterDao(getConnection());
     }
 
+    @Override
+    public ScheduleDao createScheduleDao() {
+        return new JDBCScheduleDao(getConnection());
+    }
+
     private Connection getConnection(){
         try {
             return dataSource.getConnection();

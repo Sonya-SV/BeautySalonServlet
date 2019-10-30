@@ -2,10 +2,7 @@ package com.training.salon;
 
 import com.training.salon.controller.command.*;
 import com.training.salon.controller.command.Exception;
-import com.training.salon.model.service.CategoryService;
-import com.training.salon.model.service.MasterService;
-import com.training.salon.model.service.ProcedureService;
-import com.training.salon.model.service.UserService;
+import com.training.salon.model.service.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -34,7 +31,7 @@ public class Servlet extends HttpServlet {
         commands.put("user/procedures", new ProcedureCommand(new ProcedureService()));
         commands.put("user/categoryList", new CategoryCommand(new CategoryService()));
         commands.put("user/master", new MasterCommand(new ProcedureService(), new MasterService()));
-//        commands.put("user/cart", new CartCommand( new TicketService()));
+        commands.put("user/booking", new BookCommand( new ScheduleService(),new ProcedureService(), new MasterService()));
 //        commands.put("user/history", new HistoryCommand(new TicketService()));
 //        commands.put("user/account", new AccountCommand(new UserService()));
 //        commands.put("user/profile", new ProfileCommand(new UserService()));
