@@ -16,9 +16,7 @@ public class UserList implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-        List<User> users = userService.getAllUsers();
-        request.setAttribute("users", users);
-        request.setAttribute("cal", 3);
+        request.setAttribute("users", userService.getAllUsers());
         return "/app/admin/userList";
     }
 }
