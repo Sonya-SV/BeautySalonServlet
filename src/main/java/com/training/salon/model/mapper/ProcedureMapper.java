@@ -13,12 +13,7 @@ public class ProcedureMapper implements ObjectMapper<Procedure> {
         procedure.setId(rs.getLong("id"));
         procedure.setName(rs.getString("name"));
         procedure.setPrice(rs.getBigDecimal("price"));
-
-        Category category = new Category();
-        category.setId(rs.getLong("category_id"));
-        category.setName(rs.getString("category_name"));
-        category.setImage(rs.getBlob("image"));
-        procedure.setCategory(category);
+        procedure.setCategory(new CategoryMapper().extractFromResultSet(rs));
 
         return procedure;
     }

@@ -15,8 +15,6 @@
 <div class="container" style="margin-top: 60px">
 
     <div class="row">
-
-
         <div class="col-sm-6">
             <img class="card-img"
                  src="https://backstage.ua/wp-content/uploads/2018/06/Volosy-1-601x1024.jpg"

@@ -16,13 +16,18 @@
 <div class="container" style="margin-top: 60px">
 
 
-<form  autocomplete="off" novalidate>
-    <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=1"><img src="https://backstage.ua/wp-content/uploads/2018/06/Volosy-1-601x1024.jpg" alt="..." height="380">
-    <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=2"><img src="https://backstage.ua/wp-content/uploads/2018/06/Vizazh-1-601x1024.jpg" alt="..." height="380">
-    <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=3"><img src="https://backstage.ua/wp-content/uploads/2018/06/Nogti-1-601x1024.jpg" alt="..." height="380">
-    <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=4"><img src="https://backstage.ua/wp-content/uploads/2018/06/Litso-601x1024.jpg" alt="..." height="380">
-    <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=5"><img src="https://backstage.ua/wp-content/uploads/2018/06/Telo-1-601x1024.jpg" alt="..." height="380">
-</form>
+    <form autocomplete="off" novalidate>
+        <a items="${categories}" var="i">
+            <c:forEach items="${categories}" var="i">
+            <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=${i.id}">
+                <img src="data:image/png;base64,${i.image}" alt="..." height="380"></a>
+                <input type="hidden" value="${i.id}" name="categoryId">
+                <%--    <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=2"><img src="https://backstage.ua/wp-content/uploads/2018/06/Vizazh-1-601x1024.jpg" alt="..." height="380">--%>
+                <%--    <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=3"><img src="https://backstage.ua/wp-content/uploads/2018/06/Nogti-1-601x1024.jpg" alt="..." height="380">--%>
+                <%--    <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=4"><img src="https://backstage.ua/wp-content/uploads/2018/06/Litso-601x1024.jpg" alt="..." height="380">--%>
+                <%--    <a href="${pageContext.request.contextPath}/app/user/procedures?categoryId=5"><img src="https://backstage.ua/wp-content/uploads/2018/06/Telo-1-601x1024.jpg" alt="..." height="380">--%>
+            </c:forEach>
+    </form>
 </div>
 <%--<div class="container" style="margin-top: 60px">--%>
 <%--    <div class="row">--%>

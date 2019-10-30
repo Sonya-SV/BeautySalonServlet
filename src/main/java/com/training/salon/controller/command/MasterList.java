@@ -6,6 +6,10 @@ import com.training.salon.model.service.MasterService;
 import com.training.salon.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 public class MasterList implements ICommand{
@@ -18,14 +22,8 @@ public class MasterList implements ICommand{
 
     @Override
     public String execute(HttpServletRequest request) {
-        List<Master> masters = masterService.getAllMasters();
-
-
-        String contentType = request.getServletContext().getMimeType(String.valueOf(masters.get(0).getPhoto()));
-        request.setAttribute("masters", masters);
-        request.setAttribute("photo", contentType);
-
-        System.out.println(masters + "masters");
+//        List<Master> masters = masterService.getAllMasters();
+        request.setAttribute("masters", masterService.getAllMasters());
         return "/app/user/masterList";
     }
 }
