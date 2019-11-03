@@ -22,7 +22,7 @@ public class Servlet extends HttpServlet {
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
 
-//        commands.put("logout", new LogOut());
+        commands.put("logout", new Logout());
         commands.put("login", new Login(new UserService()));
         commands.put("registration", new Registration(new UserService()));
         commands.put("exception", new Exception());
@@ -32,8 +32,8 @@ public class Servlet extends HttpServlet {
         commands.put("user/categoryList", new CategoryCommand(new CategoryService()));
         commands.put("user/master", new MasterCommand(new ProcedureService(), new MasterService()));
         commands.put("user/booking", new BookCommand( new ScheduleService(),new ProcedureService(), new MasterService()));
-//        commands.put("user/history", new HistoryCommand(new TicketService()));
-//        commands.put("user/account", new AccountCommand(new UserService()));
+        commands.put("master/schedule", new MasterSchedule(new MasterService(), new ScheduleService()));
+//        commands.put("email", new SendEmail());
 //        commands.put("user/profile", new ProfileCommand(new UserService()));
     }
 
@@ -55,7 +55,6 @@ public class Servlet extends HttpServlet {
         String path = request.getRequestURI();
         System.out.println(path);
         path = path.replaceAll(".*/app/", "");
-        System.out.println("path= " + path);
 
 
         ICommand command = commands.getOrDefault(path,
@@ -65,6 +64,11 @@ public class Servlet extends HttpServlet {
             path = path.replace("admin", "");
             path = path.toLowerCase();
             request.getRequestDispatcher("/WEB-INF/admin/"+ path+".jsp").forward(request, response);
+            return;
+        }
+        if (path.contains("/master/")) {
+            path = path.replace("master/", "/").toLowerCase();
+            request.getRequestDispatcher("/WEB-INF/master/"+ path+".jsp").forward(request, response);
             return;
         }
         if (path.contains("user")) {

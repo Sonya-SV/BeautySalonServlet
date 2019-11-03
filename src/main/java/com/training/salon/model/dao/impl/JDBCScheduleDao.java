@@ -2,13 +2,17 @@ package com.training.salon.model.dao.impl;
 
 import com.training.salon.controller.exception.BookException;
 import com.training.salon.model.dao.ScheduleDao;
+import com.training.salon.model.entity.Procedure;
 import com.training.salon.model.entity.Schedule;
+import com.training.salon.model.mapper.ProcedureMapper;
+import com.training.salon.model.mapper.ScheduleMapper;
+import com.training.salon.model.mapper.UserMapper;
 
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.Objects.isNull;
 
@@ -59,6 +63,23 @@ public class JDBCScheduleDao implements ScheduleDao {
 
     @Override
     public Optional<Schedule> findById(Long id) {
+        final String query ="select * from schedule " +
+        "inner join master on master.id = schedule.master_id " +
+                "inner join user on user.id = schedule.user_id " +
+                "inner join proced on schedule.proced_id = proced.id " +
+                "inner join category on category.id = proced.category_id where schedule.id=?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setLong (1, id);
+            ScheduleMapper scheduleMapper = new ScheduleMapper();
+            ResultSet rs = st.executeQuery();
+            Optional<Schedule> note=Optional.empty();
+            if(rs.next())
+                note=Optional.of(scheduleMapper.extractFromResultSet(rs));
+            return note;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return Optional.empty();
     }
 
@@ -116,6 +137,46 @@ public class JDBCScheduleDao implements ScheduleDao {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public void makeDone(Long scheduleId) {
+        final String query = "update schedule set done = true where schedule.id = ?";
+
+        try (PreparedStatement st = connection.prepareStatement(query);
+        ) {
+            st.setLong(1, scheduleId);
+            st.execute();
+        } catch (SQLException e) {
+            System.out.println("already done");
+        }
+    }
+
+    @Override
+    public List<Schedule> getSchedule(Long masterId) {
+
+        Map<Long, Schedule> schedule = new HashMap<>();
+        final String query = "select * from schedule " +
+                "inner join master on master.id = schedule.master_id " +
+                "inner join user on user.id = schedule.user_id " +
+                "inner join proced on schedule.proced_id = proced.id " +
+                "inner join category on category.id = proced.category_id where schedule.master_id=?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setLong(1, masterId);
+            ResultSet rs = st.executeQuery();
+
+            ScheduleMapper scheduleMapper = new ScheduleMapper();
+
+            while (rs.next()) {
+                Schedule note = scheduleMapper.extractFromResultSet(rs);
+                schedule.putIfAbsent(note.getId(), note);
+            }
+            return new ArrayList<>(schedule.values());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

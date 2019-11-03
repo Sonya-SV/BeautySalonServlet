@@ -8,9 +8,8 @@ public class Master {
     private User user;
     private LocalTime timeStart;
     private LocalTime timeEnd;
-//    private Blob photo;
-//    private byte[] photo;
     private String photo;
+
     public Long getId() {
         return id;
     }
@@ -42,22 +41,6 @@ public class Master {
     public void setTimeEnd(LocalTime timeEnd) {
         this.timeEnd = timeEnd;
     }
-
-//    public Blob getPhoto() {
-//        return photo;
-//    }
-//
-//    public void setPhoto(Blob photo) {
-//        this.photo = photo;
-//    }
-
-//    public byte[] getPhoto() {
-//        return photo;
-//    }
-//
-//    public void setPhoto(byte[] photo) {
-//        this.photo = photo;
-//    }
 
     public String getPhoto() {
         return photo;

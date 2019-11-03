@@ -15,14 +15,15 @@
 <div class="container" style="margin-top: 60px">
 
     <div class="row">
+        <c:if test="${procedures ne null}">
         <div class="col-sm-6">
             <img class="card-img"
-                 src="https://backstage.ua/wp-content/uploads/2018/06/Volosy-1-601x1024.jpg"
-                 alt="..." height="600">
+                 src=src="data:image/png;base64,${procedures[0].category.image}"
+                 alt="..." height="400">
         </div>
         <div class="col-sm-6">
 
-            <c:if test="${procedures ne null}">
+
             <h2>${procedures[0].category.name}</h2>
             <table class="table table-bordered  table-hover table-sm" style=" margin: auto;">
                 <tr>
@@ -41,9 +42,10 @@
                     </tr>
                 </c:forEach>
             </table>
-            </c:if>
+
             <input type="hidden" value="${procedure.id}" name="procedureId">
         </div>
+        </c:if>
     </div>
 </div>
 </div>

@@ -76,4 +76,18 @@ public class Schedule {
     public void setDone(boolean done) {
         isDone = done;
     }
+
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "id=" + id +
+                ", master=" + master +
+                ", user=" + user +
+                ", procedure=" + procedure +
+                ", time=" + time +
+                ", date=" + date +
+                ", comment='" + comment + '\'' +
+                ", isDone=" + isDone +
+                '}';
+    }
 }

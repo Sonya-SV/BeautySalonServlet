@@ -6,6 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends GenericDao<User> {
-    Optional<User> findByEmailAndPassword(String username, String password);
+    Optional<User> findByEmailAndPassword(String email, String password);
     List<User> findAllMasters();
 }
