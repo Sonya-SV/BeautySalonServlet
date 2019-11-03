@@ -22,7 +22,7 @@ public class MasterList implements ICommand{
 
     @Override
     public String execute(HttpServletRequest request) {
-//        List<Master> masters = masterService.getAllMasters();
+
         request.setAttribute("masters", masterService.getAllMasters());
         return "/app/user/masterList";
     }
