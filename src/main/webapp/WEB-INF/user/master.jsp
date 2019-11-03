@@ -32,19 +32,14 @@
                     </c:forEach>
                 </table>
             </c:if>
-        </div>
-    </div>
-</div>
-<div class="container" style="margin-top: 60px">
-    <div class="row">
-        <div class="col-md-8">
             <form action="${pageContext.request.contextPath}/app/user/booking">
                 <input type="hidden" value="${master.id}" name="masterId"/>
                 <button type="submit" class="btn btn-primary" style="margin-top:30px"
-                        ng-disabled="form.$invalid">
+                        ng-disabled="form.$invalid" >
                     Book
                 </button>
-                <textarea cols="280" name="comment" placeholder="Put your comment"></textarea>
+
+                <textarea rows="4"  cols="100%" name="comment" placeholder="Put your comment"></textarea>
                 <button type="submit" class="btn btn-primary" style="margin-top:30px"
                         ng-disabled="form.$invalid">
                     Send

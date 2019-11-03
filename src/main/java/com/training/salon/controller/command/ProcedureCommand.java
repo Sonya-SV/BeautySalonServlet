@@ -16,9 +16,9 @@ public class ProcedureCommand implements ICommand{
 
     @Override
     public String execute(HttpServletRequest request) {
+
         Long categoryId = Long.valueOf(request.getParameter("categoryId"));
-        List<Procedure> procedures = procedureService.getAllProceduresByCategory(categoryId);
-        request.setAttribute("procedures", procedures);
+        request.setAttribute("procedures", procedureService.getAllProceduresByCategory(categoryId));
         return "/app/user/procedures";
     }
 }

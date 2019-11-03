@@ -5,14 +5,12 @@
 <body>
 <%@ include file="../parts/common.jsp" %>
 <!-- Карточка с card-img-overlay -->
-<div class="container" style="margin-top: 60px">
+<div class="container" style="margin-top: 100px">
 
     <div class="row">
 
-        <form
-<%--                action="${pageContext.request.contextPath}/app/user/order"--%>
-                role="form">
-
+        <form action="${pageContext.request.contextPath}/app/user/profile" role="form">
+            ${alreadyBooked}
             <div class="form-inline">
                 <div class="form-group">
                     <label id="exampleInputFirstNameLabel" for="firstName">First name</label>
@@ -68,7 +66,7 @@
                 <label id="timeLabel">Time</label>
                 <ul class="hor_nav">
                     <select name="time">
-                        <c:forEach var="time" items="${schedule}">
+                        <c:forEach var="time" items="${availableTime}">
                             <option value="${time}">${time}</option>
                         </c:forEach>
 

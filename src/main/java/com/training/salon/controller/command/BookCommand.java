@@ -2,14 +2,11 @@ package com.training.salon.controller.command;
 
 import com.training.salon.controller.exception.BookException;
 import com.training.salon.model.entity.Master;
-import com.training.salon.model.entity.Procedure;
-import com.training.salon.model.entity.Schedule;
 import com.training.salon.model.entity.User;
 import com.training.salon.model.service.MasterService;
 import com.training.salon.model.service.ProcedureService;
 import com.training.salon.model.service.ScheduleService;
 
-import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,14 +28,9 @@ public class BookCommand implements ICommand {
         this.masterService = masterService;
     }
 
-
-
     @Override
     public String execute(HttpServletRequest request) {
         Long masterId = Long.valueOf(request.getParameter("masterId"));
-//        List<Procedure> procedures = procedureService.getAllProceduresByMaster(masterId);
-//        request.setAttribute("procedures", );
-
 
         request.setAttribute("procedures", procedureService.getAllProceduresByMaster(masterId));
         request.setAttribute("dateNow", LocalDate.now());
@@ -48,10 +40,11 @@ public class BookCommand implements ICommand {
         //TODO rewrite for available time
 
 
-//        User user = (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
 
 
         Optional<Master> master = masterService.getById(masterId);
+
         if(master.isPresent()) {
             LocalTime start = master.get().getTimeStart();
             LocalTime end = master.get().getTimeEnd();
@@ -60,11 +53,9 @@ public class BookCommand implements ICommand {
                     .limit(ChronoUnit.HOURS.between(start, end))
                     .collect(Collectors.toList());
 
-            request.setAttribute("schedule", schedule );
+            request.setAttribute("availableTime", schedule );
         }
         master.ifPresent(m->request.setAttribute("master", m));
-
-
 
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -78,11 +69,15 @@ public class BookCommand implements ICommand {
         LocalDate date = LocalDate.parse(request.getParameter("date"));
         LocalTime time = LocalTime.parse(request.getParameter("time"));
         try {
-            scheduleService.saveToSchedule(time,date,  Long.valueOf(0), masterId,  procedureId, false, null);
+            scheduleService.saveToSchedule(time,date,  user.getId(), masterId,  procedureId, false, null);
             System.out.println("saved");
+            return "/app/user/profile";
         } catch (BookException e) {
             System.out.println("already booked");
+            request.setAttribute("alreadyBooked", "Already booked");
         }
-        return "/app/user/";
+
+
+        return "/app/user/booking";
     }
 }
