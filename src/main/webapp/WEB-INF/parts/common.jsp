@@ -36,6 +36,7 @@
 <%--                    <c:if test="${sessionScope.user.role eq ADMIN}">--%>
                         <li><a href="${pageContext.request.contextPath}/app/admin/userList">User List</a></li>
                         <li><a href="${pageContext.request.contextPath}/app/user/masterList">Masters</a></li>
+                        <li><a href="${pageContext.request.contextPath}/app/master/schedule">Schedule</a></li>
                         <li><a href="${pageContext.request.contextPath}/app/user/categoryList">Categories</a></li>
 <%--                    </c:if>--%>
 <%--                    <c:if test="${sessionScope.user.role ne GUEST}">--%>
@@ -44,7 +45,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 <%--                    <c:if test="${sessionScope.user.role eq GUEST}">--%>
-                        <li><a href="${pageContext.request.contextPath}/app/login" id="myBtn">
+                        <li><a href="${pageContext.request.contextPath}/app/login" >
                             <span class="glyphicon glyphicon-log-in"></span> Login </a></li>
                         <%--                        <li><a  id="myBtn1">--%>
                         <%--                            <span class="glyphicon glyphicon-log-in"></span> Login </a></li>--%>
@@ -62,16 +63,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     <c:if test="${sessionScope.user.role ne GUEST}">
 
-                        <li><a><span class="glyphicon glyphicon-user"></span> ${sessionScope.user.username}</a></li>
+                        <li><a><span class="glyphicon glyphicon-user"></span> ${sessionScope.user.email}</a></li>
                         <li><a href="${pageContext.request.contextPath}/app/user/profile"> Profile</a></li>
-                        <li><a href="${pageContext.request.contextPath}/app/user/account">Account</a></li>
-                        <li><a href="${pageContext.request.contextPath}/app/user/history">History</a></li>
-                        <li><a href="${pageContext.request.contextPath}/app/user/cart"><span
-                                class="glyphicon glyphicon-shopping-cart">Cart<span
-                                class="badge pull-right"></span></span></a></li>
-
-
-                        <li><a href="${pageContext.request.contextPath}/app/logout"><span
+                                 <li><a href="${pageContext.request.contextPath}/app/logout"><span
                                 class="glyphicon glyphicon-log-out"></span> Logout </a></li>
                     </c:if>
 
