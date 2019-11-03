@@ -11,16 +11,16 @@
                 <span class="heading">Registration</span>
                 <div>
 
-                    <%--                    <label id="usernameLabel" style="text-align: left">Username</label>--%>
+
                     <div class="form-group">
 
                         <input type="text" class="form-control"  name="firstName" placeholder="First name">
-<%--                        <i class="fa fa-user"></i>--%>
+                        <i class="fa fa-user"></i>
                     </div>
                     <div class="form-group">
 
                         <input type="text" class="form-control"  name="lastName" placeholder="Last name">
-<%--                        <i class="fa fa-user"></i>--%>
+                        <i class="fa fa-user"></i>
                     </div>
 
 
@@ -30,8 +30,8 @@
                                placeholder="Email">
                         <i class="fa fa-user"></i>
                     </div>
-                    <%--                    <label id="passwordLabel" >Password</label>--%>
-                    <div class="form-group">
+<%--                                        <label id="passwordLabel" >Password</label>--%>
+                    <div class="form-gro    up">
 
                         <input type="password" class="form-control" name="password" id="inputPassword"
                                placeholder="Password">

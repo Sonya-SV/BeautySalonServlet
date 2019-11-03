@@ -16,9 +16,8 @@ public class CategoryCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-//        List<Category> categories = categoryService.getAllCategories();
-        request.setAttribute("categories", categoryService.getAllCategories());
 
+        request.setAttribute("categories", categoryService.getAllCategories());
         return "/app/user/categoryList";
     }
 }
