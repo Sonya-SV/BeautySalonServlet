@@ -10,7 +10,7 @@ public class ProcedureMapper implements ObjectMapper<Procedure> {
     @Override
     public Procedure extractFromResultSet(ResultSet rs) throws SQLException {
         Procedure procedure = new Procedure();
-        procedure.setId(rs.getLong("id"));
+        procedure.setId(rs.getLong("proced_id"));
         procedure.setName(rs.getString("name"));
         procedure.setPrice(rs.getBigDecimal("price"));
         procedure.setCategory(new CategoryMapper().extractFromResultSet(rs));

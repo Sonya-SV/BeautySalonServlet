@@ -36,7 +36,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public Optional<User> findById(Long id) {
-        final String query = "select * from user where id=?";
+        final String query = "select * from user where user_id=?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong (1, id);
             UserMapper userMapper = new UserMapper();
@@ -55,23 +55,23 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-//        Map<Long, User> users = new HashMap<>();
-//        final String query = " select * from user";
-//        try (Statement st = connection.createStatement()) {
-//            ResultSet rs = st.executeQuery(query);
-//
-//            UserMapper userMapper = new UserMapper();
-//
-//            while (rs.next()) {
-//                User user = userMapper.extractFromResultSet(rs);
-//                users.putIfAbsent(user.getId(), user);
-//            }
-//               return new ArrayList<>(users.values());
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
+        Map<Long, User> users = new HashMap<>();
+        final String query = " select * from user";
+        try (Statement st = connection.createStatement()) {
+            ResultSet rs = st.executeQuery(query);
+
+            UserMapper userMapper = new UserMapper();
+
+            while (rs.next()) {
+                User user = userMapper.extractFromResultSet(rs);
+                users.putIfAbsent(user.getId(), user);
+            }
+               return new ArrayList<>(users.values());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
             return null;
-//        }
+        }
     }
 
 

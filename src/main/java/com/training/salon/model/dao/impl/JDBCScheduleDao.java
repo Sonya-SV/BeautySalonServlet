@@ -64,10 +64,10 @@ public class JDBCScheduleDao implements ScheduleDao {
     @Override
     public Optional<Schedule> findById(Long id) {
         final String query ="select * from schedule " +
-        "inner join master on master.id = schedule.master_id " +
-                "inner join user on user.id = schedule.user_id " +
-                "inner join proced on schedule.proced_id = proced.id " +
-                "inner join category on category.id = proced.category_id where schedule.id=?";
+        "inner join master using master_id " +
+                "inner join user using (user_id) " +
+                "inner join proced using (proced_id) " +
+                "inner join category using (category_id) where schedule_id=?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong (1, id);
             ScheduleMapper scheduleMapper = new ScheduleMapper();
@@ -105,7 +105,7 @@ public class JDBCScheduleDao implements ScheduleDao {
 
     @Override
     public void saveToSchedule(LocalTime time, LocalDate date, Long userId, Long masterId, Long procedureId, boolean done, String comment) throws BookException {
-        final String queryInsert = "insert into schedule(date, time, master_id, user_id, proced_id, done, comment) values (?,?,?,?,?,?,?)";
+        final String queryInsert = "insert into schedule(date, time, master_id, user_id, proced_id, done) values (?,?,?,?,?,?)";
         final String queryCheck = "select * from schedule where date=? and time = ?";
 
         try (PreparedStatement stInsert = connection.prepareStatement(queryInsert);
@@ -116,7 +116,6 @@ public class JDBCScheduleDao implements ScheduleDao {
             stInsert.setLong(4, userId);
             stInsert.setLong(5, procedureId);
             stInsert.setBoolean(6, done);
-            stInsert.setString(7, comment);
 
             stCheck.setDate(1, Date.valueOf(date));
             stCheck.setTime(2, Time.valueOf(time));
@@ -142,7 +141,7 @@ public class JDBCScheduleDao implements ScheduleDao {
 
     @Override
     public void makeDone(Long scheduleId) {
-        final String query = "update schedule set done = true where schedule.id = ?";
+        final String query = "update schedule set done = true where schedule_id = ?";
 
         try (PreparedStatement st = connection.prepareStatement(query);
         ) {
@@ -158,10 +157,10 @@ public class JDBCScheduleDao implements ScheduleDao {
 
         Map<Long, Schedule> schedule = new HashMap<>();
         final String query = "select * from schedule " +
-                "inner join master on master.id = schedule.master_id " +
-                "inner join user on user.id = schedule.user_id " +
-                "inner join proced on schedule.proced_id = proced.id " +
-                "inner join category on category.id = proced.category_id where schedule.master_id=?";
+                "inner join master using (master_id) " +
+                "inner join user using (user_id) " +
+                "inner join proced on using (proced_id) " +
+                "inner join category using (category_id) where master_id=?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, masterId);
             ResultSet rs = st.executeQuery();

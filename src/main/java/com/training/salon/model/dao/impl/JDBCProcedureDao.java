@@ -53,7 +53,7 @@ public class JDBCProcedureDao implements ProcedureDao {
     @Override
     public List<Procedure> findAllByCategory(Long categoryId) {
         Map<Long, Procedure> procedures = new HashMap<>();
-        final String query = "select * from proced inner join category on category.id = category_id where category_id = ?";
+        final String query = "select * from proced inner join category using (category_id) where category_id = ?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, categoryId);
             ResultSet rs = st.executeQuery();
@@ -75,10 +75,10 @@ public class JDBCProcedureDao implements ProcedureDao {
     public List<Procedure> findAllProceduresByMaster(Long masterId) {
         Map<Long, Procedure> procedures = new HashMap<>();
         final String query = " select * from proced inner join master  " +
-                "on proced.category_id = master.category_id " +
+                "using (category_id) " +
                 "inner join category " +
-                "on category.id = proced.category_id "+
-                "where master.id=?";
+                "using (category_id) "+
+                "where master_id=?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, masterId);
             ResultSet rs = st.executeQuery();

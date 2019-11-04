@@ -10,14 +10,13 @@ public class ScheduleMapper implements ObjectMapper<Schedule> {
     @Override
     public Schedule extractFromResultSet(ResultSet rs) throws SQLException {
         Schedule schedule = new Schedule();
-        schedule.setId(rs.getLong("id"));
+        schedule.setId(rs.getLong("schedule_id"));
         schedule.setMaster(new MasterMapper().extractFromResultSet(rs));
         schedule.setUser(new UserMapper().extractFromResultSet(rs));
         schedule.setProcedure(new ProcedureMapper().extractFromResultSet(rs));
         schedule.setDate(rs.getDate("date").toLocalDate());
         schedule.setTime(rs.getTime("time").toLocalTime());
         schedule.setDone(rs.getBoolean("done"));
-        schedule.setComment(rs.getString("comment"));
 
         return schedule;
 
