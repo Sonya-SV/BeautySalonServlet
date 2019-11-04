@@ -22,6 +22,10 @@ public class Servlet extends HttpServlet {
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
 
+        commands.put("", new AccessCommand());
+        commands.put("user", new UserRole());
+        commands.put("master", new MasterRole());
+        commands.put("admin", new AdminRole());
         commands.put("logout", new Logout());
         commands.put("login", new Login(new UserService()));
         commands.put("registration", new Registration(new UserService()));
@@ -33,9 +37,9 @@ public class Servlet extends HttpServlet {
         commands.put("user/master", new MasterCommand(new ProcedureService(), new MasterService()));
         commands.put("user/booking", new BookCommand( new ScheduleService(),new ProcedureService(), new MasterService()));
         commands.put("master/schedule", new MasterSchedule(new MasterService(), new ScheduleService()));
-        commands.put("user/comment", new SendComment(new CommentService()));
+        commands.put("user/comment", new SendComment(new CommentService(), new MasterService(), new ProcedureService()));
         commands.put("admin/comments", new CommentsCommand(new CommentService()));
-//        commands.put("user/profile", new ProfileCommand(new UserService()));
+        commands.put("master/sendemail", new SendEmail(new ScheduleService()));
     }
 
     public void doGet(HttpServletRequest request,
@@ -57,7 +61,7 @@ public class Servlet extends HttpServlet {
         System.out.println(path);
         path = path.replaceAll(".*/beauty-salon/", "");
 
-        ICommand command = commands.getOrDefault(path, (r) -> "/beauty-salon/index.jsp)");
+        ICommand command = commands.getOrDefault(path, (r) -> "/index.jsp");
         String page = command.execute(request);
 
         if (page.contains("redirect:")) {

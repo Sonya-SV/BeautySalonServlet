@@ -39,18 +39,6 @@
                 <li><a href="${pageContext.request.contextPath}/beauty-salon/user/categoryList">Categories</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="${pageContext.request.contextPath}/beauty-salon/login">
-                    <span class="glyphicon glyphicon-log-in"></span> Login </a></li>
-                <li><a href="${pageContext.request.contextPath}/beauty-salon/registration">
-                    <span class="glyphicon glyphicon-user"></span> Sign up </a></li>
-                <%--                    <li class="locale-flag">--%>
-                <%--                        <a><img src="http://files.softicons.com/download/internet-cons/flag-icons-by-custom-icon-design/png/256/United-States-Flag.png" style="height: 100%; width: 100%"></a>--%>
-                <%--                    </li>--%>
-                <%--                    <li class="locale-flag">--%>
-                <%--                        <a><img src="https://cdn3.iconfinder.com/data/icons/finalflags/256/Ukraine-Flag.png" style="height: 100%; width: 100%"> </a>--%>
-                <%--                    </li>--%>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
                 <li><a><span class="glyphicon glyphicon-user"></span> ${sessionScope.user.email}</a></li>
                 <li><a href="${pageContext.request.contextPath}/beauty-salon/user/profile"> Profile</a></li>
                 <li><a href="${pageContext.request.contextPath}/beauty-salon/logout"><span
