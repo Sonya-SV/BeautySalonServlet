@@ -31,15 +31,16 @@ public class MasterSchedule implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-//        Long masterId = Long.valueOf(request.getParameter("masterId"));
+
+        Optional<Master> master = masterService.getMaster(((User) request.getSession().getAttribute("user")).getId());
         List<LocalDate> dates = Stream.iterate(LocalDate.now(), curr -> curr.plusDays(1))
                 .limit(ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusDays(7)))
                 .collect(Collectors.toList());
         request.setAttribute("dates", dates);
 
-        Optional<Master> master = masterService.getById((long) 2);
+//        Optional<Master> master = masterService.getById((long) 2);
 
-        System.out.println("master " + master );
+        System.out.println("master " + master.get().getUser().getFirstName() );
         if (master.isPresent()) {
             LocalTime start = master.get().getTimeStart();
             LocalTime end = master.get().getTimeEnd();
@@ -51,51 +52,52 @@ public class MasterSchedule implements ICommand {
             request.setAttribute("workTime", workTime);
         }
 
-            List<Schedule> schedule = scheduleService.getScheduleForMaster((long) 2);
+            List<Schedule> schedule = scheduleService.getScheduleForMaster(master.get().getId());
             request.setAttribute("schedule", schedule);
 
 
-        if(request.getParameter("done") == null || request.getParameter("done").equals("")){
-            return "/app/master/schedule";
+        if(request.getParameter("done") != null) {
+
+            String to = "";
+            Long masterForComment = 0L;
+            Optional<Schedule> scheduleNote = scheduleService.getScheduleNote(Long.valueOf(request.getParameter("done")));
+            if (scheduleNote.isPresent()) {
+                to = scheduleNote.get().getUser().getEmail();
+                masterForComment = scheduleNote.get().getMaster().getId();
+            }
+            final String username = "kate.nilson123@gmail.com";
+            final String password = "kate123kate";
+
+            Properties props = new Properties();
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(username, password);
+                        }
+                    });
+            try {
+
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(username));
+                message.setRecipients(Message.RecipientType.TO,
+                        InternetAddress.parse(to));
+                message.setSubject("Leave Comment");
+                message.setText(" Leave comment about our master:\n" +
+                        "http://localhost:8888/api/app/master?masterId=" + masterForComment);
+                Transport.send(message);
+                System.out.println("message sent");
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+
+            scheduleService.makeNoteDone(Long.valueOf(request.getParameter("done")));
 
         }
-
-        String to="";
-        Optional<Schedule> scheduleNote = scheduleService.getScheduleNote(Long.valueOf(request.getParameter("done")));
-        if(scheduleNote.isPresent())
-        {
-            to = scheduleNote.get().getUser().getEmail();
-        }
-        final String username = "kate.nilson123@gmail.com";
-        final String password = "kate123kate";
-
-        Properties props = new Properties();
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-        try {
-
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(to));
-            message.setSubject("Leave Comment");
-            message.setText("http://localhost:8888/api");
-            Transport.send(message);
-            System.out.println("message sent");
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
-
-        scheduleService.makeNoteDone(Long.valueOf(request.getParameter("done")));
         return "/app/master/schedule";
     }
 }

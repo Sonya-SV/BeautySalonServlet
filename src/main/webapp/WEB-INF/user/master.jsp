@@ -3,6 +3,7 @@
     <title>Master</title>
 </head>
 <body>
+<%@ include file="userpart/usernavbar.jsp" %>
 <%@ include file="../parts/common.jsp" %>
 <div class="container" style="margin-top: 60px">
     <div class="row">
@@ -38,12 +39,20 @@
                         ng-disabled="form.$invalid" >
                     Book
                 </button>
-
+            </form>
+            <form action="${pageContext.request.contextPath}/app/user/comment">
+                <c:if test="${successSend ne null}">
+                <div class="alert alert-success">
+                    ${successSend}
+                </div>
+                </c:if>
                 <textarea rows="4"  cols="100%" name="comment" placeholder="Put your comment"></textarea>
+                <input type="hidden" name="masterId" value="${master.id}">
                 <button type="submit" class="btn btn-primary" style="margin-top:30px"
                         ng-disabled="form.$invalid">
                     Send
                 </button>
+
             </form>
         </div>
     </div>

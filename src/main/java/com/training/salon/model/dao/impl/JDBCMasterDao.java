@@ -25,7 +25,7 @@ public class JDBCMasterDao implements MasterDao {
 
     @Override
     public Optional<Master> findById(Long id) {
-        final String query = " select * from master inner join user on master.user_id = user.id where master.id = ?";
+        final String query = " select * from master inner join user using (user_id) where master_id = ?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, id);
             ResultSet rs = st.executeQuery();
@@ -46,7 +46,7 @@ public class JDBCMasterDao implements MasterDao {
     @Override
     public List<Master> findAll() {
         Map<Long, Master> masters = new HashMap<>();
-        final String query = " select * from master inner join user on user.id = user_id";
+        final String query = " select * from master inner join user using (user_id)";
         try (Statement st = connection.createStatement()) {
             ResultSet rs = st.executeQuery(query);
 
@@ -76,6 +76,26 @@ public class JDBCMasterDao implements MasterDao {
 
     @Override
     public void close() {
+
+    }
+
+    @Override
+    public Optional<Master> getMaster(Long userId) {
+        final String query = " select * from master inner join user using (user_id) where user_id = ?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setLong(1, userId);
+            ResultSet rs = st.executeQuery();
+
+            MasterMapper masterMapper = new MasterMapper();
+            Optional<Master> master = Optional.empty();
+            if (rs.next()) {
+                master = Optional.of(masterMapper.extractFromResultSet(rs));
+            }
+            return master;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
 
     }
 }

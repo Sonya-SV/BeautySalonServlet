@@ -35,6 +35,11 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCScheduleDao(getConnection());
     }
 
+    @Override
+    public CommentDao createCommentDao() {
+        return new JDBCCommentDao(getConnection());
+    }
+
     private Connection getConnection(){
         try {
             return dataSource.getConnection();

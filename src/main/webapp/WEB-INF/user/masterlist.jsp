@@ -4,6 +4,7 @@
     <title>Masters</title>
 </head>
 <body>
+<%@ include file="userpart/usernavbar.jsp" %>
 <%@ include file="../parts/common.jsp" %>
 <!-- Карточка с card-img-overlay -->
 <div class="container" style="margin-top: 60px">

@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface MasterDao extends GenericDao<Master>{
 
+    Optional<Master> getMaster(Long userId);
 }

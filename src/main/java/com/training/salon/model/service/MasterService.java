@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class MasterService {
-    DaoFactory daoFactory = DaoFactory.getInstance();
+      DaoFactory daoFactory = DaoFactory.getInstance();
 
     public List<Master> getAllMasters(){
         try (MasterDao dao = daoFactory.createMasterDao()) {
@@ -23,6 +23,11 @@ public class MasterService {
     public Optional<Master> getById(Long masterId){
         try (MasterDao dao = daoFactory.createMasterDao()) {
             return dao.findById(masterId);
+        }
+    }
+    public Optional<Master> getMaster(Long userId){
+        try (MasterDao dao = daoFactory.createMasterDao()) {
+            return dao.getMaster(userId);
         }
     }
 

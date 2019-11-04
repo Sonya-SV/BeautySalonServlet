@@ -12,7 +12,7 @@ public class MasterMapper implements ObjectMapper<Master>{
     @Override
     public Master extractFromResultSet(ResultSet rs) throws SQLException {
         Master master = new Master();
-        master.setId(rs.getLong("id"));
+        master.setId(rs.getLong("master_id"));
         master.setUser(new UserMapper().extractFromResultSet(rs));
         master.setTimeStart(rs.getTime("time_start").toLocalTime());
         master.setTimeEnd(rs.getTime("time_end").toLocalTime());

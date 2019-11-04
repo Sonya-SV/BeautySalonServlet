@@ -49,4 +49,15 @@ public class Master {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
+    @Override
+    public String toString() {
+        return "Master{" +
+                "id=" + id +
+                ", user=" + user +
+                ", timeStart=" + timeStart +
+                ", timeEnd=" + timeEnd +
+                ", photo='" + photo + '\'' +
+                '}';
+    }
 }
