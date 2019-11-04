@@ -5,7 +5,7 @@
 </head>
 <body>
 <%@ include file="../parts/common.jsp" %>
-
+<%@ include file="adminpart/adminnavbar.jsp" %>
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3" style="padding-top: 50px">

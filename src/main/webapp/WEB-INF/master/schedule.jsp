@@ -12,6 +12,7 @@
 </head>
 <body>
 <%@ include file="../parts/common.jsp" %>
+<%@ include file="masterpart/masternavbar.jsp" %>
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-10 col-md-offset-1" style="padding-top: 50px">
@@ -57,36 +58,11 @@
                     </table>
                 </div>
             </form>
-            <%--                <div class="modal-content">--%>
-            <%--                    <div class="modal-header">--%>
-            <%--                        <span class="close">x</span>--%>
-            <%--                        <h2>Edit note</h2>--%>
-            <%--                    </div>--%>
-            <%--                    <div class="modal-body">--%>
-            <%--                        <button type="submit">Done</button>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-
         </div>
     </div>
 </div>
 
 </body>
-<%--<script>--%>
-<%--    var modal = document.getElementById('myModal');--%>
-<%--    var btn = document.getElementById("myBtn");--%>
-<%--    var span = document.getElementsByClassName("close")[0];--%>
-<%--    btn.onclick = function() {--%>
-<%--        modal.style.display = "block";--%>
-<%--    }--%>
-<%--    span.onclick = function() {--%>
-<%--        modal.style.display = "none";--%>
-<%--    }--%>
-<%--    window.onclick = function(event) {--%>
-<%--        if (event.target === modal) {--%>
-<%--            modal.style.display = "none";--%>
-<%--        }--%>
-<%--    }--%>
-<%--</script>--%>
+
 </html>
 
