@@ -3,13 +3,13 @@
     <title>Title</title>
 </head>
 <body>
+<%@ include file="userpart/usernavbar.jsp" %>
 <%@ include file="../parts/common.jsp" %>
-<!-- Карточка с card-img-overlay -->
 <div class="container" style="margin-top: 100px">
 
     <div class="row">
 
-        <form action="${pageContext.request.contextPath}/app/user/profile" role="form">
+        <form action="${pageContext.request.contextPath}/beauty-salon/user/profile" role="form">
             ${alreadyBooked}
             <div class="form-inline">
                 <div class="form-group">

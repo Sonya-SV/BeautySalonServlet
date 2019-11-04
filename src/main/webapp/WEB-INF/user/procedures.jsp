@@ -10,6 +10,7 @@
     <title>Procedures</title>
 </head>
 <body>
+<%@ include file="userpart/usernavbar.jsp" %>
 <%@ include file="../parts/common.jsp" %>
 <!-- Карточка с card-img-overlay -->
 <div class="container" style="margin-top: 60px">
@@ -37,7 +38,7 @@
                             <%--                                    <td>${i.index}</td>--%>
                         <td>${i.name}</td>
                         <td>${i.price}</td>
-                        <td><a href=" ${pageContext.request.contextPath}/app/user/masters">Choose</a></td>
+                        <td><a href=" ${pageContext.request.contextPath}/beauty-salon/user/masters">Choose</a></td>
                         <input type="hidden" value="${i.id}" name="procedureId"/>
                     </tr>
                 </c:forEach>

@@ -33,14 +33,14 @@
                     </c:forEach>
                 </table>
             </c:if>
-            <form action="${pageContext.request.contextPath}/app/user/booking">
+            <form action="${pageContext.request.contextPath}/beauty-salon/user/booking">
                 <input type="hidden" value="${master.id}" name="masterId"/>
                 <button type="submit" class="btn btn-primary" style="margin-top:30px"
                         ng-disabled="form.$invalid" >
                     Book
                 </button>
             </form>
-            <form action="${pageContext.request.contextPath}/app/user/comment">
+            <form action="${pageContext.request.contextPath}/beauty-salon/user/comment">
                 <c:if test="${successSend ne null}">
                 <div class="alert alert-success">
                     ${successSend}

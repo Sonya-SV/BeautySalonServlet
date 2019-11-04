@@ -1,15 +1,16 @@
 <html>
 <body>
+<%@ include file="userpart/usernavbar.jsp" %>
 <%@ include file="../parts/common.jsp" %>
     <div class="container" style="margin-top: 60px">
         <div class="row">
             <div class="col-md-8 col-md-offset-2" style="padding-top: 50px">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title" style="display: inline-block">${user.username}</h3>
+                        <h3 class="panel-title" style="display: inline-block">${user.email}</h3>
                     </div>
                     <div class="panel-body">
-                        <form name="form" action="${pageContext.request.contextPath}/app/user/profile" autocomplete="off" novalidate
+                        <form name="form" action="${pageContext.request.contextPath}/beauty-salon/user/profile" autocomplete="off" novalidate
                               ng-submit="form.$valid ">
 
                             <div class="form-group">
@@ -35,7 +36,7 @@
                                        required>
                             </div>
                             <div class="form-group">
-                                <label id="passwordLabel" for="password">Pasword</label>
+                                <label id="passwordLabel" for="password">Password</label>
                                 <input type="password"
                                        class="form-control"
                                        id="password"

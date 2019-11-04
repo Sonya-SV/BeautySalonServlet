@@ -9,7 +9,7 @@
 <!-- Карточка с card-img-overlay -->
 <div class="container" style="margin-top: 60px">
     <div class="row">
-        <form action="${pageContext.request.contextPath}/app/user/master" autocomplete="off"
+        <form action="${pageContext.request.contextPath}/beauty-salon/user/master" autocomplete="off"
               novalidate >
 
             <c:forEach items="${masters}" var="i">
