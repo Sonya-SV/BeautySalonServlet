@@ -16,6 +16,6 @@ public class CommentsCommand implements ICommand {
     public String execute(HttpServletRequest request) {
 
         request.setAttribute("comments", commentService.getAllComments());
-        return "redirect:/app/admin/comments";
+        return "redirect:/WEB-INF/admin/comments.jsp";
     }
 }

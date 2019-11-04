@@ -18,6 +18,6 @@ public class CategoryCommand implements ICommand {
     public String execute(HttpServletRequest request) {
 
         request.setAttribute("categories", categoryService.getAllCategories());
-        return "/app/user/categoryList";
+        return "/WEB-INF/user/categorylist.jsp";
     }
 }

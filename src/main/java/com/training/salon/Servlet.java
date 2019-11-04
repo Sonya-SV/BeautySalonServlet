@@ -33,7 +33,8 @@ public class Servlet extends HttpServlet {
         commands.put("user/master", new MasterCommand(new ProcedureService(), new MasterService()));
         commands.put("user/booking", new BookCommand( new ScheduleService(),new ProcedureService(), new MasterService()));
         commands.put("master/schedule", new MasterSchedule(new MasterService(), new ScheduleService()));
-//        commands.put("email", new SendEmail());
+        commands.put("user/comment", new SendComment(new CommentService()));
+        commands.put("admin/comments", new CommentsCommand(new CommentService()));
 //        commands.put("user/profile", new ProfileCommand(new UserService()));
     }
 
@@ -54,38 +55,15 @@ public class Servlet extends HttpServlet {
 
         String path = request.getRequestURI();
         System.out.println(path);
-        path = path.replaceAll(".*/app/", "");
+        path = path.replaceAll(".*/beauty-salon/", "");
 
-
-        ICommand command = commands.getOrDefault(path,
-                (r) -> "/index.jsp)");
+        ICommand command = commands.getOrDefault(path, (r) -> "/beauty-salon/index.jsp)");
         String page = command.execute(request);
-        if (path.contains("admin")) {
-            path = path.replace("admin", "");
-            path = path.toLowerCase();
-            request.getRequestDispatcher("/WEB-INF/admin/"+ path+".jsp").forward(request, response);
-            return;
-        }
-        if (path.contains("/master/")) {
-            path = path.replace("master/", "/").toLowerCase();
-            request.getRequestDispatcher("/WEB-INF/master/"+ path+".jsp").forward(request, response);
-            return;
-        }
-        if (path.contains("user")) {
-
-            path = path.replace("user", "");
-            path = path.toLowerCase();
-            System.out.println(path);
-            request.getRequestDispatcher("/WEB-INF/user/" + path + ".jsp").forward(request, response);
-            return;
-        }
 
         if (page.contains("redirect:")) {
-            page = page.replace("redirect:", "/api");
-            response.sendRedirect(page);
+            response.sendRedirect(page.replace("redirect:", "/beauty-salon"));
         } else {
             request.getRequestDispatcher(page).forward(request, response);
         }
-
     }
 }

@@ -42,6 +42,9 @@ public class Login implements ICommand {
             if (user.get().getRole().equals(User.Role.ADMIN)) {
                 CommandUtility.setUserRole(request, User.Role.ADMIN, email);
                 return "/index.jsp";
+            } else if (user.get().getRole().equals(User.Role.MASTER)) {
+                CommandUtility.setUserRole(request, User.Role.MASTER, email);
+                return "/index.jsp";
             } else if (user.get().getRole().equals(User.Role.USER)) {
                 CommandUtility.setUserRole(request, User.Role.USER, email);
                 return "/index.jsp";

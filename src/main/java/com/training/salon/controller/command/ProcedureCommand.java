@@ -19,6 +19,6 @@ public class ProcedureCommand implements ICommand{
 
         Long categoryId = Long.valueOf(request.getParameter("categoryId"));
         request.setAttribute("procedures", procedureService.getAllProceduresByCategory(categoryId));
-        return "/app/user/procedures";
+        return "/WEB-INF/user/procedures.jsp";
     }
 }

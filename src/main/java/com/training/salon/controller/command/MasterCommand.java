@@ -39,6 +39,6 @@ public class MasterCommand implements ICommand{
         request.setAttribute("procedures", procedures);
         master.ifPresent(m->request.setAttribute("master", m));
 
-        return "/app/user/master";
+        return "/WEB-INF/user/master.jsp";
     }
 }

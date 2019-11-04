@@ -24,6 +24,6 @@ public class MasterList implements ICommand{
     public String execute(HttpServletRequest request) {
 
         request.setAttribute("masters", masterService.getAllMasters());
-        return "/app/user/masterList";
+        return "/WEB-INF/user/masterlist.jsp";
     }
 }

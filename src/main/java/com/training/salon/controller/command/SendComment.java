@@ -28,6 +28,6 @@ public class SendComment implements ICommand {
         commentService.createComment(comment,  masterId, user.getId());
         System.out.println("sent");
         request.setAttribute("successSend", "Thank you for your comment");
-        return "/app/user/master";
+        return "/WEB-INF/user/master.jsp";
     }
 }

@@ -88,7 +88,7 @@ public class MasterSchedule implements ICommand {
                         InternetAddress.parse(to));
                 message.setSubject("Leave Comment");
                 message.setText(" Leave comment about our master:\n" +
-                        "http://localhost:8888/api/app/master?masterId=" + masterForComment);
+                        "http://localhost:8888/api/beauty-salon/master?masterId=" + masterForComment);
                 Transport.send(message);
                 System.out.println("message sent");
             } catch (MessagingException e) {
@@ -98,6 +98,6 @@ public class MasterSchedule implements ICommand {
             scheduleService.makeNoteDone(Long.valueOf(request.getParameter("done")));
 
         }
-        return "/app/master/schedule";
+        return "/WEB-INF/master/schedule.jsp";
     }
 }

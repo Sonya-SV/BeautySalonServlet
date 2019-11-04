@@ -62,7 +62,7 @@ public class BookCommand implements ICommand {
 
 
         if (firstName == null || firstName.equals("") || lastName == null || lastName.equals("")) {
-            return "/app/user/booking";
+            return "/WEB-INF/user/booking.jsp";
         }
 
         Long procedureId = Long.valueOf(request.getParameter("procedureId"));
@@ -78,6 +78,6 @@ public class BookCommand implements ICommand {
         }
 
 
-        return "/app/user/booking";
+        return "/WEB-INF/user/booking.jsp";
     }
 }

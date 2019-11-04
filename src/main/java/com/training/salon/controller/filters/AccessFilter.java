@@ -28,7 +28,8 @@ public class AccessFilter implements Filter {
         }
         String path = request.getRequestURI();
         if( path.contains("user")  && user.getRole().equals(User.Role.GUEST) ||
-                path.contains("admin") && !user.getRole().equals(User.Role.ADMIN)){
+                path.contains("admin") && !user.getRole().equals(User.Role.ADMIN) ||
+                path.contains("master/") && !user.getRole().equals(User.Role.MASTER)){
             servletResponse.getWriter().append("AccessDenied");
         }else
             filterChain.doFilter(servletRequest, servletResponse);

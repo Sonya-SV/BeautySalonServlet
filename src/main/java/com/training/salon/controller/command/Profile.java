@@ -26,7 +26,7 @@ public class Profile implements ICommand {
         String password2 = request.getParameter("password2");
 
         if (password == null || password.equals("") || password2 == null || password2.equals("")) {
-            return "/app/user/profile.jsp";
+            return "/WEB-INF/user/profile.jsp";
         }
         String firstName = request.getParameter("firstName");
         String lastName =request.getParameter("lastName");
@@ -37,13 +37,13 @@ public class Profile implements ICommand {
                 request.setAttribute("successSave", SUCCESS_SAVE);
             } catch (SQLException e) {
                 //TODO add logger
-                return "/app/user/profile.jsp";
+                return "/WEB-INF/user/profile.jsp";
             }
         }
         else {
             request.setAttribute("passwordErrorDiffer", PASSWORD_DIFFERENT);
-            return "/app/user/profile.jsp";
+            return "/WEB-INF/user/profile.jsp";
         }
-        return "/app/user/profile.jsp";
+        return "/WEB-INF/user/profile.jsp";
     }
 }
