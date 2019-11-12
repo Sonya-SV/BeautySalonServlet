@@ -25,7 +25,7 @@ public class JDBCScheduleDao implements ScheduleDao {
     }
 
     @Override
-    public void create(Schedule entity) throws SQLException{
+    public void create(Schedule entity) throws SQLException {
 //        final String queryInsert = "insert into schedule(date, time, master_id, user_id, proced_id, done, comment) values (?,?,?,?,?,?,?)";
 //        final String queryCheck = "select * from schedule where date=? and time = ?";
 //
@@ -63,18 +63,18 @@ public class JDBCScheduleDao implements ScheduleDao {
 
     @Override
     public Optional<Schedule> findById(Long id) {
-        final String query ="select * from schedule " +
-        "inner join master using master_id " +
-                "inner join user using (user_id) " +
-                "inner join proced using (proced_id) " +
-                "inner join category using (category_id) where schedule_id=?";
+        final String query = "select * from schedule \n" +
+                "inner join master using (master_id)\n" +
+                "inner join user on schedule.user_id=user.user_id\n" +
+                "inner join proced using (proced_id) \n" +
+                "inner join category on category.category_id=proced.category_id where schedule_id=?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
-            st.setLong (1, id);
+            st.setLong(1, id);
             ScheduleMapper scheduleMapper = new ScheduleMapper();
             ResultSet rs = st.executeQuery();
-            Optional<Schedule> note=Optional.empty();
-            if(rs.next())
-                note=Optional.of(scheduleMapper.extractFromResultSet(rs));
+            Optional<Schedule> note = Optional.empty();
+            if (rs.next())
+                note = Optional.of(scheduleMapper.extractFromResultSet(rs));
             return note;
 
         } catch (SQLException e) {
@@ -104,21 +104,25 @@ public class JDBCScheduleDao implements ScheduleDao {
     }
 
     @Override
-    public void saveToSchedule(LocalTime time, LocalDate date, Long userId, Long masterId, Long procedureId, boolean done, String comment) throws BookException {
-        final String queryInsert = "insert into schedule(date, time, master_id, user_id, proced_id, done) values (?,?,?,?,?,?)";
-        final String queryCheck = "select * from schedule where date=? and time = ?";
+    public void saveToSchedule(Schedule schedule) throws BookException {
+        final String queryInsert = "insert into schedule(date, time, master_id, user_id, proced_id, done, client_first_name, client_last_name) values (?,?,?,?,?,?,?,?)";
+        final String queryCheck = "select * from schedule where date=? and time = ? and master_id=?";
 
         try (PreparedStatement stInsert = connection.prepareStatement(queryInsert);
              PreparedStatement stCheck = connection.prepareStatement(queryCheck)) {
-            stInsert.setDate(1, Date.valueOf(date));
-            stInsert.setTime(2, Time.valueOf(time));
-            stInsert.setLong(3, masterId);
-            stInsert.setLong(4, userId);
-            stInsert.setLong(5, procedureId);
-            stInsert.setBoolean(6, done);
+            stInsert.setDate(1, Date.valueOf(schedule.getDate()));
+            stInsert.setTime(2, Time.valueOf(schedule.getTime()));
+            stInsert.setLong(3, schedule.getMaster().getId());
+            stInsert.setLong(4, schedule.getUser().getId());
+            stInsert.setLong(5, schedule.getProcedure().getId());
+            stInsert.setBoolean(6, schedule.isDone());
+            stInsert.setString(7, schedule.getClientFirstName());
+            stInsert.setString(8, schedule.getClientLastName());
 
-            stCheck.setDate(1, Date.valueOf(date));
-            stCheck.setTime(2, Time.valueOf(time));
+
+            stCheck.setDate(1, Date.valueOf(schedule.getDate()));
+            stCheck.setTime(2, Time.valueOf(schedule.getTime()));
+            stCheck.setLong(3, schedule.getMaster().getId());
 
 
             connection.setAutoCommit(false);
@@ -158,9 +162,10 @@ public class JDBCScheduleDao implements ScheduleDao {
         Map<Long, Schedule> schedule = new HashMap<>();
         final String query = "select * from schedule " +
                 "inner join master using (master_id) " +
-                "inner join user using (user_id) " +
-                "inner join proced on using (proced_id) " +
-                "inner join category using (category_id) where master_id=?";
+                "inner join user on schedule.user_id=user.user_id " +
+                "inner join proced using (proced_id) " +
+                "inner join category on master.category_id=category.category_id " +
+                "where master.master_id=?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, masterId);
             ResultSet rs = st.executeQuery();

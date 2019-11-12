@@ -27,7 +27,21 @@ public class JDBCProcedureDao implements ProcedureDao {
 
     @Override
     public Optional<Procedure> findById(Long id) {
+        final String query = "select * from proced inner join category using (category_id) where proced_id=?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setLong (1, id);
+            ProcedureMapper procedureMapper = new ProcedureMapper();
+            ResultSet rs = st.executeQuery();
+            Optional<Procedure> procedure=Optional.empty();
+            if(rs.next())
+                procedure=Optional.of(procedureMapper.extractFromResultSet(rs));
+            return procedure;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return Optional.empty();
+
     }
 
     @Override

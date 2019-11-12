@@ -4,103 +4,64 @@
 </head>
 <body>
 <%@ include file="userpart/usernavbar.jsp" %>
-<%@ include file="../parts/common.jsp" %>
 <div class="container" style="margin-top: 100px">
-
     <div class="row">
-
-        <form action="${pageContext.request.contextPath}/beauty-salon/user/profile" role="form">
-            ${alreadyBooked}
-            <div class="form-inline">
-                <div class="form-group">
-                    <label id="exampleInputFirstNameLabel" for="firstName">First name</label>
-                    <input type="text" value="${user.firstName}"
-                           class="form-control"
-                           name="firstName"
-                           id="firstName"
-                           placeholder=""
-                           required>
-
-                </div>
-
-                <div class="form-group">
-                    <label id="exampleInputLastNameLabel" for="lastName">Last name</label>
-                    <input type="text" value="${user.lastName}"
-                           class="form-control"
-                           id="lastName"
-                           name="lastName"
-                           placeholder=""
-                           required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label id="exampleInputProcedureLabel">Procedure</label>
-                <select name="procedureId">
-                    <c:forEach items="${procedures}" var="procedure">
-                        <option value="${procedure.id}">
-                            <table>
-                                <tr>
-                                    <td>${procedure.name}</td>
-                                    <td class="text-right">${procedure.price}</td>
-                                </tr>
-                            </table>
-                        </option>
-                    </c:forEach>
-                </select>
-            </div>
+        <div class="col-md-5">
+            <img class="card-img"
+                 src="data:image/png;base64,${schedule.master.photo}"
+                 alt="..." height="400">
 
             <div class="form-group">
-                <label id="dateLabel">Date</label>
-                <input type="date" name="date" value="${dateNow}" max="${maxDate}" min="${dateNow}">
-            </div>
-            <%--                <div class="form-group">--%>
-            <%--                    <label  class="col-sm-2 control-label">Date:</label>--%>
-            <%--                    <div class="col-sm-4 input-group date">--%>
-            <%--                        <input type="date" name="date" class="form-control inputstl" value="${dateNow}"--%>
-            <%--                               max="${maxDate}" min="${dateNow}">--%>
-            <%--&lt;%&ndash;                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>&ndash;%&gt;--%>
-            <%--    --%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <div class="form-group">
-                <label id="timeLabel">Time</label>
-                <ul class="hor_nav">
-                    <select name="time">
-                        <c:forEach var="time" items="${availableTime}">
-                            <option value="${time}">${time}</option>
-                        </c:forEach>
-
-                    </select>
-                    <%--            <c:forEach var="time" items="${schedule}" >--%>
-                    <%--                <li name="time" value="${time}">${time}</li>--%>
-                    <%--            </c:forEach>--%>
-                </ul>
+                <h3>${schedule.master.user.firstName} ${schedule.master.user.lastName}</h3>
             </div>
 
-            <input type="hidden" value="${master.id}" name="masterId"/>
-            <button type="submit" class="btn btn-primary" style="margin-top:30px"
-                    ng-disabled="form.$invalid">
-                Book
-            </button>
+        </div>
+        <div class="col-md-7">
+            <c:forEach items="${scheduleDate}" var="date">
+                <form action="${pageContext.request.contextPath}/beauty-salon/user/order" role="form">
+                    <ul class="media-list">
+                        <li class="media">
+                            <div class="media-body">
+                                <div class="medi-heading">
+                                    <div class="autor"><h4>${date}</h4></div>
+                                </div>
+                                <div class="media-text text-justify">
+<%--                                    <p style="text-indent: 25px;">--%>
+                                        <c:forEach var="time" items="${availableTime}">
+                                            <c:set var="count" value="0"/>
+                                            <c:forEach var="busy" items="${busySchedule}">
+                                                <c:if test="${time eq busy.time && date eq busy.date && schedule.master.id eq busy.master.id}">
+                                                    <label class="radio-label" style="text-decoration: line-through;">
+                                                        <div class="radio1" >
+                                                            <input class="radio-input" type="submit"
+                                                                   value=${time} name="time" disabled/>${time}
+                                                        </div>
+                                                    </label>
+                                                    <c:set var="count" value="1"/>
+                                                </c:if>
+                                            </c:forEach>
+                                            <c:if test="${count <1}">
+                                                <label class="radio-label">
+                                                    <div class="radio1">
+                                                        <input class="radio-input" type="submit"
+                                                               value=${time} name="time"/>${time}
+                                                    </div>
+                                                </label>
+                                            </c:if>
+                                        </c:forEach>
+<%--                                    </p>--%>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <input type="hidden" value="${date}" name="dateOrder"/>
+                </form>
+                <hr align="center" width="100%" style="border-color: lightgray"/>
+            </c:forEach>
 
-        </form>
+
+        </div>
     </div>
 </div>
-
-
-<%--<script type="text/javascript">--%>
-<%--    $(function () {--%>
-<%--        $('#datetimepicker12').datetimepicker({--%>
-<%--            inline: true,--%>
-<%--            sideBySide: true--%>
-<%--        });--%>
-<%--    });--%>
-<%--</script>--%>
-<script type='text/javascript'>
-    $(function () {
-        $('.col-sm-4.date').datepicker({});
-    });
-
-</script>
 </body>
 </html>

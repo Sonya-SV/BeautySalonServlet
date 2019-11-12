@@ -16,12 +16,10 @@ import java.util.Optional;
 public class ScheduleService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public void saveToSchedule(LocalTime time, LocalDate date, Long userId, Long masterId,
-                               Long procedureId, boolean done, String comment) throws BookException {
+    public void saveToSchedule(Schedule schedule) throws BookException {
 
         try (ScheduleDao dao = daoFactory.createScheduleDao()) {
-            dao.saveToSchedule(time, date, userId, masterId, procedureId,done,comment);
-
+            dao.saveToSchedule(schedule);
         }
     }
 
@@ -32,6 +30,7 @@ public class ScheduleService {
 
         }
     }
+
     public void makeNoteDone(Long scheduleId) {
 
         try (ScheduleDao dao = daoFactory.createScheduleDao()) {

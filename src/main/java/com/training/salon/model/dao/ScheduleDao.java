@@ -8,7 +8,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface ScheduleDao extends GenericDao<Schedule> {
-    void saveToSchedule(LocalTime time, LocalDate date, Long userId, Long masterId, Long procedureId, boolean done, String comment) throws BookException;
+    void saveToSchedule(Schedule schedule) throws BookException;
     List<Schedule> getSchedule(Long masterId);
     void makeDone(Long scheduleId);
+
 }
