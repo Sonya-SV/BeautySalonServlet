@@ -1,24 +1,22 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>User List</title>
+    <title><fmt:message key="user.list"/></title>
 </head>
 <body>
-<%@ include file="../parts/common.jsp" %>
 <%@ include file="adminpart/adminnavbar.jsp" %>
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3" style="padding-top: 50px">
             <h2>
-                List Users <br/>
+                <fmt:message key="user.list"/> <br/>
             </h2>
-
             <table class="table table-bordered  table-hover table-sm" style=" margin: auto;">
                 <tr>
-                    <th>Email</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Role</th>
+                    <th><fmt:message key="email"/></th>
+                    <th><fmt:message key="first.name"/></th>
+                    <th><fmt:message key="last.name"/></th>
+                    <th><fmt:message key="role"/></th>
                 </tr>
                 <c:forEach items="${users}" var="i">
                     <tr>
@@ -32,6 +30,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

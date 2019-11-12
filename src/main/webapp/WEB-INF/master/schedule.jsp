@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Schedule</title>
+    <title><fmt:message key="schedule"/></title>
 </head>
 <body>
 
@@ -9,14 +9,14 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1" style="padding-top: 50px">
             <h2>
-                Schedule <br/>
+                <fmt:message key="schedule"/> <br/>
             </h2>
             <form action="${pageContext.request.contextPath}/beauty-salon/master/sendemail">
                 <div class="form-group">
                     <table class="calendar table table-bordered" style=" margin: auto; empty-cells: show">
 
                         <tr>
-                            <th>Time/Date</th>
+                            <th><fmt:message key="time"/>/<fmt:message key="date"/></th>
                             <c:forEach var="date" items="${dates}">
                                 <td width="13%">${date}</td>
                             </c:forEach>
@@ -47,7 +47,7 @@
                                                     <div class="row-fluid practice" style="width: 99%; height: 100%;">
                                                         <span class="title"> ${i.procedure.name} </span>
                                                             ${i.user.firstName} ${i.user.lastName}<br>
-                                                        <button type="submit" name="done" value="${i.id}">Done</button>
+                                                        <button type="submit" name="done" value="${i.id}"><fmt:message key="done"/></button>
                                                     </div>
 
                                                 </td>

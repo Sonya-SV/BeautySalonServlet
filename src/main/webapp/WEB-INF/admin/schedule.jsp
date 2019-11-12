@@ -1,32 +1,24 @@
 <html>
 <head>
-    <title>Schedule</title>
+    <title><fmt:message key="schedule"/></title>
 </head>
 <body>
 <%@ include file="adminpart/adminnavbar.jsp" %>
-
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-10 col-md-offset-1" style="padding-top: 50px">
-            <h2>
-                Schedule <br/>
-            </h2>
-            <%--            <form action="${pageContext.request.contextPath}/beauty-salon/master/sendemail">--%>
+            <h2><fmt:message key="schedule"/> <br/></h2>
             <div class="form-group">
                 <table class="calendar table table-bordered" style=" margin: auto; empty-cells: show">
-
                     <tr>
-                        <th>Time/Date</th>
+                        <th><fmt:message key="time"/>/<fmt:message key="date"/></th>
                         <c:forEach var="date" items="${dates}">
                             <td width="13%">${date}</td>
                         </c:forEach>
                     </tr>
-
                     <c:forEach var="time" items="${workTime}">
-
                         <tr>
                             <td>${time}</td>
-
                             <c:forEach var="date" items="${dates}">
                                 <c:set var="count" value="0"/>
                                 <c:forEach items="${schedule}" var="i">
@@ -37,7 +29,6 @@
                                                 <div class="row-fluid practice" style="width: 99%; height: 100%;">
                                                     <span class="title"> ${i.procedure.name} </span>
                                                         ${i.user.firstName} ${i.user.lastName}<br>
-<%--                                                        ${i.time} ${i.date}--%>
                                                 </div>
                                             </td>
                                             <c:set var="count" value="1"/>
@@ -48,7 +39,6 @@
                                                 <div class="row-fluid practice" style="width: 99%; height: 100%;">
                                                     <span class="title"> ${i.procedure.name} </span>
                                                         ${i.user.firstName} ${i.user.lastName}<br>
-<%--                                                        ${i.time} ${i.date}--%>
                                                 </div>
                                             </td>
                                             <c:set var="count" value="1"/>
@@ -64,7 +54,6 @@
                     </c:forEach>
                 </table>
             </div>
-            <%--            </form>--%>
         </div>
     </div>
 </div>

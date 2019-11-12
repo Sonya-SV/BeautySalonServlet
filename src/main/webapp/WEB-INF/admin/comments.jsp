@@ -1,19 +1,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Sonya
-  Date: 10/29/2019
-  Time: 11:58 PM
-  To change this template use File | Settings | File Templates.
---%>
-
 <html>
 <head>
     <title>All comments</title>
 </head>
 <body>
 <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />--%>
-<%@ include file="../parts/common.jsp" %>
 <%@ include file="adminpart/adminnavbar.jsp" %>
 
 <div class="container" style="margin-top: 60px">
@@ -50,6 +41,7 @@
                         </div>
                     </li>
                 </ul>
+                <hr align="center" width="100%" color="black"/>
             </c:forEach>
         </div>
     </div>

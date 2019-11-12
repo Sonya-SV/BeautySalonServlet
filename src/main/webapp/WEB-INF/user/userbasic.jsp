@@ -1,14 +1,11 @@
-
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="user"/></title>
 </head>
 <body>
 <%@ include file="userpart/usernavbar.jsp" %>
-<div class="jumbotron" style="text-align: center; background: transparent;"  >
-    <img src="https://make-up-me.ua/content/images/6/46010414988912.jpg"/>
-
+<div class="jumbotron" style="text-align: center; height: 55%"  >
+    <img src="http://nagdi.ru/galery/slider/slide2.jpg" width="100%" height="100%"/>
 </div>
-Hello, user
 </body>
 </html>

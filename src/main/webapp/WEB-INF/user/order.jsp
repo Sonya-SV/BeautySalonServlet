@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Order</title>
+    <title><fmt:message key="order"/></title>
 </head>
 <body>
 <%@ include file="userpart/usernavbar.jsp" %>
@@ -21,39 +21,39 @@
                 </c:if>
                 <div class="form-row">
                     <div class="col-6 col-sm-4 form-group">
-                        <label>First name</label>
+                        <label><fmt:message key="first.name"/></label>
                         <input type="text" value="${user.firstName}" class="form-control" name="firstName">
                     </div>
                     <div class="col-6 col-sm-8 form-group">
-                        <label>Last name</label>
+                        <label><fmt:message key="last.name"/></label>
                         <input type="text" value="${user.lastName}" class="form-control" name="lastName">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-4 col-sm-4 form-group">
-                        <label>Time</label>
+                        <label><fmt:message key="time"/></label>
                         <input type="text" value="${schedule.time}" class="form-control" name="time">
                     </div>
                     <div class="col-4 col-sm-4 form-group">
-                        <label>Date</label>
+                        <label><fmt:message key="date"/></label>
                         <input type="text" value="${schedule.date}" class="form-control" name="date">
                     </div>
                     <div class="col-4 col-sm-4 form-group">
-                        <label>Master</label>
+                        <label><fmt:message key="master"/></label>
                         <p class="form-control-static">${schedule.master.user.firstName} ${schedule.master.user.lastName}
                         </p>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-4 col-sm-4 form-group">
-                        <label>Procedure</label>
+                        <label><fmt:message key="procedure"/></label>
                         <p class="form-control-static">${schedule.procedure.name}</p>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-4 col-sm-4 form-group">
-                        <label>Price</label>
-                        <p class="form-control-static">${schedule.procedure.price} UAH</p>
+                        <label><fmt:message key="price"/></label>
+                        <p class="form-control-static">${schedule.procedure.price} <fmt:message key="uah"/></p>
 
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                     <div class="col-4 col-sm-4 form-group">
                         <button type="submit" class="btn btn-primary" style="margin-top:30px"
                                 ng-disabled="form.$invalid">
-                            Book
+                            <fmt:message key="book"/>
                         </button>
                     </div>
                 </div>

@@ -5,40 +5,31 @@
 <body>
 <%@ include file="userpart/usernavbar.jsp" %>
 <div class="container" style="margin-top: 60px">
-
     <div class="row">
         <c:if test="${procedures ne null}">
-        <div class="col-sm-6"  >
-
-            <img class="card-img"
-                 src="data:image/png;base64,${procedures[0].category.image}"
-                 alt="..." height="400" style=" display: block; margin: 0 auto; margin-top: 5px">
-
-        </div>
-        <div class="col-sm-6">
-
-
-            <h2>${procedures[0].category.name}</h2>
-            <table class="table table-bordered  table-hover table-sm" style=" margin: auto;">
-                <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                </tr>
-                <c:forEach items="${procedures}" var="i">
+            <div class="col-sm-6">
+                <img class="card-img" src="data:image/png;base64,${procedures[0].category.image}" alt="..." height="400"
+                     style=" display: block; margin: 0 auto; margin-top: 5px">
+            </div>
+            <div class="col-sm-6">
+                <h2>${procedures[0].category.name}</h2>
+                <table class="table table-bordered  table-hover table-sm" style=" margin: auto;">
                     <tr>
-                        <td>${i.name}</td>
-                        <td>${i.price}</td>
+                        <th><fmt:message key="name"/></th>
+                        <th><fmt:message key="price"/></th>
                     </tr>
-                </c:forEach>
-            </table>
-
-            <input type="hidden" value="${procedure.id}" name="procedureId">
-        </div>
+                    <c:forEach items="${procedures}" var="i">
+                        <tr>
+                            <td>${i.name}</td>
+                            <td>${i.price}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <input type="hidden" value="${procedure.id}" name="procedureId">
+            </div>
         </c:if>
     </div>
 </div>
-</div>
-</div>
-<%@ include file="masterlist.jsp"%>
+<%@ include file="masterlist.jsp" %>
 </body>
 </html>

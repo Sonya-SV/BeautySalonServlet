@@ -1,51 +1,36 @@
 <html>
 <head>
-    <title>Master</title>
+    <title><fmt:message key="master"/></title>
 </head>
 <body>
 <%@ include file="adminpart/adminnavbar.jsp" %>
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-5">
-            <img class="card-img"
-                 src="data:image/png;base64,${master.photo}"
-                 alt="..." height="400" style=" display: block;
+            <img class="card-img" src="data:image/png;base64,${master.photo}" alt="..." height="400" style=" display: block;
                                      margin: 0 auto; margin-top: 5px">
         </div>
-
         <div class="col-md-7">
             <h1 align="center" class="card-title">${master.user.firstName} ${master.user.lastName}</h1>
             <hr align="center" width="300"/>
             <p class="card-text">
-            <h2> Work schedule: ${master.timeStart} - ${master.timeEnd}</h2> </p>
-<%--            <form action="${pageContext.request.contextPath}/beauty-salon/admin/booking">--%>
+            <h2> <fmt:message key="work.schedule"/>: ${master.timeStart} - ${master.timeEnd}</h2> </p>
                 <c:if test="${procedures ne null}">
                     <h2>${procedures[0].category.name}</h2>
                     <table class="table table-bordered  table-hover table-sm" style=" margin: auto;">
                         <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-<%--                            <th>Book</th>--%>
+                            <th><fmt:message key="name"/></th>
+                            <th><fmt:message key="price"/></th>
                         </tr>
                         <c:forEach items="${procedures}" var="i">
                             <tr>
                                 <td>${i.name}</td>
                                 <td>${i.price}</td>
-<%--                                <td>--%>
-<%--                                    <button type="submit" class="btn btn-primary" style="margin-top:0px"--%>
-<%--                                            ng-disabled="form.$invalid" value="${i.id}" name="procedureId">--%>
-<%--                                        Book--%>
-<%--                                    </button>--%>
-<%--                                </td>--%>
                             </tr>
 
                         </c:forEach>
                     </table>
                 </c:if>
-
-
-
-<%--            </form>--%>
             <div>
                 <form action="${pageContext.request.contextPath}/beauty-salon/admin/schedule">
                     <input type="hidden" value="${master.id}" name="masterId"/>

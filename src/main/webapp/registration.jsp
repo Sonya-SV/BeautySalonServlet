@@ -1,50 +1,63 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsf/html" %>
 <html>
 <head>
-    <title>Registration form</title>
+    <title><fmt:message key="registration"/></title>
 </head>
 <body>
 <%@ include file="WEB-INF/parts/common.jsp" %>
-<div class="container">
-    <div class="row">
-        <div class="col-md-offset-3 col-md-6" style="padding-top: 100px">
-            <form class="form-horizontal">
-                <span class="heading">Registration</span>
-                <div>
-
-
-                    <div class="form-group">
-
-                        <input type="text" class="form-control"  name="firstName" placeholder="First name">
-                        <i class="fa fa-user"></i>
-                    </div>
-                    <div class="form-group">
-
-                        <input type="text" class="form-control"  name="lastName" placeholder="Last name">
-                        <i class="fa fa-user"></i>
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <input type="text" class="form-control" name="email" id="inputEmail"
-                               placeholder="Email">
-                        <i class="fa fa-user"></i>
-                    </div>
-<%--                                        <label id="passwordLabel" >Password</label>--%>
-                    <div class="form-gro    up">
-
-                        <input type="password" class="form-control" name="password" id="inputPassword"
-                               placeholder="Password">
-                        <i class="fa fa-lock"></i>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default">Registration</button>
+<div class="login-page">
+    <div class="col-md-offset-4 col-md-3" style="padding-top: 100px">
+        <div class="login-block">
+            <img src="https://www.domzamkad.ru/images/no-avatar.png" width="200" alt="Scanfcode">
+            <h1><fmt:message key="put.your.data"/></h1>
+            <c:if test="${requestScope.userError ne null}">
+                <div class="alert alert-danger">
+                        ${errorMessage}
+                </div>
+            </c:if>
+            <form>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user ti-user"></i></span>
+                        <input type="text" class="form-control" name="email" placeholder="<fmt:message key="email"/>">
                     </div>
                 </div>
+                <hr class="hr-xs">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock ti-unlock"></i></span>
+                        <input type="text" class="form-control" name="firstName"
+                               placeholder="<fmt:message key="first.name"/>">
+                    </div>
+                </div>
+                <hr class="hr-xs">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock ti-unlock"></i></span>
+                        <input type="text" class="form-control" name="lastName"
+                               placeholder="<fmt:message key="last.name"/>">
+                    </div>
+                </div>
+                <hr class="hr-xs">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock ti-unlock"></i></span>
+                        <input type="password" class="form-control" name="password"
+                               placeholder="<fmt:message key="password"/>">
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit"><fmt:message key="registration"/></button>
             </form>
+        </div>
+        <div class="login-links">
+            <p class="text-center">
+                <fmt:message key="already.have.account"/>
+                <a class="txt-brand" href="${pageContext.request.contextPath}/beauty-salon/login">
+                    <font color=#29aafe><fmt:message key="login"/></font>
+                </a>
+            </p>
         </div>
     </div>
 </div>
-
 </body>
 </html>

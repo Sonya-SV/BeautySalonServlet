@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Services</title>
+    <title><fmt:message key="procedures"/></title>
 </head>
 <body>
 <%@ include file="userpart/usernavbar.jsp" %>
