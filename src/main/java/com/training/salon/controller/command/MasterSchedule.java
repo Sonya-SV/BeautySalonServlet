@@ -31,73 +31,33 @@ public class MasterSchedule implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
+        Optional<Master> master;
+        if(request.getSession().getAttribute("role").equals(User.Role.ADMIN))
+             master= masterService.getById(Long.valueOf(request.getParameter("masterId")));
+        else
+            master = masterService.getMaster(((User) request.getSession().getAttribute("user")).getId());
 
-        Optional<Master> master = masterService.getMaster(((User) request.getSession().getAttribute("user")).getId());
         List<LocalDate> dates = Stream.iterate(LocalDate.now(), curr -> curr.plusDays(1))
                 .limit(ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusDays(7)))
                 .collect(Collectors.toList());
         request.setAttribute("dates", dates);
 
-//        Optional<Master> master = masterService.getById((long) 2);
-
-        System.out.println("master " + master.get().getUser().getFirstName() );
         if (master.isPresent()) {
             LocalTime start = master.get().getTimeStart();
             LocalTime end = master.get().getTimeEnd();
-
+            System.out.println("master " + master.get().getUser().getFirstName() );
+            List<Schedule> schedule = scheduleService.getScheduleForMaster(master.get().getId());
             List<LocalTime> workTime = Stream.iterate(start, curr -> curr.plusHours(1))
                     .limit(ChronoUnit.HOURS.between(start, end))
                     .collect(Collectors.toList());
 
             request.setAttribute("workTime", workTime);
-        }
-
-            List<Schedule> schedule = scheduleService.getScheduleForMaster(master.get().getId());
             request.setAttribute("schedule", schedule);
 
-
-        if(request.getParameter("done") != null) {
-
-            String to = "";
-            Long masterForComment = 0L;
-            Optional<Schedule> scheduleNote = scheduleService.getScheduleNote(Long.valueOf(request.getParameter("done")));
-            if (scheduleNote.isPresent()) {
-                to = scheduleNote.get().getUser().getEmail();
-                masterForComment = scheduleNote.get().getMaster().getId();
-            }
-            final String username = "kate.nilson123@gmail.com";
-            final String password = "kate123kate";
-
-            Properties props = new Properties();
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.port", "587");
-
-            Session session = Session.getInstance(props,
-                    new javax.mail.Authenticator() {
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(username, password);
-                        }
-                    });
-            try {
-
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(username));
-                message.setRecipients(Message.RecipientType.TO,
-                        InternetAddress.parse(to));
-                message.setSubject("Leave Comment");
-                message.setText(" Leave comment about our master:\n" +
-                        "http://localhost:8888/api/beauty-salon/master?masterId=" + masterForComment);
-                Transport.send(message);
-                System.out.println("message sent");
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
-            }
-
-            scheduleService.makeNoteDone(Long.valueOf(request.getParameter("done")));
-
         }
-        return "/WEB-INF/master/schedule.jsp";
+        if(request.getSession().getAttribute("role").equals(User.Role.ADMIN))
+            return "/WEB-INF/admin/schedule.jsp";
+        else
+            return "/WEB-INF/master/schedule.jsp";
     }
 }

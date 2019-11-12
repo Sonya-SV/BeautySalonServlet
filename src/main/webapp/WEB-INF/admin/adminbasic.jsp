@@ -5,10 +5,10 @@
 </head>
 <body>
 <%@ include file="adminpart/adminnavbar.jsp" %>
-<div class="jumbotron" style="text-align: center; background: transparent;"  >
-    <img src="https://make-up-me.ua/content/images/6/46010414988912.jpg"/>
-
+<div class="jumbotron" style="text-align: center; height: 55%"  >
+    <img src="http://nagdi.ru/galery/slider/slide2.jpg" width="100%" height="100%"/>
+    <%--    <img src="https://www.dneprovsky-group.ru/wp-content/uploads/2017/04/prodvizhenie_salona_krasoty.jpg" width="100%" height="100%"/>--%>
 </div>
-Hello, admin
+
 </body>
 </html>

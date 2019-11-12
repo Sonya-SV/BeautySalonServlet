@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class Profile implements ICommand {
 
-
+//    private static final Logger log = LogManager.getLogger(Profile.class);
     public final static String PASSWORD_DIFFERENT = "Password are different";
     public final static String SUCCESS_SAVE = "Saved successfully";
 
@@ -24,26 +24,29 @@ public class Profile implements ICommand {
 
         String password = request.getParameter("password");
         String password2 = request.getParameter("password2");
-
-        if (password == null || password.equals("") || password2 == null || password2.equals("")) {
-            return "/WEB-INF/user/profile.jsp";
-        }
         String firstName = request.getParameter("firstName");
-        String lastName =request.getParameter("lastName");
-        if (password.equals(password2)) {
+        String lastName = request.getParameter("lastName");
+        User user = (User)request.getSession().getAttribute("user");
+        if (request.getParameter("password") == null || request.getParameter("password2") == null)
+            return "/WEB-INF/" + user.getRole().name().toLowerCase()+ "/"+ user.getRole().name().toLowerCase()+"profile.jsp";
 
+
+        if (password.equals(password2)) {
             try {
-                userService.update(firstName, lastName, password, (User)request.getSession().getAttribute("user"));
+                userService.update(firstName, lastName, password, user);
                 request.setAttribute("successSave", SUCCESS_SAVE);
             } catch (SQLException e) {
-                //TODO add logger
-                return "/WEB-INF/user/profile.jsp";
+                //TODO
+//                log.info("cant save new password");
             }
         }
         else {
             request.setAttribute("passwordErrorDiffer", PASSWORD_DIFFERENT);
-            return "/WEB-INF/user/profile.jsp";
         }
-        return "/WEB-INF/user/profile.jsp";
+        if(request.getSession().getAttribute("role").equals(User.Role.ADMIN))
+            return "/WEB-INF/admin/adminprofile.jsp";
+        else if(request.getSession().getAttribute("role").equals(User.Role.MASTER))
+            return "/WEB-INF/master/masterprofile.jsp";
+        else return "/WEB-INF/user/userprofile.jsp";
     }
 }

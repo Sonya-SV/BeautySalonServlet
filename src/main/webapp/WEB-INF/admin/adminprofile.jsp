@@ -1,7 +1,6 @@
 <html>
 <body>
-<%@ include file="userpart/usernavbar.jsp" %>
-<%@ include file="../parts/common.jsp" %>
+<%@ include file="adminpart/adminnavbar.jsp" %>
     <div class="container" style="margin-top: 60px">
         <div class="row">
             <div class="col-md-8 col-md-offset-2" style="padding-top: 50px">
@@ -10,17 +9,12 @@
                         <h3 class="panel-title" style="display: inline-block">${user.email}</h3>
                     </div>
                     <div class="panel-body">
-                        <form name="form" action="${pageContext.request.contextPath}/beauty-salon/user/profile" autocomplete="off" novalidate
+                        <form name="form" action="${pageContext.request.contextPath}/beauty-salon/admin/profile" autocomplete="off" novalidate
                               ng-submit="form.$valid ">
 
                             <div class="form-group">
-                                <label id="exampleInputFirstNameLabel"
-                                       for="firstName">First name</label>
-                                <input type="text"
-                                       class="form-control"
-                                       name="firstName"
-                                       id="firstName"
-                                       placeholder=""
+                                <label id="exampleInputFirstNameLabel" >First name</label>
+                                <input type="text" class="form-control" name="firstName"
                                        value="${user.firstName}"
                                        required>
                             </div>

@@ -4,16 +4,16 @@
     <title>Masters</title>
 </head>
 <body>
-<%@ include file="userpart/usernavbar.jsp" %>
+<%@ include file="adminpart/adminnavbar.jsp" %>
 <!-- Карточка с card-img-overlay -->
 <div class="container" style="margin-top: 60px">
     <div class="row">
-        <form action="${pageContext.request.contextPath}/beauty-salon/user/master" autocomplete="off"
+        <form action="${pageContext.request.contextPath}/beauty-salon/admin/master" autocomplete="off"
               novalidate >
 
             <c:forEach items="${masters}" var="i">
-                    <div class="col-sm-3">
-                        <div class="panel panel-default">
+                <div class="col-sm-3">
+                    <div class="panel panel-default">
                         <div class="card">
                             <div class="card-body" style="text-align: center">
 
@@ -31,11 +31,11 @@
 
                             </div>
                         </div>
-                        </div>
                     </div>
+                </div>
             </c:forEach>
         </form>
-<%--        ${photo}--%>
+        <%--        ${photo}--%>
     </div>
 </div>
 

@@ -3,7 +3,7 @@
     <title>Master</title>
 </head>
 <body>
-<%@ include file="userpart/usernavbar.jsp" %>
+<%@ include file="adminpart/adminnavbar.jsp" %>
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-5">
@@ -18,56 +18,64 @@
             <hr align="center" width="300"/>
             <p class="card-text">
             <h2> Work schedule: ${master.timeStart} - ${master.timeEnd}</h2> </p>
-            <form action="${pageContext.request.contextPath}/beauty-salon/user/booking">
+<%--            <form action="${pageContext.request.contextPath}/beauty-salon/admin/booking">--%>
                 <c:if test="${procedures ne null}">
                     <h2>${procedures[0].category.name}</h2>
                     <table class="table table-bordered  table-hover table-sm" style=" margin: auto;">
                         <tr>
                             <th>Name</th>
                             <th>Price</th>
-                            <th>Choose</th>
+<%--                            <th>Book</th>--%>
                         </tr>
                         <c:forEach items="${procedures}" var="i">
                             <tr>
                                 <td>${i.name}</td>
                                 <td>${i.price}</td>
-                                <td>
-                                    <button type="submit" class="btn btn-primary" style="margin-top:0px"
-                                            ng-disabled="form.$invalid" value="${i.id}" name="procedureId">
-                                        Choose
-                                    </button>
-                                </td>
+<%--                                <td>--%>
+<%--                                    <button type="submit" class="btn btn-primary" style="margin-top:0px"--%>
+<%--                                            ng-disabled="form.$invalid" value="${i.id}" name="procedureId">--%>
+<%--                                        Book--%>
+<%--                                    </button>--%>
+<%--                                </td>--%>
                             </tr>
 
                         </c:forEach>
                     </table>
                 </c:if>
 
-                <input type="hidden" value="${master.id}" name="masterId"/>
 
-            </form>
+
+<%--            </form>--%>
+            <div>
+                <form action="${pageContext.request.contextPath}/beauty-salon/admin/schedule">
+                    <input type="hidden" value="${master.id}" name="masterId"/>
+                    <button id="myBtn" >Show schedule</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="container" style="margin-top: 60px">
     <div class="col-md-10    col-md-offset-1" style="padding-top: 50px">
         <h2 align="center">Customer reviews</h2>
         <div class="comments">
-            <form action="${pageContext.request.contextPath}/beauty-salon/user/comment">
-                <c:if test="${successSend ne null}">
-                    <div class="alert alert-success">
-                            ${successSend}
-                    </div>
-                </c:if>
+<%--            <form action="${pageContext.request.contextPath}/beauty-salon/user/comment">--%>
+<%--                <c:if test="${successSend ne null}">--%>
+<%--                    <div class="alert alert-success">--%>
+<%--                            ${successSend}--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
                 <textarea rows="4" cols="100%" name="comment" placeholder="Put your comment"></textarea>
                 <input type="hidden" name="masterId" value="${master.id}">
-                <button type="submit" class="btn btn-primary" style="margin-top:30px"
-                        ng-disabled="form.$invalid">
-                    Send
-                </button>
+<%--                <button type="submit" class="btn btn-primary" style="margin-top:30px"--%>
+<%--                        ng-disabled="form.$invalid">--%>
+<%--                    Send--%>
+<%--                </button>--%>
 
-            </form>
+<%--            </form>--%>
             <h5>${fn:length(comments)} comments</h5>
             <c:forEach items="${comments}" var="com">
                 <ul class="media-list">
@@ -112,5 +120,33 @@
         });
     });
 </script>
+
+
+<%--<script> var modal = document.getElementById('myModal');--%>
+
+
+<%--var btn = document.getElementById("myBtn");--%>
+
+
+<%--var span = document.getElementsByClassName("close")[0];--%>
+
+
+<%--btn.onclick = function() {--%>
+<%--    modal.style.display = "block";--%>
+<%--}--%>
+
+
+<%--span.onclick = function() {--%>
+<%--    modal.style.display = "none";--%>
+<%--}--%>
+
+
+<%--window.onclick = function(event) {--%>
+<%--    if (event.target == modal) {--%>
+<%--        modal.style.display = "none";--%>
+<%--    }--%>
+<%--}--%>
+
+<%--</script>--%>
 </body>
 </html>

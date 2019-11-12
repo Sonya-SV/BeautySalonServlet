@@ -3,7 +3,7 @@
     <title>Master</title>
 </head>
 <body>
-<%@ include file="userpart/usernavbar.jsp" %>
+<%@ include file="masterpart/masternavbar.jsp" %>
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-5">
@@ -18,7 +18,7 @@
             <hr align="center" width="300"/>
             <p class="card-text">
             <h2> Work schedule: ${master.timeStart} - ${master.timeEnd}</h2> </p>
-            <form action="${pageContext.request.contextPath}/beauty-salon/user/booking">
+<%--            <form action="${pageContext.request.contextPath}/beauty-salon/user/booking">--%>
                 <c:if test="${procedures ne null}">
                     <h2>${procedures[0].category.name}</h2>
                     <table class="table table-bordered  table-hover table-sm" style=" margin: auto;">

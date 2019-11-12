@@ -4,11 +4,11 @@
     <title>Masters</title>
 </head>
 <body>
-<%@ include file="userpart/usernavbar.jsp" %>
+<%@ include file="masterpart/masternavbar.jsp" %>
 <!-- Карточка с card-img-overlay -->
 <div class="container" style="margin-top: 60px">
     <div class="row">
-        <form action="${pageContext.request.contextPath}/beauty-salon/user/master" autocomplete="off"
+        <form action="${pageContext.request.contextPath}/beauty-salon/master/master" autocomplete="off"
               novalidate >
 
             <c:forEach items="${masters}" var="i">

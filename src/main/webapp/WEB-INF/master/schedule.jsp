@@ -1,17 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Sonya
-  Date: 11/3/2019
-  Time: 12:27 PM
-  To change this template use File | Settings | File Templates.
---%>
-
 <html>
 <head>
     <title>Schedule</title>
 </head>
 <body>
-<%@ include file="../parts/common.jsp" %>
+
 <%@ include file="masterpart/masternavbar.jsp" %>
 <div class="container" style="margin-top: 60px">
     <div class="row">
@@ -19,40 +11,55 @@
             <h2>
                 Schedule <br/>
             </h2>
-            <form>
+            <form action="${pageContext.request.contextPath}/beauty-salon/master/sendemail">
                 <div class="form-group">
-                    <table class="table table-bordered  table-hover table-sm"
-                           style=" margin: auto; empty-cells: show">
+                    <table class="calendar table table-bordered" style=" margin: auto; empty-cells: show">
+
                         <tr>
                             <th>Time/Date</th>
                             <c:forEach var="date" items="${dates}">
-                                <td>${date}</td>
+                                <td width="13%">${date}</td>
                             </c:forEach>
                         </tr>
+
                         <c:forEach var="time" items="${workTime}">
 
                             <tr>
                                 <td>${time}</td>
 
                                 <c:forEach var="date" items="${dates}">
+                                    <c:set var="count" value="0"/>
                                     <c:forEach items="${schedule}" var="i">
                                         <c:if test="${time eq i.time && date eq i.date}">
                                             <c:if test="${i.done eq true}">
-                                                <td style="text-decoration: line-through">
-                                                ${i.user.firstName} ${i.user.lastName}<br>
-                                                        ${i.procedure.name} ${i.time} ${i.date}</td>
+                                                <td class="has-events" rowspan="1">
+                                                    <div class="row-fluid practice" style="width: 99%; height: 99%;
+                                                    text-decoration: line-through">
+                                                        <span class="title"> ${i.procedure.name} </span>
+                                                            ${i.user.firstName} ${i.user.lastName}<br>
+                                                    </div>
+                                                </td>
+                                                <c:set var="count" value="1"/>
                                             </c:if>
                                             <c:if test="${i.done eq false}">
-                                                <td>
-                                                        ${i.user.firstName} ${i.user.lastName}<br>
-                                                        ${i.procedure.name} ${i.time} ${i.date}
-                                                <button type="submit" name="done" value="${i.id}">Done
-                                                </button>
+                                                <td class="has-events" rowspan="1"
+                                                    style="text-decoration: line-through">
+                                                    <div class="row-fluid practice" style="width: 99%; height: 100%;">
+                                                        <span class="title"> ${i.procedure.name} </span>
+                                                            ${i.user.firstName} ${i.user.lastName}<br>
+                                                        <button type="submit" name="done" value="${i.id}">Done</button>
+                                                    </div>
+
                                                 </td>
+                                                <c:set var="count" value="1"/>
                                             </c:if>
                                         </c:if>
                                     </c:forEach>
+                                    <c:if test="${count<1}">
+                                        <td class="no-events" rowspan="1"></td>
+                                    </c:if>
                                 </c:forEach>
+
                             </tr>
                         </c:forEach>
                     </table>
@@ -61,7 +68,6 @@
         </div>
     </div>
 </div>
-
 </body>
 
 </html>

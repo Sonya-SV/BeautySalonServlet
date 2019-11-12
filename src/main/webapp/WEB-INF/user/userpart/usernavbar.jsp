@@ -32,7 +32,9 @@
 <body data-spy="scroll">
 <div class="header">
     <div class="navbar-fixed-top">
+
         <div class="navbar navbar-default">
+            <div class="container">
             <a class="navbar-brand" href="">Beauty</a>
             <ul class="nav navbar-nav">
                 <li><a href="${pageContext.request.contextPath}/beauty-salon/user/masterList">Masters</a></li>
@@ -44,6 +46,7 @@
                 <li><a href="${pageContext.request.contextPath}/beauty-salon/logout"><span
                         class="glyphicon glyphicon-log-out"></span> Logout </a></li>
             </ul>
+        </div>
         </div>
     </div>
 </div>
