@@ -32,14 +32,25 @@ public class Servlet extends HttpServlet {
         commands.put("exception", new Exception());
         commands.put("admin/userList", new UserList(new UserService()));
         commands.put("user/masterList", new MasterList(new MasterService()));
-        commands.put("user/procedures", new ProcedureCommand(new ProcedureService()));
+        commands.put("master/masterList", new MasterList(new MasterService()));
+        commands.put("admin/masterList", new MasterList(new MasterService()));
+        commands.put("user/procedures", new ProcedureCommand(new ProcedureService(), new MasterService()));
         commands.put("user/categoryList", new CategoryCommand(new CategoryService()));
-        commands.put("user/master", new MasterCommand(new ProcedureService(), new MasterService()));
-        commands.put("user/booking", new BookCommand( new ScheduleService(),new ProcedureService(), new MasterService()));
+        commands.put("user/master", new MasterCommand(new ProcedureService(), new MasterService(), new CommentService()));
+        commands.put("master/master", new MasterCommand(new ProcedureService(), new MasterService(), new CommentService()));
+        commands.put("admin/master", new MasterCommand(new ProcedureService(), new MasterService(), new CommentService()));
+        commands.put("user/booking", new ChooseProcedureCommand( new ScheduleService(),new ProcedureService(), new MasterService()));
         commands.put("master/schedule", new MasterSchedule(new MasterService(), new ScheduleService()));
+        commands.put("admin/schedule", new MasterSchedule(new MasterService(), new ScheduleService()));
         commands.put("user/comment", new SendComment(new CommentService(), new MasterService(), new ProcedureService()));
         commands.put("admin/comments", new CommentsCommand(new CommentService()));
         commands.put("master/sendemail", new SendEmail(new ScheduleService()));
+        commands.put("user/profile", new Profile(new UserService()));
+        commands.put("master/profile", new Profile(new UserService()));
+        commands.put("admin/profile", new Profile(new UserService()));
+        commands.put("user/order", new OrderCommand(new ScheduleService()));
+        commands.put("user/save", new ScheduleNote(new ScheduleService()));
+//        commands.put("user/success", new OrderCommand(new ScheduleService()));
     }
 
     public void doGet(HttpServletRequest request,
