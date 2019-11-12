@@ -98,5 +98,28 @@ public class JDBCMasterDao implements MasterDao {
         }
 
     }
+
+    @Override
+    public List<Master> getMastersByCategory(Long categoryId) {
+        Map<Long, Master> masters = new HashMap<>();
+        final String query = " select * from master inner join user using (user_id)" +
+                "inner join category using (category_id) where category_id=?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setLong(1, categoryId);
+            ResultSet rs = st.executeQuery();
+
+            MasterMapper masterMapper = new MasterMapper();
+
+            while (rs.next()) {
+                Master master = masterMapper.extractFromResultSet(rs);
+                masters.putIfAbsent(master.getId(), master);
+            }
+            return new ArrayList<>(masters.values());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
 

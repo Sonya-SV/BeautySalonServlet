@@ -30,6 +30,11 @@ public class MasterService {
             return dao.getMaster(userId);
         }
     }
+    public List<Master> getMastersByCategory(Long categoryId){
+        try (MasterDao dao = daoFactory.createMasterDao()) {
+            return dao.getMastersByCategory(categoryId);
+        }
+    }
 
 
 
