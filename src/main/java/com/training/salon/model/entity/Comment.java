@@ -1,10 +1,21 @@
 package com.training.salon.model.entity;
 
+import java.time.LocalDateTime;
+
 public class Comment {
     private Long id;
     private Master master;
     private User user;
     private String comment;
+    private LocalDateTime dateTime;
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
 
     public Long getId() {
         return id;

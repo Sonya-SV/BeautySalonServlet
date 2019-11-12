@@ -23,5 +23,10 @@ public class CommentService {
             return dao.findAll();
         }
     }
+    public List<Comment> getAllByMaster(Long masterId){
+        try (CommentDao dao = daoFactory.createCommentDao()) {
+            return dao.findAllByMaster(masterId);
+        }
+    }
 
 }
