@@ -10,8 +10,28 @@ public class Schedule {
     private Procedure procedure;
     private LocalTime time;
     private LocalDate date;
-    private String comment;
     private boolean isDone;
+    private String clientFirstName;
+    private String clientLastName;
+
+    public String getClientFirstName() {
+        return clientFirstName;
+    }
+
+    public void setClientFirstName(String clientFirstName) {
+        this.clientFirstName = clientFirstName;
+    }
+
+    public String getClientLastName() {
+        return clientLastName;
+    }
+
+    public void setClientLastName(String clientLastName) {
+        this.clientLastName = clientLastName;
+    }
+
+
+
 
     public Long getId() {
         return id;
@@ -61,14 +81,6 @@ public class Schedule {
         this.date = date;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public boolean isDone() {
         return isDone;
     }
@@ -86,7 +98,6 @@ public class Schedule {
                 ", procedure=" + procedure +
                 ", time=" + time +
                 ", date=" + date +
-                ", comment='" + comment + '\'' +
                 ", isDone=" + isDone +
                 '}';
     }
