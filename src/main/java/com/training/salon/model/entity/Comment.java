@@ -58,4 +58,40 @@ public class Comment {
                 ", comment='" + comment + '\'' +
                 '}';
     }
+    //Builder
+    public static Builder builder() {
+        return new Comment().new Builder();
+    }
+
+    public class Builder {
+        private Builder() {
+        }
+
+        public Builder id(Long id) {
+            Comment.this.id = id;
+            return this;
+        }
+
+        public Builder master(Master master) {
+            Comment.this.master = master;
+            return this;
+        }
+        public Builder user(User user) {
+            Comment.this.user = user;
+            return this;
+        }
+        public Builder comment(String comment) {
+            Comment.this.comment = comment;
+            return this;
+        }
+
+        public Builder dateTime(LocalDateTime dateTime) {
+            Comment.this.dateTime = dateTime;
+            return this;
+        }
+
+        public Comment build() {
+            return Comment.this;
+        }
+    }
 }

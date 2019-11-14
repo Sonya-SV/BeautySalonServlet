@@ -49,4 +49,37 @@ public class Procedure {
                 ", category=" + category +
                 '}';
     }
+
+    public static Builder builder() {
+        return new Procedure().new Builder();
+    }
+
+    public class Builder {
+        private Builder() {
+        }
+
+        public Builder id(Long id) {
+            Procedure.this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            Procedure.this.name = name;
+            return this;
+        }
+
+        public Builder price(BigDecimal price) {
+            Procedure.this.price = price;
+            return this;
+        }
+
+        public Builder category(Category category) {
+            Procedure.this.category = category;
+            return this;
+        }
+
+        public Procedure build() {
+            return Procedure.this;
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package com.training.salon.model.entity;
 
-import java.sql.Blob;
 import java.time.LocalTime;
 
 public class Master {
@@ -57,7 +56,44 @@ public class Master {
                 ", user=" + user +
                 ", timeStart=" + timeStart +
                 ", timeEnd=" + timeEnd +
-                ", photo='" + photo + '\'' +
                 '}';
+    }
+
+    public static Builder builder() {
+        return new Master().new Builder();
+    }
+
+    public class Builder {
+        private Builder() {
+        }
+
+        public Builder id(Long id) {
+            Master.this.id = id;
+            return this;
+        }
+
+        public Builder user(User user) {
+            Master.this.user = user;
+            return this;
+        }
+
+        public Builder timeStart(LocalTime timeStart) {
+            Master.this.timeStart = timeStart;
+            return this;
+        }
+
+        public Builder timeEnd(LocalTime timeEnd) {
+            Master.this.timeEnd = timeEnd;
+            return this;
+        }
+
+        public Builder photo(String photo) {
+            Master.this.photo = photo;
+            return this;
+        }
+
+        public Master build() {
+            return Master.this;
+        }
     }
 }

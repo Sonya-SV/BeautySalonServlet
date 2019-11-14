@@ -1,7 +1,5 @@
 package com.training.salon.model.entity;
 
-import java.sql.Blob;
-
 public class Category {
     private Long id;
     private String name;
@@ -36,7 +34,32 @@ public class Category {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", image='" + image + '\'' +
                 '}';
+    }
+    //Builder
+    public static Builder builder() {
+        return new Category().new Builder();
+    }
+
+    public class Builder {
+        private Builder() {
+        }
+
+        public Builder id(Long id) {
+            Category.this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            Category.this.name = name;
+            return this;
+        }
+        public Builder image(String image) {
+            Category.this.image = image;
+            return this;
+        }
+        public Category build() {
+            return Category.this;
+        }
     }
 }

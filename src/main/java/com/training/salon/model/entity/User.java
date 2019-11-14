@@ -8,7 +8,7 @@ public class User {
     private String password;
     private Role role;
     public enum Role {
-        ADMIN, GUEST, USER, MASTER
+        ADMIN, USER, MASTER
     }
 
     public Long getId() {
@@ -70,4 +70,47 @@ public class User {
                 ", role=" + role +
                 '}';
     }
+
+    //Builder
+    public static Builder builder() {
+        return new User().new Builder();
+    }
+
+    public class Builder {
+        private Builder() {
+        }
+
+        public Builder id(Long id) {
+            User.this.id = id;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            User.this.firstName = firstName;
+            return this;
+        }
+        public Builder lastName(String lastName) {
+            User.this.lastName = lastName;
+            return this;
+        }
+        public Builder email(String email) {
+            User.this.email = email;
+            return this;
+        }
+
+        public Builder password(String password) {
+            User.this.password = password;
+            return this;
+        }
+
+        public Builder role(Role role) {
+            User.this.role = role;
+            return this;
+        }
+
+        public User build() {
+            return User.this;
+        }
+    }
+
 }

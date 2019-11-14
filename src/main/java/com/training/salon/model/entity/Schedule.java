@@ -30,9 +30,6 @@ public class Schedule {
         this.clientLastName = clientLastName;
     }
 
-
-
-
     public Long getId() {
         return id;
     }
@@ -100,5 +97,58 @@ public class Schedule {
                 ", date=" + date +
                 ", isDone=" + isDone +
                 '}';
+    }
+
+    //Builder
+    public static Builder builder() {
+        return new Schedule().new Builder();
+    }
+
+    public class Builder {
+        private Builder() {
+        }
+
+        public Builder id(Long id) {
+            Schedule.this.id = id;
+            return this;
+        }
+
+        public Builder master(Master master) {
+            Schedule.this.master = master;
+            return this;
+        }
+        public Builder user(User user) {
+            Schedule.this.user = user;
+            return this;
+        }
+        public Builder procedure(Procedure procedure) {
+            Schedule.this.procedure = procedure;
+            return this;
+        }
+
+        public Builder time(LocalTime time) {
+            Schedule.this.time = time;
+            return this;
+        }
+
+        public Builder date(LocalDate date) {
+            Schedule.this.date = date;
+            return this;
+        }
+        public Builder isDone(boolean isDone) {
+            Schedule.this.isDone= isDone;
+            return this;
+        }
+        public Builder clientFirstName(String clientFirstName) {
+            Schedule.this.clientFirstName= clientFirstName;
+            return this;
+        }
+        public Builder clientLastName(String clientLastName) {
+            Schedule.this.clientLastName= clientLastName;
+            return this;
+        }
+        public Schedule build() {
+            return Schedule.this;
+        }
     }
 }

@@ -10,10 +10,10 @@ import java.util.Base64;
 public class CategoryMapper implements ObjectMapper<Category> {
     @Override
     public Category extractFromResultSet(ResultSet rs) throws SQLException {
-        Category category = new Category();
-        category.setId(rs.getLong("category_id"));
-        category.setName(rs.getString("category_name"));
-        category.setImage(new String(Base64.getEncoder().encode(rs.getBytes("image")), StandardCharsets.UTF_8));
-        return category;
+        return Category.builder()
+                .id(rs.getLong("category_id"))
+                .name(rs.getString("category_name"))
+                .image(new String(Base64.getEncoder().encode(rs.getBytes("image")), StandardCharsets.UTF_8))
+                .build();
     }
 }
