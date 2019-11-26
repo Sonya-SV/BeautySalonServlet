@@ -1,3 +1,8 @@
+.container{
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+
 ul.hor_nav {
     margin: 0;
     padding: 0;
@@ -15,25 +20,125 @@ ul.hor_nav li {
 .card{
     display: inline;
 }
-body {
-    /*background-image: url(http://fonday.ru/images/tmp/10/2/original/1021930k7BX41VKmE33ix169sY1dh4g.jpg) ;*/
-    /*background-image: url(https://st2.depositphotos.com/4097503/8670/v/950/depositphotos_86701870-stock-illustration-beauty-salon-poster-with-butterfly.jpg) ;*/
-    /*background-size: cover;*/
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: black;
+    text-align: center;
+}
+.navbar-nav li a {
+    line-height: 60px;
+    height: 60px;
+    padding-top: 0;
+}
+.navbar-default{
+    background: whitesmoke;
+}
+.panel-default:hover{
+    border-color: goldenrod;
+}
+.panel-default{
+    border-color: transparent;
 }
 
-/*a.button {display:block; height:100%; width:100%;}*/
-
-.modal {
-    display: none; /* Скрыто по умолчанию */
-    background-color: rgb(0,0,0); /* Затемнение фона */
-    background-color: rgba(0,0,0,0.5); /* Полупрозрачное затемнение */
-    z-index: 1; /* Фон на нижнем слое */
-    overflow: auto; /* При необходимости, то появиться прокрутка */
+.login-block
+{
+    background-color:#fff;
+    padding:60px;
+    -webkit-box-shadow:0 3px 50px 0 rgba(0,0,0,.1);
+    box-shadow:0 3px 50px 0 rgba(0,0,0,.1);
+    text-align:center;
+    border-radius:5px
+}
+.login-block h1,.login-block h6
+{
+    font-family:Open Sans,sans-serif;
+    color:#96a2b2;
+    letter-spacing:1px
+}
+.login-block h1
+{
+    font-size:22px;
+    margin-bottom:60px;
+    margin-top:40px
 }
 
+.login-block .input-group-addon
+{
+    color:#29aafe;
+    font-size:19px;
+    opacity:.5
+}
+.login-block .btn-block
+{
+    margin-top:30px;
+    padding:15px;
+    background:#29aafe;
+    border-color:#29aafe;
+}
+.login-block .hr-xs
+{
+    margin-top:5px;
+    margin-bottom:5px
+}
+
+.menu > div{
+    width: 19%;
+    /*height: 400px;*/
+    display: inline-block;
+    margin-right: 0.5%;
+}
+
+.holder {
+    position: relative;
+    margin: 0;
+}
+
+.block {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 80%;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 0;
+    display: none;
+    text-decoration: peru;
+}
+
+.holder:hover .block {
+    display: block;
+    width: 100%;
+}
+
+.radio-ul {
+    list-style: none;
+}
+.radio-li {
+    display: inline-block;
+    margin-right: 0;
+    margin-left: 0;
+}
+.radio-input {
+    visibility:hidden;
+
+}
+.radio1{
+    text-decoration-color: cornflowerblue;
+    font-size: large;
+
+}
+.radio-label {
+    cursor: pointer;
+    width: 10%;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
 
 #myBtn {
-    background-color: #9C27B0;
+    background-color: lightgrey;
     color: white;
     padding: 12px 16px;
     font-size: 18px;
@@ -43,72 +148,61 @@ body {
     width: 180px;
 }
 
-
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+table.calendar {
+    margin-bottom: 0;
 }
 
+table.calendar > thead > tr > th {
+    text-align: center;
+}
 
-.modal-content {
-    position: relative;
-    background-color: #E1BEE7;
-    margin: auto;
+table.calendar > tbody > tr > td {
+    height: 20px;
+}
+
+table.calendar > tbody > tr > td > div {
+    padding: 8px;
+    height: 40px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    float: left;
+}
+
+table.calendar > tbody > tr > td.has-events {
+    color: black;
+    cursor: pointer;
     padding: 0;
-    border: 5px solid #7B1FA2;
-    width: 50%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s
+    border-radius: 4px;
+}
+
+table.calendar > tbody > tr > td.has-events > div {
+    background-color: #E1BEE7;
+    /*border-left: 1px solid white;*/
+}
+
+table.calendar > tbody > tr > td.has-events > div:first-child {
+    border-left: 0;
+    margin-left: 1px;
+}
+
+table.calendar > tbody > tr > td.has-events > div.practice {
+    opacity: 0.7;
 }
 
 
-@-webkit-keyframes animatetop {
-    from {top:-300px; opacity:0}
-    to {top:0; opacity:1}
+table.calendar > tbody > tr > td.has-events > div > span {
+    display: block;
+    text-align: center;
+}
+table.calendar > tbody > tr > td.has-events > div > span a {
+    color: black;
 }
 
-@keyframes animatetop {
-    from {top:-300px; opacity:0}
-    to {top:0; opacity:1}
-}
-
-
-.close {
-    color: white;
-    float: right;
-    font-size: 28px;
+table.calendar > tbody > tr > td.has-events > div > span.title {
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modal-header {
-    padding: 2px 16px;
-    background-color: #9C27B0;
-    color: white;
-}
-
-.modal-body {padding: 2px 16px;}
-
-.modal-footer {
-    padding: 2px 16px;
-    background-color: #9C27B0;
-    color: white;
+table.table-borderless > thead > tr > th, table.table-borderless > tbody > tr > td {
+    border: 0;
 }
