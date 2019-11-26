@@ -10,7 +10,6 @@ import java.io.IOException;
 
 import static java.util.Objects.isNull;
 
-//TODO: add to web.xml
 public class AccessFilter implements Filter {
 
     @Override
