@@ -4,6 +4,7 @@ import com.training.salon.model.dao.DaoFactory;
 import com.training.salon.model.dao.UserDao;
 import com.training.salon.model.entity.Master;
 import com.training.salon.model.entity.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,9 +23,11 @@ public class UserService {
     public Optional<User> login(String email, String password){
         Optional<User> user;
         try(UserDao dao = daoFactory.createUserDao()){
-            user = dao.findByEmailAndPassword(email, password);
+            user = dao.findByEmailAndPassword(email);
         }
+        if(user.isPresent() && BCrypt.checkpw(password,user.get().getPassword()))
         return user;
+        else return Optional.empty();
     }
     public List<User> getAllUsers(){
         try (UserDao dao = daoFactory.createUserDao()) {
