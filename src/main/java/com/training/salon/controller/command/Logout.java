@@ -11,7 +11,7 @@ public class Logout implements ICommand {
 
         final HttpSession session = request.getSession();
         session.invalidate();
-        CommandUtility.setUserRole(request, User.Role.GUEST, "Guest");
-        return "redirect:/login.jsp";
+        CommandUtility.setUserRole(request, null, "Guest");
+        return "redirect:/login";
     }
 }
