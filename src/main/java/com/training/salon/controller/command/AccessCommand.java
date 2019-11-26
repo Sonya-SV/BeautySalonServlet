@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 public class AccessCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request) {
-        System.out.println(request.getSession().getAttribute("role"));
         if (request.getSession().getAttribute("role")==null)
             return "/index.jsp";
         else if (request.getSession().getAttribute("role").equals(User.Role.ADMIN))

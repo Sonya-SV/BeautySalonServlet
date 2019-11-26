@@ -3,15 +3,17 @@ package com.training.salon.controller.command;
 
 import com.training.salon.model.entity.User;
 import com.training.salon.model.service.UserService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.Optional;
+
+import static com.training.salon.controller.command.ITextConstant.*;
 
 public class Profile implements ICommand {
-
-//    private static final Logger log = LogManager.getLogger(Profile.class);
-    public final static String PASSWORD_DIFFERENT = "Password are different";
-    public final static String SUCCESS_SAVE = "Saved successfully";
+    private static final Logger log = LogManager.getLogger(Profile.class);
 
     private UserService userService;
 
@@ -27,17 +29,15 @@ public class Profile implements ICommand {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         User user = (User)request.getSession().getAttribute("user");
-        if (request.getParameter("password") == null || request.getParameter("password2") == null)
+        if (Optional.ofNullable(password).isEmpty())
             return "/WEB-INF/" + user.getRole().name().toLowerCase()+ "/"+ user.getRole().name().toLowerCase()+"profile.jsp";
-
 
         if (password.equals(password2)) {
             try {
                 userService.update(firstName, lastName, password, user);
                 request.setAttribute("successSave", SUCCESS_SAVE);
             } catch (SQLException e) {
-                //TODO
-//                log.info("cant save new password");
+                log.info("Cant save new parameters for user" + user.getEmail());
             }
         }
         else {

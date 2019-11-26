@@ -1,25 +1,15 @@
 package com.training.salon.controller.command;
 
-import com.training.salon.controller.exception.BookException;
 import com.training.salon.model.entity.Master;
-import com.training.salon.model.entity.Procedure;
-import com.training.salon.model.entity.Schedule;
 import com.training.salon.model.entity.User;
 import com.training.salon.model.service.CommentService;
 import com.training.salon.model.service.MasterService;
 import com.training.salon.model.service.ProcedureService;
-import com.training.salon.model.service.ScheduleService;
 
-import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
-import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ResourceBundle;
 
 public class MasterCommand implements ICommand {
 
@@ -35,18 +25,21 @@ public class MasterCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
+
+        Optional<String> locale = Optional.ofNullable((String) request.getSession().getAttribute("lang"));
+        ResourceBundle bundle = ResourceBundle.getBundle("messages",
+                new Locale(locale.orElse("en")));
+        if (Optional.ofNullable(request.getParameter("masterId")).isEmpty())
+            return request.getHeader("referer");
         Long masterId = Long.valueOf(request.getParameter("masterId"));
         Optional<Master> master = masterService.getById(masterId);
+        if (master.isEmpty())
+            return "redirect:/" + request.getSession().getAttribute("role").toString().toLowerCase() + "/masterlist";
 
         request.setAttribute("comments", commentService.getAllByMaster(masterId));
         request.setAttribute("procedures", procedureService.getAllProceduresByMaster(masterId));
         master.ifPresent(m -> request.setAttribute("master", m));
 
-        if (request.getSession().getAttribute("role").equals(User.Role.ADMIN))
-            return "/WEB-INF/admin/master.jsp";
-        else if (request.getSession().getAttribute("role").equals(User.Role.MASTER))
-            return "/WEB-INF/master/master.jsp";
-        else
-            return "/WEB-INF/user/master.jsp";
+        return "/WEB-INF/" + request.getSession().getAttribute("role").toString().toLowerCase() + "/master.jsp";
     }
 }
