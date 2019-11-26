@@ -1,10 +1,11 @@
 <html>
 <head>
+    <%@ include file="masterpart/masternavbar.jsp" %>
     <title><fmt:message key="schedule"/></title>
 </head>
 <body>
 
-<%@ include file="masterpart/masternavbar.jsp" %>
+
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-10 col-md-offset-1" style="padding-top: 50px">

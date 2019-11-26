@@ -1,10 +1,10 @@
 <html>
 <head>
+    <%@ include file="userpart/usernavbar.jsp" %>
     <title><fmt:message key="procedures"/></title>
 </head>
 <body>
-<%@ include file="userpart/usernavbar.jsp" %>
-<div class="container" style="margin-top: 60px">
+<div class="container" style="margin-top: 100px">
     <form autocomplete="off" novalidate>
         <div class="menu">
         <c:forEach items="${categories}" var="i">

@@ -1,15 +1,15 @@
 <html>
 <head>
-    <title>Procedures</title>
+    <%@ include file="userpart/usernavbar.jsp" %>
+    <title><fmt:message key="procedures"/></title>
 </head>
 <body>
-<%@ include file="userpart/usernavbar.jsp" %>
-<div class="container" style="margin-top: 60px">
+
+<div class="container" style="margin-top: 100px">
     <div class="row">
         <c:if test="${procedures ne null}">
             <div class="col-sm-6">
-                <img class="card-img" src="data:image/png;base64,${procedures[0].category.image}" alt="..." height="400"
-                     style=" display: block; margin: 0 auto; margin-top: 5px">
+                <img class="card-img" src="data:image/png;base64,${procedures[0].category.image}" alt="..." height="400" style=" display: block; margin: 0 auto; margin-top: 5px">
             </div>
             <div class="col-sm-6">
                 <h2>${procedures[0].category.name}</h2>

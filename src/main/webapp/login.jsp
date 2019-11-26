@@ -1,11 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <%@ include file="WEB-INF/parts/common.jsp" %>
     <title><fmt:message key="login"/></title>
 </head>
 <body>
-<%@ include file="WEB-INF/parts/common.jsp" %>
+
 <div class="panel panel-default">
 <div class="login-page">
     <div class="col-md-offset-4 col-md-3" style="padding-top: 100px">

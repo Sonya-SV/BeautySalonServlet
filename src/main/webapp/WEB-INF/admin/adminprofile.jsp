@@ -9,8 +9,7 @@
                     <h3 class="panel-title" style="display: inline-block">${user.email}</h3>
                 </div>
                 <div class="panel-body">
-                    <form action="${pageContext.request.contextPath}/beauty-salon/admin/profile" autocomplete="off"
-                          novalidate>
+                    <form action="${pageContext.request.contextPath}/beauty-salon/admin/profile">
                         <div class="form-group">
                             <label id="exampleInputFirstNameLabel"><fmt:message key="first.name"/></label>
                             <input type="text" class="form-control" name="firstName" value="${user.firstName}" required>
@@ -21,17 +20,15 @@
                         </div>
                         <div class="form-group">
                             <label><fmt:message key="password"/></label>
-                            <input type="password" class="form-control" name="password" required>
+                            <input required type="password" class="form-control" name="password" >
                             <div class="text-danger">
-                                ${password2Error}
                                 ${passwordErrorDiffer}
                             </div>
                         </div>
                         <div class="form-group">
                             <label><fmt:message key="password"/></label>
-                            <input type="password" class="form-control" name="password2" required>
+                            <input required type="password" class="form-control" name="password2" >
                             <div class="text-danger">
-                                ${password2Error}
                                 ${passwordErrorDiffer}
                             </div>
                         </div>

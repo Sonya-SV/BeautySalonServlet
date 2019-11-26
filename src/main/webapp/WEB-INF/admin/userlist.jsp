@@ -1,10 +1,9 @@
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <%@ include file="adminpart/adminnavbar.jsp" %>
     <title><fmt:message key="user.list"/></title>
 </head>
 <body>
-<%@ include file="adminpart/adminnavbar.jsp" %>
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3" style="padding-top: 50px">
@@ -23,7 +22,7 @@
                         <td>${i.email}</td>
                         <td>${i.firstName}</td>
                         <td>${i.lastName}</td>
-                        <td> ${i.role}</td>
+                        <td>${i.role}</td>
                     </tr>
                 </c:forEach>
             </table>

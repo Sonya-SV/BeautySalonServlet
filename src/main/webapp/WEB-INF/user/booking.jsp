@@ -1,9 +1,9 @@
 <html>
 <head>
-    <title>Title</title>
+    <%@ include file="userpart/usernavbar.jsp" %>
+    <title><fmt:message key="book"/></title>
 </head>
 <body>
-<%@ include file="userpart/usernavbar.jsp" %>
 <div class="container" style="margin-top: 100px">
     <div class="row">
         <div class="col-md-5">
@@ -13,23 +13,37 @@
             </div>
         </div>
         <div class="col-md-7">
+            <c:if test="${errorProcedure ne null}">
+                <div class="alert alert-danger">
+                        ${errorProcedure}
+                </div>
+            </c:if>
+            <c:if test="${discrepancy ne null}">
+                <div class="alert alert-danger">
+                        ${discrepancy}
+                </div>
+                <a href="${pageContext.request.contextPath}/beauty-salon/user/master?masterId=${schedule.master.id}">
+                    Choose another procedure
+                </a>
+            </c:if>
             <c:forEach items="${scheduleDate}" var="date">
                 <form action="${pageContext.request.contextPath}/beauty-salon/user/order" role="form">
                     <ul class="media-list">
                     <li class="media">
                         <div class="media-body">
-                        <div class="medi-heading">
-                            <div class="autor"><h4>${date}</h4></div>
-                        </div>
-                        <div class="media-text text-justify">
+                            <div class="medi-heading">
+                                <div class="autor"><h4>${date}</h4></div>
+                            </div>
+                            <div class="media-text text-justify">
                             <c:forEach var="time" items="${availableTime}">
                                 <c:set var="count" value="0"/>
                                 <c:forEach var="busy" items="${busySchedule}">
-                                    <c:if test="${time eq busy.time && date eq busy.date && schedule.master.id eq busy.master.id}">
+                                    <c:if test="${time eq busy.time && date eq busy.date
+                                    && schedule.master.id eq busy.master.id }">
                                         <label class="radio-label" style="text-decoration: line-through;">
                                             <div class="radio1">
                                                 <input class="radio-input" type="submit"
-                                                       value=${time} name="time" disabled/>${time}
+                                                       value=${time} name="timeOrder" disabled/>${time}
                                             </div>
                                         </label>
                                         <c:set var="count" value="1"/>
@@ -39,12 +53,12 @@
                                     <label class="radio-label">
                                         <div class="radio1">
                                             <input class="radio-input" type="submit"
-                                                   value=${time} name="time"/>${time}
+                                                   value=${time} name="timeOrder"/>${time}
                                         </div>
                                     </label>
                                 </c:if>
                             </c:forEach>
-                        </div>
+                            </div>
                         </div>
                     </li>
                     </ul>

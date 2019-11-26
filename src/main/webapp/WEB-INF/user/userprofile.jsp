@@ -9,9 +9,7 @@
                     <h3 class="panel-title" style="display: inline-block"><fmt:message key="edit.profile"/></h3>
                 </div>
                 <div class="panel-body">
-                    <form name="form" action="${pageContext.request.contextPath}/beauty-salon/user/profile"
-                          autocomplete="off" novalidate
-                          ng-submit="form.$valid ">
+                    <form action="${pageContext.request.contextPath}/beauty-salon/user/profile" >
                         <c:if test="${successSave ne null}">
                             <div class="alert alert-success">
                                     ${successSave}
@@ -19,7 +17,7 @@
                         </c:if>
                         <div class="form-group">
                             <label ><fmt:message key="email"/>:   </label>
-                            <b class="form-control-static"> ${user.email}</b>
+                            <p class="form-control-static"> ${user.email}</p>
                         </div>
 
                         <div class="form-group">
@@ -32,17 +30,15 @@
                         </div>
                         <div class="form-group">
                             <label><fmt:message key="password"/></label>
-                            <input type="password" class="form-control" name="password" required>
+                            <input required type="password" class="form-control" name="password">
                             <div class="text-danger">
-                                ${password2Error}
                                 ${passwordErrorDiffer}
                             </div>
                         </div>
                         <div class="form-group">
                             <label><fmt:message key="password"/></label>
-                            <input type="password" class="form-control" name="password2" required>
+                            <input required type="password" class="form-control" name="password2">
                             <div class="text-danger">
-                                ${password2Error}
                                 ${passwordErrorDiffer}
                             </div>
                         </div>

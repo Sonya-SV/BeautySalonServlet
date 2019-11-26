@@ -1,10 +1,10 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsf/html" %>
 <html>
 <head>
+    <%@ include file="WEB-INF/parts/common.jsp" %>
     <title><fmt:message key="registration"/></title>
 </head>
 <body>
-<%@ include file="WEB-INF/parts/common.jsp" %>
+
 <div class="login-page">
     <div class="col-md-offset-4 col-md-3" style="padding-top: 100px">
         <div class="login-block">
@@ -19,13 +19,13 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user ti-user"></i></span>
-                        <input type="text" class="form-control" name="email" placeholder="<fmt:message key="email"/>">
+                        <input required type="text" class="form-control" name="email" placeholder="<fmt:message key="email"/>">
                     </div>
                 </div>
                 <hr class="hr-xs">
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lock ti-unlock"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-check"></i></span>
                         <input type="text" class="form-control" name="firstName"
                                placeholder="<fmt:message key="first.name"/>">
                     </div>
@@ -33,7 +33,7 @@
                 <hr class="hr-xs">
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lock ti-unlock"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-check"></i></span>
                         <input type="text" class="form-control" name="lastName"
                                placeholder="<fmt:message key="last.name"/>">
                     </div>
@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock ti-unlock"></i></span>
-                        <input type="password" class="form-control" name="password"
+                        <input required type="password" class="form-control" name="password"
                                placeholder="<fmt:message key="password"/>">
                     </div>
                 </div>
