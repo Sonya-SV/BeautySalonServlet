@@ -61,7 +61,12 @@ public class JDBCProcedureDao implements ProcedureDao {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+//            logger.warn("close() SQLException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

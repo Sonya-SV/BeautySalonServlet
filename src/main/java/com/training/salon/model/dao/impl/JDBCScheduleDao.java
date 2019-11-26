@@ -1,6 +1,7 @@
 package com.training.salon.model.dao.impl;
 
 import com.training.salon.controller.exception.BookException;
+import com.training.salon.controller.exception.DiscrepancyException;
 import com.training.salon.model.dao.ScheduleDao;
 import com.training.salon.model.entity.Procedure;
 import com.training.salon.model.entity.Schedule;
@@ -100,16 +101,21 @@ public class JDBCScheduleDao implements ScheduleDao {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+//            logger.warn("close() SQLException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void saveToSchedule(Schedule schedule) throws BookException {
         final String queryInsert = "insert into schedule(date, time, master_id, user_id, proced_id, done, client_first_name, client_last_name) values (?,?,?,?,?,?,?,?)";
-        final String queryCheck = "select * from schedule where date=? and time = ? and master_id=?";
-
+        final String queryCheckBusy = "select * from schedule where date=? and time = ? and master_id=?";
         try (PreparedStatement stInsert = connection.prepareStatement(queryInsert);
-             PreparedStatement stCheck = connection.prepareStatement(queryCheck)) {
+             PreparedStatement stCheckBusy = connection.prepareStatement(queryCheckBusy)) {
+
             stInsert.setDate(1, Date.valueOf(schedule.getDate()));
             stInsert.setTime(2, Time.valueOf(schedule.getTime()));
             stInsert.setLong(3, schedule.getMaster().getId());
@@ -120,14 +126,14 @@ public class JDBCScheduleDao implements ScheduleDao {
             stInsert.setString(8, schedule.getClientLastName());
 
 
-            stCheck.setDate(1, Date.valueOf(schedule.getDate()));
-            stCheck.setTime(2, Time.valueOf(schedule.getTime()));
-            stCheck.setLong(3, schedule.getMaster().getId());
+            stCheckBusy.setDate(1, Date.valueOf(schedule.getDate()));
+            stCheckBusy.setTime(2, Time.valueOf(schedule.getTime()));
+            stCheckBusy.setLong(3, schedule.getMaster().getId());
 
 
             connection.setAutoCommit(false);
 
-            ResultSet rs = stCheck.executeQuery();
+            ResultSet rs = stCheckBusy.executeQuery();
             if (rs.next())
                 throw new BookException();
 
@@ -152,7 +158,7 @@ public class JDBCScheduleDao implements ScheduleDao {
             st.setLong(1, scheduleId);
             st.execute();
         } catch (SQLException e) {
-            System.out.println("already done");
+            e.printStackTrace();
         }
     }
 

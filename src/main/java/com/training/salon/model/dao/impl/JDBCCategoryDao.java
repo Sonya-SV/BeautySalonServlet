@@ -43,6 +43,7 @@ public class JDBCCategoryDao implements CategoryDao{
                 Category category = categoryMapper.extractFromResultSet(rs);
                 categories.putIfAbsent(category.getId(), category);
             }
+            rs.close();
                return new ArrayList<>(categories.values());
 
         } catch (SQLException e) {
@@ -63,6 +64,11 @@ public class JDBCCategoryDao implements CategoryDao{
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+//            logger.warn("close() SQLException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

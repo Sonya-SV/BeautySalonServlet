@@ -101,6 +101,11 @@ public class JDBCCommentDao implements CommentDao {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+//            logger.warn("close() SQLException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

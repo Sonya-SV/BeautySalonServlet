@@ -3,6 +3,7 @@ package com.training.salon.model.dao.impl;
 import com.training.salon.model.dao.UserDao;
 import com.training.salon.model.entity.User;
 import com.training.salon.model.mapper.UserMapper;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -21,15 +22,15 @@ public class JDBCUserDao implements UserDao {
     public void create(User entity) throws SQLException {
         final String query = "insert into user(email, first_name, last_name, password, role) values (?,?,?,?,?)";
         try (PreparedStatement st = connection.prepareStatement(query)) {
-            st.setString (1, entity.getEmail());
-            st.setString   (2, entity.getFirstName());
+            st.setString(1, entity.getEmail());
+            st.setString(2, entity.getFirstName());
             st.setString(3, entity.getLastName());
             st.setString(4, entity.getPassword());
             st.setString(5, entity.getRole().name());
             st.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw new SQLException();
         }
     }
@@ -103,26 +104,46 @@ public class JDBCUserDao implements UserDao {
         }
     }
 
-    @Override
-    public Optional<User> findByEmailAndPassword(String email, String password) {
-        final String query = "select * from user where email=? && password =?";
-        try (PreparedStatement st = connection.prepareStatement(query)) {
-            st.setString (1, email);
-            st.setString (2, password);
-            UserMapper userMapper = new UserMapper();
+//    @Override
+//    public Optional<User> findByEmailAndPassword(String email, String password) {
+//        final String query = "select * from user where email=? && password =?";
+//        try (PreparedStatement st = connection.prepareStatement(query)) {
+//            st.setString (1, email);
+//            st.setString (2, password);
+//            UserMapper userMapper = new UserMapper();
+//
+//            ResultSet rs = st.executeQuery();
+//            Optional<User> user=Optional.empty();
+//            if(rs.next())
+//                user=Optional.of(userMapper.extractFromResultSet(rs));
+//            return user;
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return Optional.empty();
+//    }
+@Override
+public Optional<User> findByEmailAndPassword(String email) {
+    final String query = "select * from user where email=?";
+    try (PreparedStatement st = connection.prepareStatement(query)) {
+        st.setString (1, email);
+//        st.setString (2, password);
+        UserMapper userMapper = new UserMapper();
 
-            ResultSet rs = st.executeQuery();
-            Optional<User> user=Optional.empty();
-            if(rs.next())
-                user=Optional.of(userMapper.extractFromResultSet(rs));
-            return user;
+        ResultSet rs = st.executeQuery();
+        Optional<User> user=Optional.empty();
+        if(rs.next())
+            user=Optional.of(userMapper.extractFromResultSet(rs));
+        return user;
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return Optional.empty();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    return Optional.empty();
+}
 
     @Override
     public List<User> findAllMasters() {
