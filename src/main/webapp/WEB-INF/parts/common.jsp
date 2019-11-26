@@ -31,23 +31,23 @@
 <div class="header">
     <div class="navbar-fixed-top">
         <div class="navbar navbar-default">
-            <div class="container">
-                <a class="navbar-brand" href="${pageContext.request.contextPath}/">Beauty</a>
-                <ul class="nav navbar-nav">
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="${pageContext.request.contextPath}/beauty-salon/login"><span
-                            class="glyphicon glyphicon-log-in"></span><fmt:message key="login"/></a></li>
-                    <li><a href="${pageContext.request.contextPath}/beauty-salon/registration"><span
-                            class="glyphicon glyphicon-user"></span><fmt:message key="registration"/></a></li>
-                    <li><a href="?lang=ua">
-                        <img alt="Українська" height="42" src="https://cdn3.iconfinder.com/data/icons/finalflags/256/Ukraine-Flag.png" width="42">
-                    </a></li>
-                    <li><a href="?lang=en">
-                        <img alt="Англійська" height="42" src="http://abali.ru/wp-content/uploads/2010/12/united-kingdom-flag.png" width="42">
-                    </a></li>
-                </ul>
-            </div>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/">Beauty</a>
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="${pageContext.request.contextPath}/beauty-salon/login"><span
+                        class="glyphicon glyphicon-log-in"></span><fmt:message key="login"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/beauty-salon/registration"><span
+                        class="glyphicon glyphicon-user"></span><fmt:message key="registration"/></a></li>
+                <li><a href="?lang=ua">
+                    <img alt="Українська" height="42"
+                         src="https://cdn3.iconfinder.com/data/icons/finalflags/256/Ukraine-Flag.png" width="42">
+                </a></li>
+                <li><a href="?lang=en">
+                    <img alt="Англійська" height="42"
+                         src="http://abali.ru/wp-content/uploads/2010/12/united-kingdom-flag.png" width="42">
+                </a></li>
+            </ul>
         </div>
     </div>
 </div>
