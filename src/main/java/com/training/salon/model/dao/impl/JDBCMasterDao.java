@@ -27,7 +27,10 @@ public class JDBCMasterDao implements MasterDao {
 
     @Override
     public Optional<Master> findById(Long id) {
-        final String query = " select * from master inner join user using (user_id) where master_id = ?";
+        final String query = " select * from master " +
+                "inner join user using (user_id) " +
+                "inner join category using (category_id)" +
+                "where master_id = ?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, id);
             ResultSet rs = st.executeQuery();
@@ -48,7 +51,9 @@ public class JDBCMasterDao implements MasterDao {
     @Override
     public List<Master> findAll() {
         Map<Long, Master> masters = new HashMap<>();
-        final String query = " select * from master inner join user using (user_id)";
+        final String query = " select * from master " +
+                "inner join user using (user_id)" +
+                "inner join category using (category_id)";
         try (Statement st = connection.createStatement()) {
             ResultSet rs = st.executeQuery(query);
 
@@ -82,14 +87,15 @@ public class JDBCMasterDao implements MasterDao {
         try {
             connection.close();
         } catch (SQLException e) {
-//            logger.warn("close() SQLException: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public Optional<Master> getMaster(Long userId) {
-        final String query = " select * from master inner join user using (user_id) where user_id = ?";
+        final String query = "select * from master inner join user using (user_id) " +
+                "inner join category using (category_id)" +
+                "where user_id = ?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, userId);
             ResultSet rs = st.executeQuery();
@@ -132,7 +138,8 @@ public class JDBCMasterDao implements MasterDao {
 
     @Override
     public void isProcedureAccordToMaster(Long masterId, Long procedureId) throws DiscrepancyException {
-        final String queryCheckDiscrepancy = "SELECT * FROM master inner join proced using (category_id) where proced_id =? and master_id = ?";
+        final String queryCheckDiscrepancy = "SELECT * FROM master inner join proced using (category_id) " +
+                "where proced_id =? and master_id = ?";
 
         try(PreparedStatement st = connection.prepareStatement(queryCheckDiscrepancy)) {
             st.setLong(1, procedureId);
@@ -148,7 +155,7 @@ public class JDBCMasterDao implements MasterDao {
 
     @Override
     public void checkTimeForMaster(Long masterId, LocalTime time) throws DiscrepancyException {
-        final String query = "SELECT * FROM master where master_id = ? and time_start>=? and time_end<?";
+        final String query = "SELECT * FROM master where master_id = ? and time_start<=? and time_end>?";
         try(PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, masterId);
             st.setTime(2, Time.valueOf(time));

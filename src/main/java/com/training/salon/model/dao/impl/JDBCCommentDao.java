@@ -38,6 +38,7 @@ public class JDBCCommentDao implements CommentDao {
         Map<Long, Comment> comments = new HashMap<>();
         final String query = " select * from comment inner join user using (user_id) " +
                 "inner join master using (master_id) " +
+                "inner join category using (category_id)" +
                 "where master_id=? order by date desc";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, masterId);
