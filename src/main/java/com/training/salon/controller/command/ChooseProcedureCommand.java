@@ -2,20 +2,14 @@ package com.training.salon.controller.command;
 
 import com.training.salon.controller.exception.DiscrepancyException;
 import com.training.salon.model.entity.Master;
-import com.training.salon.model.entity.Procedure;
 import com.training.salon.model.entity.Schedule;
 import com.training.salon.model.service.MasterService;
 import com.training.salon.model.service.ProcedureService;
 import com.training.salon.model.service.ScheduleService;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -23,7 +17,7 @@ import java.util.stream.Stream;
 import static com.training.salon.controller.command.ITextConstant.PROCEDURE_ERROR;
 
 public class ChooseProcedureCommand implements ICommand {
-    private static final Logger log = LogManager.getLogger(ChooseProcedureCommand.class);
+
     private ScheduleService scheduleService;
     private ProcedureService procedureService;
     private MasterService masterService;
@@ -36,10 +30,13 @@ public class ChooseProcedureCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Long masterId = Long.valueOf(request.getParameter("masterId"));
-        Long procedureId = Long.valueOf(request.getParameter("procedureId"));
+        String masterId = request.getParameter("masterId");
+        String procedureId = request.getParameter("procedureId");
 
-        Optional<Master> master = masterService.getById(masterId);
+        if(Optional.ofNullable(masterId).isEmpty())
+            return  "redirect:/"+ request.getHeader("referer").replaceAll(".*/beauty-salon/","");
+
+        Optional<Master> master = masterService.getById(Long.valueOf(masterId));
         if (master.isEmpty())
             return "redirect:/" + request.getSession().getAttribute("role").toString().toLowerCase() + "/masterlist";
 
@@ -47,7 +44,7 @@ public class ChooseProcedureCommand implements ICommand {
         Schedule schedule = new Schedule();
         schedule.setMaster(master.get());
         request.getSession().setAttribute("schedule", schedule);
-        request.setAttribute("busySchedule", scheduleService.getScheduleForMaster(masterId));
+        request.setAttribute("busySchedule", scheduleService.getScheduleForMaster(Long.valueOf(masterId)));
 
         request.setAttribute("scheduleDate", Stream.iterate(LocalDate.now(), curr -> curr.plusDays(1))
                 .limit(ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusDays(7)))
@@ -58,13 +55,12 @@ public class ChooseProcedureCommand implements ICommand {
                 .collect(Collectors.toList()));
 
         try {
-            masterService.isProcedureAccordToMaster(masterId, procedureId);
+            masterService.isProcedureAccordToMaster(Long.valueOf(masterId), Long.valueOf(procedureId));
         } catch (DiscrepancyException e) {
-            request.setAttribute("discrepancy", "Master doesn't do such procedure");
+            request.setAttribute("discrepancy", PROCEDURE_ERROR);
             return "/WEB-INF/"+request.getSession().getAttribute("role").toString().toLowerCase() + "/booking.jsp";
         }
-        procedureService.getProcedureById(procedureId).ifPresent(schedule::setProcedure);
-
+        procedureService.getProcedureById(Long.valueOf(procedureId)).ifPresent(schedule::setProcedure);
         return "/WEB-INF/"+request.getSession().getAttribute("role").toString().toLowerCase()+"/booking.jsp";
     }
 }
