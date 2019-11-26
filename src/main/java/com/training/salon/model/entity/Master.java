@@ -5,6 +5,7 @@ import java.time.LocalTime;
 public class Master {
     private Long id;
     private User user;
+    private Category category;
     private LocalTime timeStart;
     private LocalTime timeEnd;
     private String photo;
@@ -27,6 +28,14 @@ public class Master {
 
     public LocalTime getTimeStart() {
         return timeStart;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public void setTimeStart(LocalTime timeStart) {
@@ -74,6 +83,11 @@ public class Master {
 
         public Builder user(User user) {
             Master.this.user = user;
+            return this;
+        }
+
+        public Builder category(Category category) {
+            Master.this.category = category;
             return this;
         }
 

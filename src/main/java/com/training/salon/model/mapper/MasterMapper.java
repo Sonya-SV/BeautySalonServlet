@@ -14,6 +14,7 @@ public class MasterMapper implements ObjectMapper<Master> {
         return Master.builder()
                 .id(rs.getLong("master_id"))
                 .user(new UserMapper().extractFromResultSet(rs))
+                .category(new CategoryMapper().extractFromResultSet(rs))
                 .timeStart(rs.getTime("time_start").toLocalTime())
                 .timeEnd(rs.getTime("time_end").toLocalTime())
                 .photo(new String(Base64.getEncoder().encode(rs.getBytes("photo")), StandardCharsets.UTF_8))
