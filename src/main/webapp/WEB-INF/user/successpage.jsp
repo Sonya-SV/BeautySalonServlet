@@ -7,7 +7,7 @@
 
 <div class="container" style="margin-top: 60px">
     <div class="row">
-        <h1>Thank you!</h1>
+        <h1 align="center"><fmt:message key="created.record"/></h1>
     </div>
 </div>
 </body>

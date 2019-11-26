@@ -1,7 +1,7 @@
 package com.training.salon;
 
-import com.training.salon.controller.command.*;
 import com.training.salon.controller.command.Exception;
+import com.training.salon.controller.command.*;
 import com.training.salon.model.service.*;
 
 import javax.servlet.ServletConfig;
@@ -30,38 +30,49 @@ public class Servlet extends HttpServlet {
         commands.put("login", new Login(new UserService()));
         commands.put("registration", new Registration(new UserService()));
         commands.put("exception", new Exception());
-        commands.put("admin/userList", new UserList(new UserService()));
-        commands.put("user/masterList", new MasterList(new MasterService()));
-        commands.put("master/masterList", new MasterList(new MasterService()));
-        commands.put("admin/masterList", new MasterList(new MasterService()));
+        commands.put("successpage", new SuccessPageCommand());
+        commands.put("admin/userlist", new UserList(new UserService()));
+        commands.put("user/masterlist", new MasterList(new MasterService()));
+        commands.put("master/masterlist", new MasterList(new MasterService()));
+        commands.put("admin/masterlist", new MasterList(new MasterService()));
         commands.put("user/procedures", new ProcedureCommand(new ProcedureService(), new MasterService()));
-        commands.put("user/categoryList", new CategoryCommand(new CategoryService()));
+        commands.put("master/procedures", new ProcedureCommand(new ProcedureService(), new MasterService()));
+        commands.put("admin/procedures", new ProcedureCommand(new ProcedureService(), new MasterService()));
+        commands.put("user/categorylist", new CategoryCommand(new CategoryService()));
+        commands.put("master/categorylist", new CategoryCommand(new CategoryService()));
+        commands.put("admin/categorylist", new CategoryCommand(new CategoryService()));
         commands.put("user/master", new MasterCommand(new ProcedureService(), new MasterService(), new CommentService()));
         commands.put("master/master", new MasterCommand(new ProcedureService(), new MasterService(), new CommentService()));
         commands.put("admin/master", new MasterCommand(new ProcedureService(), new MasterService(), new CommentService()));
         commands.put("user/booking", new ChooseProcedureCommand( new ScheduleService(),new ProcedureService(), new MasterService()));
+        commands.put("master/booking", new ChooseProcedureCommand( new ScheduleService(),new ProcedureService(), new MasterService()));
+        commands.put("admin/booking", new ChooseProcedureCommand( new ScheduleService(),new ProcedureService(), new MasterService()));
         commands.put("master/schedule", new MasterSchedule(new MasterService(), new ScheduleService()));
         commands.put("admin/schedule", new MasterSchedule(new MasterService(), new ScheduleService()));
-        commands.put("user/comment", new SendComment(new CommentService(), new MasterService(), new ProcedureService()));
-        commands.put("admin/comments", new CommentsCommand(new CommentService()));
-        commands.put("master/sendemail", new SendEmail(new ScheduleService()));
+        commands.put("user/comment", new SendComment(new CommentService(), new MasterService()));
+        commands.put("master/comment", new SendComment(new CommentService(), new MasterService()));
+        commands.put("admin/comment", new SendComment(new CommentService(), new MasterService()));
+        commands.put("master/sendemail", new SendEmail(new ScheduleService(), new MailSender()));
+        commands.put("admin/sendemail", new SendEmail(new ScheduleService(), new MailSender()));
+        commands.put("user/save", new ScheduleNote(new ScheduleService()));
+        commands.put("master/save", new ScheduleNote(new ScheduleService()));
+        commands.put("admin/save", new ScheduleNote(new ScheduleService()));
         commands.put("user/profile", new Profile(new UserService()));
         commands.put("master/profile", new Profile(new UserService()));
         commands.put("admin/profile", new Profile(new UserService()));
-        commands.put("user/order", new OrderCommand(new ScheduleService()));
-        commands.put("user/save", new ScheduleNote(new ScheduleService()));
-//        commands.put("user/success", new OrderCommand(new ScheduleService()));
+        commands.put("user/order", new OrderCommand(new MasterService()));
+        commands.put("master/order", new OrderCommand(new MasterService()));
+        commands.put("admin/order", new OrderCommand(new MasterService()));
+
     }
 
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response)
-            throws IOException, ServletException {
-
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         processRequest(request, response);
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         processRequest(request, response);
     }
 
@@ -69,10 +80,8 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        System.out.println(path);
         path = path.replaceAll(".*/beauty-salon/", "");
-
-        ICommand command = commands.getOrDefault(path, (r) -> "/index.jsp");
+        ICommand command = commands.getOrDefault(path, (r) -> "");
         String page = command.execute(request);
 
         if (page.contains("redirect:")) {
