@@ -34,7 +34,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a><span class="glyphicon glyphicon-user"></span> ${sessionScope.user.email}</a></li>
-                <li><a href="${pageContext.request.contextPath}/beauty-salon/${pageContext.session.getAttribute("role")}/profile"> <fmt:message key="profile"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/beauty-salon/user/profile"> <fmt:message key="profile"/></a></li>
                 <li><a href="${pageContext.request.contextPath}/beauty-salon/logout"><span
                         class="glyphicon glyphicon-log-out"></span> <fmt:message key="logout"/> </a></li>
                 <li><a href="?lang=ua">

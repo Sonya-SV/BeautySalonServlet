@@ -28,9 +28,10 @@ public class Profile implements ICommand {
         String password2 = request.getParameter("password2");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
-        User user = (User)request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
+        String role = request.getSession().getAttribute("role").toString().toLowerCase();
         if (Optional.ofNullable(password).isEmpty())
-            return "/WEB-INF/" + user.getRole().name().toLowerCase()+ "/"+ user.getRole().name().toLowerCase()+"profile.jsp";
+            return "/WEB-INF/" + role + "/" + role + "profile.jsp";
 
         if (password.equals(password2)) {
             try {
@@ -39,14 +40,9 @@ public class Profile implements ICommand {
             } catch (SQLException e) {
                 log.info("Cant save new parameters for user" + user.getEmail());
             }
-        }
-        else {
+        } else {
             request.setAttribute("passwordErrorDiffer", PASSWORD_DIFFERENT);
         }
-        if(request.getSession().getAttribute("role").equals(User.Role.ADMIN))
-            return "/WEB-INF/admin/adminprofile.jsp";
-        else if(request.getSession().getAttribute("role").equals(User.Role.MASTER))
-            return "/WEB-INF/master/masterprofile.jsp";
-        else return "/WEB-INF/user/userprofile.jsp";
+        return "/WEB-INF/" + role + "/" + role + "profile.jsp";
     }
 }
