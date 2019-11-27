@@ -12,6 +12,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.training.salon.controller.command.IConstant.DAYS_IN_SCHEDULE;
+
 
 public class MasterSchedule implements ICommand {
     private MasterService masterService;
@@ -36,7 +38,7 @@ public class MasterSchedule implements ICommand {
         if (master.isEmpty()) return "redirect:/";
         request.setAttribute("schedule", scheduleService.getScheduleForMaster(master.get().getId()));
         request.setAttribute("dates", Stream.iterate(LocalDate.now(), curr -> curr.plusDays(1))
-                .limit(ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusDays(7)))
+                .limit(ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusDays(DAYS_IN_SCHEDULE)))
                 .collect(Collectors.toList()));
 
         request.setAttribute("workTime", Stream.iterate(master.get().getTimeStart(), curr -> curr.plusHours(1))

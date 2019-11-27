@@ -12,6 +12,8 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static com.training.salon.controller.command.IConstant.DAYS_IN_SCHEDULE;
+
 public class OrderCommand implements ICommand {
 
     private MasterService masterService;
@@ -37,7 +39,7 @@ public class OrderCommand implements ICommand {
         try {
             masterService.checkTimeForMaster(scheduleNote.getMaster().getId(), LocalTime.parse(timeOrder));
             if (LocalDate.parse(dateOrder).isBefore(LocalDate.now()) ||
-                    LocalDate.parse(dateOrder).isAfter(LocalDate.now().plusDays(7)))
+                    LocalDate.parse(dateOrder).isAfter(LocalDate.now().plusDays(DAYS_IN_SCHEDULE)))
                 throw new DiscrepancyException();
         } catch (DiscrepancyException e) {
             request.setAttribute("timeError", bundle.getString("unavailable.time"));

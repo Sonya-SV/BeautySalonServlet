@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.training.salon.controller.command.IConstant.DAYS_IN_SCHEDULE;
+
 public class ChooseProcedureCommand implements ICommand {
 
     private ScheduleService scheduleService;
@@ -42,14 +44,13 @@ public class ChooseProcedureCommand implements ICommand {
         if (master.isEmpty())
             return "redirect:/" + request.getSession().getAttribute("role").toString().toLowerCase() + "/masterlist";
 
-
         Schedule schedule = new Schedule();
         schedule.setMaster(master.get());
         request.getSession().setAttribute("schedule", schedule);
         request.setAttribute("busySchedule", scheduleService.getScheduleForMaster(Long.valueOf(masterId)));
 
         request.setAttribute("scheduleDate", Stream.iterate(LocalDate.now(), curr -> curr.plusDays(1))
-                .limit(ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusDays(7)))
+                .limit(ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusDays(DAYS_IN_SCHEDULE)))
                 .collect(Collectors.toList()));
 
         request.setAttribute("availableTime", Stream.iterate(master.get().getTimeStart(), curr -> curr.plusHours(1))
