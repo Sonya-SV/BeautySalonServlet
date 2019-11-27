@@ -25,6 +25,8 @@ public class MasterSchedule implements ICommand {
     @Override
     public String execute(HttpServletRequest request) {
         Optional<Master> master;
+        if (Optional.ofNullable(request.getParameter("masterId")).isEmpty())
+            return "redirect:/"+ request.getHeader("referer").replaceAll(".*/beauty-salon/","");
         if (request.getSession().getAttribute("role").equals(User.Role.ADMIN)) {
             master = masterService.getById(Long.valueOf(request.getParameter("masterId")));
         } else
