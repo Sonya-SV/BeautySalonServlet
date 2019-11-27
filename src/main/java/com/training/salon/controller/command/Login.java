@@ -5,11 +5,12 @@ import com.training.salon.model.entity.User;
 import com.training.salon.model.service.UserService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.mindrot.jbcrypt.BCrypt;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
-import static com.training.salon.controller.command.ITextConstant.USER_ERROR;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -29,11 +30,13 @@ public class Login implements ICommand {
 
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
+        ResourceBundle bundle = ResourceBundle.getBundle("messages",
+                new Locale(Optional.ofNullable( (String) request.getSession().getAttribute("lang")).orElse("en")));
         if (isNull(email)) return "/login.jsp";
         Optional<User> user = userService.login(email, pass);
         if (user.isEmpty()) {
             log.info("Invalid attempt of user email: '" + email + "'");
-            request.setAttribute("userError", USER_ERROR);
+            request.setAttribute("userError", bundle.getString("user.error"));
             return "/login.jsp";
         }
         request.getSession().setAttribute("user", user.get());

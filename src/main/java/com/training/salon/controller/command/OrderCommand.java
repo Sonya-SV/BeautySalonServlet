@@ -8,10 +8,9 @@ import com.training.salon.model.service.MasterService;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Locale;
 import java.util.Optional;
-
-import static com.training.salon.controller.command.ITextConstant.DAYS_iN_SCHEDULE;
-import static com.training.salon.controller.command.ITextConstant.UNAVAILABLE_TIME;
+import java.util.ResourceBundle;
 
 public class OrderCommand implements ICommand {
 
@@ -27,7 +26,8 @@ public class OrderCommand implements ICommand {
         String timeOrder = request.getParameter("timeOrder");
         User user = (User) request.getSession().getAttribute("user");
         Schedule scheduleNote = (Schedule) request.getSession().getAttribute("schedule");
-
+        ResourceBundle bundle = ResourceBundle.getBundle("messages",
+                new Locale(Optional.ofNullable( (String) request.getSession().getAttribute("lang")).orElse("en")));
         if(Optional.ofNullable(timeOrder).isEmpty())
             return  "redirect:/"+ request.getHeader("referer").replaceAll(".*/beauty-salon/","");
 
@@ -37,10 +37,10 @@ public class OrderCommand implements ICommand {
         try {
             masterService.checkTimeForMaster(scheduleNote.getMaster().getId(), LocalTime.parse(timeOrder));
             if (LocalDate.parse(dateOrder).isBefore(LocalDate.now()) ||
-                    LocalDate.parse(dateOrder).isAfter(LocalDate.now().plusDays(DAYS_iN_SCHEDULE)))
+                    LocalDate.parse(dateOrder).isAfter(LocalDate.now().plusDays(7)))
                 throw new DiscrepancyException();
         } catch (DiscrepancyException e) {
-            request.setAttribute("timeError", UNAVAILABLE_TIME);
+            request.setAttribute("timeError", bundle.getString("unavailable.time"));
             return "/WEB-INF/"+request.getSession().getAttribute("role").toString().toLowerCase()+"/order.jsp";
         }
         scheduleNote.setDate(LocalDate.parse(dateOrder));

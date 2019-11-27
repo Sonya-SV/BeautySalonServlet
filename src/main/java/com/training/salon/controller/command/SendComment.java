@@ -3,11 +3,10 @@ package com.training.salon.controller.command;
 import com.training.salon.model.entity.User;
 import com.training.salon.model.service.CommentService;
 import com.training.salon.model.service.MasterService;
-import com.training.salon.model.service.ProcedureService;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.training.salon.controller.command.ITextConstant.*;
+
 
 public class SendComment implements ICommand {
 
@@ -27,8 +26,7 @@ public class SendComment implements ICommand {
 
         masterService.getById(masterId).ifPresent(m->request.setAttribute("master", m));
         commentService.createComment(comment,  masterId, user.getId());
-        request.setAttribute("successSend", SUCCESS_SEND);
 
-        return "redirect:/user/master?masterId="+masterId;
+        return "redirect:/user/master?masterId="+masterId+"&success";
     }
 }

@@ -8,9 +8,11 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-import static com.training.salon.controller.command.ITextConstant.*;
+
 import static java.util.Objects.nonNull;
 
 public class Registration implements ICommand {
@@ -23,6 +25,8 @@ public class Registration implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
+        ResourceBundle bundle = ResourceBundle.getBundle("messages",
+                new Locale(Optional.ofNullable( (String) request.getSession().getAttribute("lang")).orElse("en")));
         if (nonNull(request.getSession().getAttribute("user")))
             return "redirect:/";
 
@@ -40,8 +44,8 @@ public class Registration implements ICommand {
             userService.saveUser(user);
             log.info("New user " + user.getEmail() + " was successfully registered");
         }catch (SQLException e){
-            log.warn("User " + user.getEmail() + " wasn`t registered. Not unique email");
-            request.setAttribute("errorMessage", NOT_UNIQUE_EMAIL);
+            log.warn("User " + user.getEmail() + " wasn't registered. Not unique email");
+            request.setAttribute("errorMessage", bundle.getString("not.unique.email"));
             return "/registration.jsp";
         }
         return "redirect:/login";

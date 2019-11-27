@@ -7,7 +7,9 @@ import com.training.salon.model.service.MasterService;
 import com.training.salon.model.service.ProcedureService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class MasterCommand implements ICommand {
 
@@ -24,7 +26,10 @@ public class MasterCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request) {
         String masterId = request.getParameter("masterId");
-
+        ResourceBundle bundle = ResourceBundle.getBundle("messages",
+                new Locale(Optional.ofNullable( (String) request.getSession().getAttribute("lang")).orElse("en")));
+        if(Optional.ofNullable(request.getParameter("success")).isPresent())
+            request.setAttribute("successSend", bundle.getString("saved.comment"));
         if (Optional.ofNullable(request.getParameter("masterId")).isEmpty())
             return "redirect:/"+ request.getHeader("referer").replaceAll(".*/beauty-salon/","");
 

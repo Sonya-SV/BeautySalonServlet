@@ -10,7 +10,7 @@
         <div class="login-block">
             <img src="https://www.domzamkad.ru/images/no-avatar.png" width="200" alt="Scanfcode">
             <h1><fmt:message key="put.your.data"/></h1>
-            <c:if test="${requestScope.userError ne null}">
+            <c:if test="${errorMessage ne null}">
                 <div class="alert alert-danger">
                         ${errorMessage}
                 </div>

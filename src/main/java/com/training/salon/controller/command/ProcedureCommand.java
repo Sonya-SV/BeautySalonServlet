@@ -20,11 +20,11 @@ public class ProcedureCommand implements ICommand{
 
     @Override
     public String execute(HttpServletRequest request) {
-        Long categoryId = Long.valueOf(request.getParameter("categoryId"));
-        Optional<String> locale = Optional.ofNullable((String) request.getSession().getAttribute("lang"));
-        ResourceBundle.getBundle("messages", new Locale(locale.orElse("en")));
-        request.setAttribute("procedures", procedureService.getAllProceduresByCategory(categoryId));
-        request.setAttribute("masters", masterService.getMastersByCategory(categoryId));
+        String categoryId = request.getParameter("categoryId");
+        if (Optional.ofNullable(request.getParameter("categoryId")).isEmpty())
+            return "redirect:/"+ request.getHeader("referer").replaceAll(".*/beauty-salon/","");
+        request.setAttribute("procedures", procedureService.getAllProceduresByCategory(Long.valueOf(categoryId)));
+        request.setAttribute("masters", masterService.getMastersByCategory(Long.valueOf(categoryId)));
 
         return "/WEB-INF/"+request.getSession().getAttribute("role").toString().toLowerCase()+"/procedures.jsp";
     }

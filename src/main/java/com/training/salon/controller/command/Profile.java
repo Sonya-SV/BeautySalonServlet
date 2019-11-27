@@ -8,9 +8,9 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Optional;
-
-import static com.training.salon.controller.command.ITextConstant.*;
+import java.util.ResourceBundle;
 
 public class Profile implements ICommand {
     private static final Logger log = LogManager.getLogger(Profile.class);
@@ -30,18 +30,20 @@ public class Profile implements ICommand {
         String lastName = request.getParameter("lastName");
         User user = (User) request.getSession().getAttribute("user");
         String role = request.getSession().getAttribute("role").toString().toLowerCase();
+        ResourceBundle bundle = ResourceBundle.getBundle("messages",
+                new Locale(Optional.ofNullable( (String) request.getSession().getAttribute("lang")).orElse("en")));
         if (Optional.ofNullable(password).isEmpty())
             return "/WEB-INF/" + role + "/" + role + "profile.jsp";
 
         if (password.equals(password2)) {
             try {
                 userService.update(firstName, lastName, password, user);
-                request.setAttribute("successSave", SUCCESS_SAVE);
+                request.setAttribute("successSave", bundle.getString("success.save"));
             } catch (SQLException e) {
                 log.info("Cant save new parameters for user" + user.getEmail());
             }
         } else {
-            request.setAttribute("passwordErrorDiffer", PASSWORD_DIFFERENT);
+            request.setAttribute("passwordErrorDiffer", bundle.getString("password.different"));
         }
         return "/WEB-INF/" + role + "/" + role + "profile.jsp";
     }
