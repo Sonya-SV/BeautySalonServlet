@@ -24,10 +24,9 @@ public class AccessFilter implements Filter {
         User user= (User) request.getSession().getAttribute("user");
         User.Role role = (User.Role) request.getSession().getAttribute("role");
 
-
         String path = request.getRequestURI();
-        if( (path.contains("/user/")  && user==null) ||
-                (path.contains("/admin/") && role!=User.Role.ADMIN)||
+        if( (path.contains("/user")  && user==null) ||
+                (path.contains("/admin") && role!=User.Role.ADMIN)||
                 (path.contains("/master/") && (role==User.Role.USER || role ==null))){
             request.getRequestDispatcher("/beauty-salon/").forward(request, response);
             return;

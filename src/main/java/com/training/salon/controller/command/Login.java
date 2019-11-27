@@ -39,11 +39,12 @@ public class Login implements ICommand {
             request.setAttribute("userError", bundle.getString("user.error"));
             return "/login.jsp";
         }
-        request.getSession().setAttribute("user", user.get());
-        log.info("User \"" + email + "\" logged successfully");
         if (CommandUtility.checkUserIsLogged(request, email)) {
-            return "/WEB-INF/error.jsp";
+            log.warn("User \"" + email + "\" is already logged");
+            return "/login.jsp";
         }
+        log.info("User \"" + email + "\" logged successfully");
+        request.getSession().setAttribute("user", user.get());
         if (user.get().getRole().equals(User.Role.ADMIN)) {
             CommandUtility.setUserRole(request, User.Role.ADMIN, email);
             return "redirect:/admin";
