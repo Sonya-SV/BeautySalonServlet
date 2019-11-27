@@ -26,40 +26,8 @@ public class JDBCScheduleDao implements ScheduleDao {
     }
 
     @Override
-    public void create(Schedule entity) throws SQLException {
-//        final String queryInsert = "insert into schedule(date, time, master_id, user_id, proced_id, done, comment) values (?,?,?,?,?,?,?)";
-//        final String queryCheck = "select * from schedule where date=? and time = ?";
-//
-//        try (PreparedStatement stInsert = connection.prepareStatement(queryInsert);
-//             PreparedStatement stCheck = connection.prepareStatement(queryCheck)) {
-//            stInsert.setDate(1, Date.valueOf(entity.getDate()));
-//            stInsert.setTime(2, Time.valueOf(entity.getTime()));
-//            stInsert.setLong(3, entity.getMaster().getId());
-//            stInsert.setLong(4, entity.getUser().getId());
-//            stInsert.setLong(5, entity.getProcedure().getId());
-//            stInsert.setBoolean(6, entity.isDone());
-//            stInsert.setString(7, entity.getComment());
-//
-//            stCheck.setDate(1, Date.valueOf(entity.getDate()));
-//            stCheck.setTime(2, Time.valueOf(entity.getTime()));
-//
-//
-//            connection.setAutoCommit(false);
-//
-//            ResultSet rs = stCheck.executeQuery();
-//            if (rs.next())
-//                throw new BookException();
-//
-//            stInsert.execute();
-//
-//            connection.commit();
-//        } catch (SQLException e) {
-//            try {
-//                connection.rollback();
-//            } catch (SQLException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
+    public void create(Schedule entity) {
+
     }
 
     @Override
@@ -90,7 +58,7 @@ public class JDBCScheduleDao implements ScheduleDao {
     }
 
     @Override
-    public void update(Schedule entity) throws SQLException {
+    public void update(Schedule entity) {
 
     }
 
@@ -104,14 +72,14 @@ public class JDBCScheduleDao implements ScheduleDao {
         try {
             connection.close();
         } catch (SQLException e) {
-//            logger.warn("close() SQLException: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public void saveToSchedule(Schedule schedule) throws BookException {
-        final String queryInsert = "insert into schedule(date, time, master_id, user_id, proced_id, done, client_first_name, client_last_name) values (?,?,?,?,?,?,?,?)";
+        final String queryInsert = "insert into schedule(date, time, master_id, user_id, proced_id, " +
+                "done, client_first_name, client_last_name) values (?,?,?,?,?,?,?,?)";
         final String queryCheckBusy = "select * from schedule where date=? and time = ? and master_id=?";
         try (PreparedStatement stInsert = connection.prepareStatement(queryInsert);
              PreparedStatement stCheckBusy = connection.prepareStatement(queryCheckBusy)) {
@@ -125,11 +93,9 @@ public class JDBCScheduleDao implements ScheduleDao {
             stInsert.setString(7, schedule.getClientFirstName());
             stInsert.setString(8, schedule.getClientLastName());
 
-
             stCheckBusy.setDate(1, Date.valueOf(schedule.getDate()));
             stCheckBusy.setTime(2, Time.valueOf(schedule.getTime()));
             stCheckBusy.setLong(3, schedule.getMaster().getId());
-
 
             connection.setAutoCommit(false);
 
@@ -138,7 +104,6 @@ public class JDBCScheduleDao implements ScheduleDao {
                 throw new BookException();
 
             stInsert.execute();
-
             connection.commit();
         } catch (SQLException e) {
             try {
@@ -153,8 +118,7 @@ public class JDBCScheduleDao implements ScheduleDao {
     public void makeDone(Long scheduleId) {
         final String query = "update schedule set done = true where schedule_id = ?";
 
-        try (PreparedStatement st = connection.prepareStatement(query);
-        ) {
+        try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, scheduleId);
             st.execute();
         } catch (SQLException e) {
@@ -164,8 +128,7 @@ public class JDBCScheduleDao implements ScheduleDao {
 
     @Override
     public List<Schedule> getSchedule(Long masterId) {
-
-        Map<Long, Schedule> schedule = new HashMap<>();
+        List<Schedule> schedule = new ArrayList<>();
         final String query = "select * from schedule " +
                 "inner join master using (master_id) " +
                 "inner join user on schedule.user_id=user.user_id " +
@@ -175,14 +138,11 @@ public class JDBCScheduleDao implements ScheduleDao {
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, masterId);
             ResultSet rs = st.executeQuery();
-
             ScheduleMapper scheduleMapper = new ScheduleMapper();
 
-            while (rs.next()) {
-                Schedule note = scheduleMapper.extractFromResultSet(rs);
-                schedule.putIfAbsent(note.getId(), note);
-            }
-            return new ArrayList<>(schedule.values());
+            while (rs.next())
+                schedule.add(scheduleMapper.extractFromResultSet(rs));
+            return schedule;
 
         } catch (SQLException e) {
             e.printStackTrace();

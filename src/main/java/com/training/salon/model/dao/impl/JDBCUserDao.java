@@ -13,7 +13,6 @@ public class JDBCUserDao implements UserDao {
     private Connection connection;
 
 
-
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
     }
@@ -30,7 +29,7 @@ public class JDBCUserDao implements UserDao {
             st.execute();
 
         } catch (SQLException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             throw new SQLException();
         }
     }
@@ -39,12 +38,12 @@ public class JDBCUserDao implements UserDao {
     public Optional<User> findById(Long id) {
         final String query = "select * from user where user_id=?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
-            st.setLong (1, id);
+            st.setLong(1, id);
             UserMapper userMapper = new UserMapper();
             ResultSet rs = st.executeQuery();
-            Optional<User> user=Optional.empty();
-            if(rs.next())
-                user=Optional.of(userMapper.extractFromResultSet(rs));
+            Optional<User> user = Optional.empty();
+            if (rs.next())
+                user = Optional.of(userMapper.extractFromResultSet(rs));
             return user;
 
         } catch (SQLException e) {
@@ -56,7 +55,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        Map<Long, User> users = new HashMap<>();
+        List<User> users = new ArrayList<>();
         final String query = " select * from user";
         try (Statement st = connection.createStatement()) {
             ResultSet rs = st.executeQuery(query);
@@ -65,9 +64,9 @@ public class JDBCUserDao implements UserDao {
 
             while (rs.next()) {
                 User user = userMapper.extractFromResultSet(rs);
-                users.putIfAbsent(user.getId(), user);
+                users.add(user);
             }
-               return new ArrayList<>(users.values());
+            return users;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,10 +79,10 @@ public class JDBCUserDao implements UserDao {
     public void update(User entity) throws SQLException {
         final String query = "update user set first_name=?, last_name=?, password=? where email=?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
-            st.setString (1, entity.getFirstName());
-            st.setString (2, entity.getLastName());
-            st.setString (3, entity.getPassword());
-            st.setString (4, entity.getEmail());
+            st.setString(1, entity.getFirstName());
+            st.setString(2, entity.getLastName());
+            st.setString(3, entity.getPassword());
+            st.setString(4, entity.getEmail());
             st.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,6 +92,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void delete(int id) {
+
     }
 
     @Override
@@ -104,61 +104,38 @@ public class JDBCUserDao implements UserDao {
         }
     }
 
-//    @Override
-//    public Optional<User> findByEmailAndPassword(String email, String password) {
-//        final String query = "select * from user where email=? && password =?";
-//        try (PreparedStatement st = connection.prepareStatement(query)) {
-//            st.setString (1, email);
-//            st.setString (2, password);
-//            UserMapper userMapper = new UserMapper();
-//
-//            ResultSet rs = st.executeQuery();
-//            Optional<User> user=Optional.empty();
-//            if(rs.next())
-//                user=Optional.of(userMapper.extractFromResultSet(rs));
-//            return user;
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return Optional.empty();
-//    }
-@Override
-public Optional<User> findByEmailAndPassword(String email) {
-    final String query = "select * from user where email=?";
-    try (PreparedStatement st = connection.prepareStatement(query)) {
-        st.setString (1, email);
-//        st.setString (2, password);
-        UserMapper userMapper = new UserMapper();
+    @Override
+    public Optional<User> findByEmailAndPassword(String email) {
+        final String query = "select * from user where email=?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setString(1, email);
+            UserMapper userMapper = new UserMapper();
 
-        ResultSet rs = st.executeQuery();
-        Optional<User> user=Optional.empty();
-        if(rs.next())
-            user=Optional.of(userMapper.extractFromResultSet(rs));
-        return user;
+            ResultSet rs = st.executeQuery();
+            Optional<User> user = Optional.empty();
+            if (rs.next())
+                user = Optional.of(userMapper.extractFromResultSet(rs));
+            return user;
 
-    } catch (SQLException e) {
-        e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
     }
-
-    return Optional.empty();
-}
 
     @Override
     public List<User> findAllMasters() {
-        Map<Long, User> users = new HashMap<>();
+       List<User> users = new ArrayList<>();
         final String query = " select * from user where role= ? ";
         try (PreparedStatement st = connection.prepareStatement(query)) {
-            st.setString (1, User.Role.MASTER.name());
+            st.setString(1, User.Role.MASTER.name());
             ResultSet rs = st.executeQuery();
             UserMapper userMapper = new UserMapper();
 
-            while (rs.next()) {
-                User user = userMapper.extractFromResultSet(rs);
-                users.putIfAbsent(user.getId(), user);
-            }
-            return new ArrayList<>(users.values());
+            while (rs.next())
+                users.add(userMapper.extractFromResultSet(rs));
+            return users;
 
         } catch (SQLException e) {
             e.printStackTrace();

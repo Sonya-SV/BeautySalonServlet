@@ -21,7 +21,7 @@ public class JDBCProcedureDao implements ProcedureDao {
     }
 
     @Override
-    public void create(Procedure entity) throws SQLException {
+    public void create(Procedure entity) {
 
     }
 
@@ -29,12 +29,13 @@ public class JDBCProcedureDao implements ProcedureDao {
     public Optional<Procedure> findById(Long id) {
         final String query = "select * from proced inner join category using (category_id) where proced_id=?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
-            st.setLong (1, id);
+            st.setLong(1, id);
             ProcedureMapper procedureMapper = new ProcedureMapper();
             ResultSet rs = st.executeQuery();
-            Optional<Procedure> procedure=Optional.empty();
-            if(rs.next())
-                procedure=Optional.of(procedureMapper.extractFromResultSet(rs));
+            Optional<Procedure> procedure = Optional.empty();
+
+            if (rs.next())
+                procedure = Optional.of(procedureMapper.extractFromResultSet(rs));
             return procedure;
 
         } catch (SQLException e) {
@@ -50,7 +51,7 @@ public class JDBCProcedureDao implements ProcedureDao {
     }
 
     @Override
-    public void update(Procedure entity) throws SQLException {
+    public void update(Procedure entity) {
 
     }
 
@@ -64,14 +65,13 @@ public class JDBCProcedureDao implements ProcedureDao {
         try {
             connection.close();
         } catch (SQLException e) {
-//            logger.warn("close() SQLException: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public List<Procedure> findAllByCategory(Long categoryId) {
-        Map<Long, Procedure> procedures = new HashMap<>();
+        List<Procedure> procedures = new ArrayList<>();
         final String query = "select * from proced inner join category using (category_id) where category_id = ?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, categoryId);
@@ -79,11 +79,9 @@ public class JDBCProcedureDao implements ProcedureDao {
 
             ProcedureMapper procedureMapper = new ProcedureMapper();
 
-            while (rs.next()) {
-                Procedure procedure = procedureMapper.extractFromResultSet(rs);
-                procedures.putIfAbsent(procedure.getId(), procedure);
-            }
-            return new ArrayList<>(procedures.values());
+            while (rs.next())
+                procedures.add(procedureMapper.extractFromResultSet(rs));
+            return procedures;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,24 +90,20 @@ public class JDBCProcedureDao implements ProcedureDao {
     }
 
     public List<Procedure> findAllProceduresByMaster(Long masterId) {
-        Map<Long, Procedure> procedures = new HashMap<>();
+        List<Procedure> procedures = new ArrayList<>();
         final String query = " select * from proced inner join master  " +
                 "using (category_id) " +
                 "inner join category " +
-                "using (category_id) "+
+                "using (category_id) " +
                 "where master_id=?";
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, masterId);
             ResultSet rs = st.executeQuery();
-
             ProcedureMapper procedureMapper = new ProcedureMapper();
 
-            while (rs.next()) {
-               Procedure procedure = procedureMapper.extractFromResultSet(rs);
-                procedures.putIfAbsent(procedure.getId(), procedure);
-            }
-
-            return new ArrayList<>(procedures.values());
+            while (rs.next())
+                procedures.add(procedureMapper.extractFromResultSet(rs));
+            return procedures;
 
         } catch (SQLException e) {
             e.printStackTrace();

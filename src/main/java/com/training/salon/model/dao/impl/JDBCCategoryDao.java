@@ -2,9 +2,7 @@ package com.training.salon.model.dao.impl;
 
 import com.training.salon.model.dao.CategoryDao;
 import com.training.salon.model.entity.Category;
-import com.training.salon.model.entity.User;
 import com.training.salon.model.mapper.CategoryMapper;
-import com.training.salon.model.mapper.UserMapper;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
-public class JDBCCategoryDao implements CategoryDao{
+public class JDBCCategoryDao implements CategoryDao {
 
     private Connection connection;
 
@@ -21,7 +19,7 @@ public class JDBCCategoryDao implements CategoryDao{
     }
 
     @Override
-    public void create(Category entity) throws SQLException {
+    public void create(Category entity) {
 
     }
 
@@ -32,28 +30,26 @@ public class JDBCCategoryDao implements CategoryDao{
 
     @Override
     public List<Category> findAll() {
-        Map<Long, Category> categories = new HashMap<>();
+        List<Category> categories = new ArrayList<>();
         final String query = " select * from category";
         try (Statement st = connection.createStatement()) {
             ResultSet rs = st.executeQuery(query);
-
             CategoryMapper categoryMapper = new CategoryMapper();
 
             while (rs.next()) {
                 Category category = categoryMapper.extractFromResultSet(rs);
-                categories.putIfAbsent(category.getId(), category);
+                categories.add(category);
             }
-            rs.close();
-               return new ArrayList<>(categories.values());
+            return categories;
 
         } catch (SQLException e) {
             e.printStackTrace();
-        return null;
+            return null;
         }
     }
 
     @Override
-    public void update(Category entity) throws SQLException {
+    public void update(Category entity) {
 
     }
 
@@ -67,7 +63,6 @@ public class JDBCCategoryDao implements CategoryDao{
         try {
             connection.close();
         } catch (SQLException e) {
-//            logger.warn("close() SQLException: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
