@@ -25,14 +25,15 @@ public class MasterSchedule implements ICommand {
     @Override
     public String execute(HttpServletRequest request) {
         Optional<Master> master;
-        if (Optional.ofNullable(request.getParameter("masterId")).isEmpty())
+        if (Optional.ofNullable(request.getParameter("masterId")).isEmpty()
+                && request.getSession().getAttribute("role").equals(User.Role.ADMIN))
             return "redirect:/"+ request.getHeader("referer").replaceAll(".*/beauty-salon/","");
         if (request.getSession().getAttribute("role").equals(User.Role.ADMIN)) {
             master = masterService.getById(Long.valueOf(request.getParameter("masterId")));
         } else
             master = masterService.getMaster(((User) request.getSession().getAttribute("user")).getId());
-        if (master.isEmpty()) return "redirect:/";
 
+        if (master.isEmpty()) return "redirect:/";
         request.setAttribute("schedule", scheduleService.getScheduleForMaster(master.get().getId()));
         request.setAttribute("dates", Stream.iterate(LocalDate.now(), curr -> curr.plusDays(1))
                 .limit(ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusDays(7)))
