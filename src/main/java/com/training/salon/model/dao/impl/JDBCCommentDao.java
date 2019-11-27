@@ -18,24 +18,10 @@ public class JDBCCommentDao implements CommentDao {
         this.connection = connection;
     }
 
-    @Override
-    public void createComment(String comment, Long masterId, Long userId) {
-        final String query = "insert into comment(user_id, master_id, comment, date) values (?,?,?,?)";
-        try (PreparedStatement st = connection.prepareStatement(query)) {
-            st.setLong(1, userId);
-            st.setLong(2, masterId);
-            st.setString(3, comment);
-            st.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-            st.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public List<Comment> findAllByMaster(Long masterId) {
-        Map<Long, Comment> comments = new HashMap<>();
+        List<Comment> comments = new ArrayList<>();
         final String query = " select * from comment inner join user using (user_id) " +
                 "inner join master using (master_id) " +
                 "inner join category using (category_id)" +
@@ -43,15 +29,11 @@ public class JDBCCommentDao implements CommentDao {
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, masterId);
             ResultSet rs = st.executeQuery();
-
             CommentMapper commentMapper = new CommentMapper();
 
-            while (rs.next()) {
-                Comment comment = commentMapper.extractFromResultSet(rs);
-                comments.putIfAbsent(comment.getId(), comment);
-            }
-            return new ArrayList<>(comments.values());
-
+            while (rs.next())
+                comments.add(commentMapper.extractFromResultSet(rs));
+            return comments;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -59,8 +41,17 @@ public class JDBCCommentDao implements CommentDao {
     }
 
     @Override
-    public void create(Comment entity) throws SQLException {
-
+    public void create(Comment entity) {
+        final String query = "insert into comment(user_id, master_id, comment, date) values (?,?,?,?)";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setLong(1, entity.getUser().getId());
+            st.setLong(2, entity.getMaster().getId());
+            st.setString(3, entity.getComment());
+            st.setTimestamp(4, Timestamp.valueOf(entity.getDateTime()));
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -70,28 +61,11 @@ public class JDBCCommentDao implements CommentDao {
 
     @Override
     public List<Comment> findAll() {
-//        Map<Long, Comment> comments = new HashMap<>();
-//        final String query = " select * from comment inner join user using (user_id) " +
-//                "inner join (SELECT * FROM USER inner join master using (user_id))as s on comment.master_id=s.master_id";
-//        try (Statement st = connection.createStatement()) {
-//            ResultSet rs = st.executeQuery(query);
-//
-//            CommentMapper commentMapper = new CommentMapper();
-//
-//            while (rs.next()) {
-//               Comment comment = commentMapper.extractFromResultSet(rs);
-//                comments.putIfAbsent(comment.getId(), comment);
-//            }
-//            return new ArrayList<>(comments.values());
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-            return null;
-//        }
+        return null;
     }
 
     @Override
-    public void update(Comment entity) throws SQLException {
+    public void update(Comment entity) {
 
     }
 
@@ -105,7 +79,6 @@ public class JDBCCommentDao implements CommentDao {
         try {
             connection.close();
         } catch (SQLException e) {
-//            logger.warn("close() SQLException: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }

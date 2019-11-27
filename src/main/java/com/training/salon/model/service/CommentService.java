@@ -12,9 +12,11 @@ import java.util.List;
 public class CommentService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public void createComment(String comment, Long masterId, Long userId){
+    public void createComment(Comment comment){
         try (CommentDao dao = daoFactory.createCommentDao()) {
-             dao.createComment(comment, masterId, userId);
+             dao.create(comment);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

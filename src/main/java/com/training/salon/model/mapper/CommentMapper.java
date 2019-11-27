@@ -14,8 +14,7 @@ public class CommentMapper implements ObjectMapper<Comment> {
                 .master(new MasterMapper().extractFromResultSet(rs))
                 .user(new UserMapper().extractFromResultSet(rs))
                 .comment(rs.getString("comment"))
-                .dateTime(LocalDateTime.of(rs.getDate("date").toLocalDate(),
-                        rs.getTime("date").toLocalTime()))
+                .dateTime(rs.getTimestamp("date").toLocalDateTime())
                 .build();
     }
 }
