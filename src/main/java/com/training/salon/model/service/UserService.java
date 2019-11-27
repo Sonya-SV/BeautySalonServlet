@@ -2,7 +2,6 @@ package com.training.salon.model.service;
 
 import com.training.salon.model.dao.DaoFactory;
 import com.training.salon.model.dao.UserDao;
-import com.training.salon.model.entity.Master;
 import com.training.salon.model.entity.User;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -42,7 +41,7 @@ public class UserService {
             User userr = userToUpdate.get();
             userr.setFirstName(firstName);
             userr.setLastName(lastName);
-            userr.setPassword(password);
+            userr.setPassword(BCrypt.hashpw(password,BCrypt.gensalt(8)));
             dao.update(userr);
         }
     }
