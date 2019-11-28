@@ -56,7 +56,7 @@
                 <c:if test="${emptyComment ne null}">
                     <div class="alert alert-danger"> ${emptyComment} </div>
                 </c:if>
-                <textarea maxlength="280" name="comment"
+                <textarea maxlength="280" cols="100%" rows="5" name="comment"
                           placeholder="<fmt:message key="put.your.comment"/>"></textarea>
                 <input type="hidden" name="masterId" value="${master.id}">
                 <button type="submit" class="btn btn-primary" style="margin-top:30px">
