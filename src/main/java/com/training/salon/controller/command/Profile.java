@@ -39,8 +39,9 @@ public class Profile implements ICommand {
             try {
                 userService.update(firstName, lastName, password, user);
                 request.setAttribute("successSave", bundle.getString("success.save"));
+                log.info("Saved new parameters for user" + user.getEmail());
             } catch (SQLException e) {
-                log.info("Cant save new parameters for user" + user.getEmail());
+                log.warn("Cant save new parameters for user" + user.getEmail());
             }
         } else {
             request.setAttribute("passwordErrorDiffer", bundle.getString("password.different"));
