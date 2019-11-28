@@ -1,5 +1,6 @@
 package com.training.salon.controller.command;
 
+import com.training.salon.model.entity.Schedule;
 import com.training.salon.model.entity.User;
 
 import javax.servlet.ServletContext;
@@ -14,6 +15,7 @@ class CommandUtility {
         ServletContext context = request.getServletContext();
         context.setAttribute("email", email);
         session.setAttribute("role", role);
+        session.setAttribute("schedule", new Schedule());
 
     }
 

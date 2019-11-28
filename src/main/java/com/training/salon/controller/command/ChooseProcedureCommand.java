@@ -36,9 +36,9 @@ public class ChooseProcedureCommand implements ICommand {
         String procedureId = request.getParameter("procedureId");
 
         ResourceBundle bundle = ResourceBundle.getBundle("messages",
-                new Locale(Optional.ofNullable( (String) request.getSession().getAttribute("lang")).orElse("en")));
-        if(Optional.ofNullable(masterId).isEmpty())
-            return  "redirect:/"+ request.getHeader("referer").replaceAll(".*/beauty-salon/","");
+                new Locale(Optional.ofNullable((String) request.getSession().getAttribute("lang")).orElse("en")));
+        if (Optional.ofNullable(masterId).isEmpty())
+            return "redirect:/" + request.getHeader("referer").replaceAll(".*/beauty-salon/", "");
 
         Optional<Master> master = masterService.getById(Long.valueOf(masterId));
         if (master.isEmpty())
@@ -61,9 +61,9 @@ public class ChooseProcedureCommand implements ICommand {
             masterService.isProcedureAccordToMaster(Long.valueOf(masterId), Long.valueOf(procedureId));
         } catch (DiscrepancyException e) {
             request.setAttribute("discrepancy", bundle.getString("procedure.error"));
-            return "/WEB-INF/"+request.getSession().getAttribute("role").toString().toLowerCase() + "/booking.jsp";
+            return "/WEB-INF/" + request.getSession().getAttribute("role").toString().toLowerCase() + "/booking.jsp";
         }
         procedureService.getProcedureById(Long.valueOf(procedureId)).ifPresent(schedule::setProcedure);
-        return "/WEB-INF/"+request.getSession().getAttribute("role").toString().toLowerCase()+"/booking.jsp";
+        return "/WEB-INF/" + request.getSession().getAttribute("role").toString().toLowerCase() + "/booking.jsp";
     }
 }
