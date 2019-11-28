@@ -57,7 +57,7 @@
                             ${successSend}
                     </div>
                 </c:if>
-                <textarea rows="4" cols="100%" name="comment"
+                <textarea maxlength="280" name="comment"
                           placeholder="<fmt:message key="put.your.comment"/>"></textarea>
                 <input type="hidden" name="masterId" value="${master.id}">
                 <button type="submit" class="btn btn-primary" style="margin-top:30px" ng-disabled="form.$invalid">
