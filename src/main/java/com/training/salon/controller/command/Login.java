@@ -25,13 +25,14 @@ public class Login implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
+        ResourceBundle bundle = ResourceBundle.getBundle("messages",
+                new Locale(Optional.ofNullable( (String) request.getSession().getAttribute("lang")).orElse("en")));
         if (nonNull(request.getSession().getAttribute("user")))
             return "redirect:/";
 
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
-        ResourceBundle bundle = ResourceBundle.getBundle("messages",
-                new Locale(Optional.ofNullable( (String) request.getSession().getAttribute("lang")).orElse("en")));
+
         if (isNull(email)) return "/login.jsp";
         Optional<User> user = userService.login(email, pass);
         if (user.isEmpty()) {

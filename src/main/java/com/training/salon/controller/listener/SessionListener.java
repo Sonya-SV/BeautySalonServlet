@@ -25,7 +25,6 @@ public class SessionListener implements HttpSessionListener {
                 .getAttribute("email");
         log.info("User log out: " + email);
         loggedUsers.remove(email);
-        System.out.println(loggedUsers);
         httpSessionEvent.getSession().getServletContext().setAttribute("loggedUsers", loggedUsers);
     }
 }
