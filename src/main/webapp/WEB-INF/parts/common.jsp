@@ -31,7 +31,7 @@
 <div class="header">
     <div class="navbar-fixed-top">
         <div class="navbar navbar-default">
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/">Beauty</a>
+            <a class="navbar-brand" href="">Beauty</a>
             <ul class="nav navbar-nav">
             </ul>
             <ul class="nav navbar-nav navbar-right">
