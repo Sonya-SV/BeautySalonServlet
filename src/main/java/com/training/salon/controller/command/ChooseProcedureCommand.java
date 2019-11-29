@@ -44,7 +44,7 @@ public class ChooseProcedureCommand implements ICommand {
         if (master.isEmpty())
             return "redirect:/" + request.getSession().getAttribute("role").toString().toLowerCase() + "/masterlist";
 
-        Schedule schedule = new Schedule();
+        Schedule schedule = (Schedule) request.getSession().getAttribute("schedule");
         schedule.setMaster(master.get());
         request.getSession().setAttribute("schedule", schedule);
         request.setAttribute("busySchedule", scheduleService.getScheduleForMaster(Long.valueOf(masterId)));
