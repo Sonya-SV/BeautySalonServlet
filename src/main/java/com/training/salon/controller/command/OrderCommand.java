@@ -35,17 +35,16 @@ public class OrderCommand implements ICommand {
 
         request.setAttribute("schedule", scheduleNote);
         request.setAttribute("user", user);
-
+        LocalDate date = LocalDate.parse(dateOrder);
         try {
             masterService.checkTimeForMaster(scheduleNote.getMaster().getId(), LocalTime.parse(timeOrder));
-            if (LocalDate.parse(dateOrder).isBefore(LocalDate.now()) ||
-                    LocalDate.parse(dateOrder).isAfter(LocalDate.now().plusDays(DAYS_IN_SCHEDULE)))
+            if (date.isBefore(LocalDate.now()) || date.isAfter(LocalDate.now().plusDays(DAYS_IN_SCHEDULE)))
                 throw new DiscrepancyException();
         } catch (DiscrepancyException e) {
             request.setAttribute("timeError", bundle.getString("unavailable.time"));
             return "/WEB-INF/"+request.getSession().getAttribute("role").toString().toLowerCase()+"/order.jsp";
         }
-        scheduleNote.setDate(LocalDate.parse(dateOrder));
+        scheduleNote.setDate(date);
         scheduleNote.setTime(LocalTime.parse(timeOrder));
         scheduleNote.setUser(user);
         return "/WEB-INF/"+request.getSession().getAttribute("role").toString().toLowerCase()+"/order.jsp";

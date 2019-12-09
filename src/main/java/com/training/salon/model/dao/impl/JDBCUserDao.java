@@ -29,7 +29,6 @@ public class JDBCUserDao implements UserDao {
             st.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new SQLException();
         }
     }
