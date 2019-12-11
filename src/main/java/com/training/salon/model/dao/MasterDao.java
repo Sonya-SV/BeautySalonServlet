@@ -18,4 +18,8 @@ public interface MasterDao extends GenericDao<Master>{
     void isProcedureAccordToMaster(Long masterId, Long procedureId) throws DiscrepancyException;
 
     void checkTimeForMaster(Long masterId, LocalTime time) throws DiscrepancyException;
+
+    List<Master> getAllByPage(int start, int end);
+
+    int getCountMaster();
 }

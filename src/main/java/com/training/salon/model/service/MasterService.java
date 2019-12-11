@@ -48,4 +48,16 @@ public class MasterService {
             dao.checkTimeForMaster(masterId, time);
         }
     }
+
+    public List<Master> getAllByPage(int start, int end) {
+        try(MasterDao dao = daoFactory.createMasterDao()){
+            return dao.getAllByPage(start, end);
+        }
+    }
+
+    public int getCount() {
+        try(MasterDao dao = daoFactory.createMasterDao()){
+            return dao.getCountMaster();
+        }
+    }
 }

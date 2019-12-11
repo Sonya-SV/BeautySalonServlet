@@ -109,6 +109,42 @@ public class JDBCMasterDao implements MasterDao {
     }
 
     @Override
+    public int getCountMaster() {
+        final String query = "select count(*) from master";
+        try (Statement st = connection.prepareStatement(query)) {
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next())
+                return rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Master> getAllByPage(int start, int end) {
+        List<Master> masters = new ArrayList<>();
+        final String query = "select * from master inner join " +
+                "user using (user_id) " +
+                "inner join category using (category_id) limit ?, ?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setInt(1, start);
+            st.setInt(2, end);
+            ResultSet rs = st.executeQuery();
+
+            MasterMapper masterMapper = new MasterMapper();
+
+            while (rs.next())
+                masters.add(masterMapper.extractFromResultSet(rs));
+            return masters;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public List<Master> getMastersByCategory(Long categoryId) {
         List<Master> masters = new ArrayList<>();
         final String query = " select * from master inner join user using (user_id)" +
